@@ -42,7 +42,3 @@ def change_password(request):
 
 
 
-def story_generator(request):
-    static_dir = os.path.join(settings.BASE_DIR, "static")
-    main_generate("A detective duck wearing a detective suit is solving a mystery of an egg", img_path=static_dir)
-    return render(request, "dashboard/about.html", {'first_name': request.user.first_name})
