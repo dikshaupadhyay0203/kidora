@@ -1,0 +1,6 @@
+langchain_google_genai
+langchain
+python-dotenv
+together
+requests
+Pillow
