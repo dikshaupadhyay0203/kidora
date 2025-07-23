@@ -3,6 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 # Create your views here.
+# Create your views he
+from .AI_agent.ai_main import main_generate
+from django.conf import settings
+import os
+
 
 
 @login_required
@@ -23,6 +28,7 @@ def edit_profile(request):
     context = {'user': user}
     return render(request, 'dashboard/edit_profile.html', context)
 
+
 @login_required
 def change_password(request):
      user = request.user
@@ -33,3 +39,10 @@ def change_password(request):
           messages.success(request, f"Password changed successfully")
           return redirect('dashboard')
      return render(request, 'dashboard/dashboard.html')
+
+
+
+def story_generator(request):
+    static_dir = os.path.join(settings.BASE_DIR, "static")
+    main_generate("A detective duck wearing a detective suit is solving a mystery of an egg", img_path=static_dir)
+    return render(request, "dashboard/about.html", {'first_name': request.user.first_name})
