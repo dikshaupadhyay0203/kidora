@@ -4,686 +4,941 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Buddy - Jungle Adventure!</title>
+    <title>Kidora - Jungle Learning Adventure</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Poppins:wght@400;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
-       body {
-  background-image: url("{% static 'images/green.jpeg' %}");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed; /* This makes the image stay still while scrolling */
-  background-position: center;
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  color: #fff; /* Make text readable on dark background */
-}
 
-        
-        @keyframes jungle-breeze {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a4a2e 0%, #2d6a42 50%, #0f2617 100%);
+            min-height: 100vh;
         }
-        
-        /* Jungle Flying Elements */
-        .flying-element {
+
+        /* Custom Jungle Background */
+        .jungle-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                /* 🌟 REPLACE 'YOUR_IMAGE_URL_HERE' WITH YOUR JUNGLE BACKGROUND IMAGE URL 🌟 */
+                url("{% static 'images/background.png' %}")
+                no-repeat center center / cover,
+                /* Dark overlay for better text readability */
+                linear-gradient(rgba(6, 68, 32, 0.4), rgba(15, 38, 23, 0.6)),
+                /* Fallback gradient in case image doesn't load */
+                linear-gradient(135deg, #1a4a2e 0%, #2d6a42 50%, #0f2617 100%);
+            background-attachment: fixed; /* Creates parallax effect */
+        }
+
+        /* Optional: Add a subtle overlay pattern on top of your image */
+        .jungle-bg::after {
+            content: '';
             position: absolute;
-            font-size: 2.5rem;
-            opacity: 0.8;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                /* Subtle leaf pattern overlay */
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><ellipse cx="50" cy="50" rx="15" ry="30" fill="%23228B22" opacity="0.1" transform="rotate(45)"/><ellipse cx="150" cy="150" rx="20" ry="35" fill="%2332CD32" opacity="0.08" transform="rotate(-30)"/></svg>') repeat;
+            pointer-events: none;
+        }
+
+        /* Floating Animals */
+        .floating-animal {
+            position: fixed;
             z-index: 1;
+            pointer-events: none;
         }
-        
-        .parrot { 
-            animation: parrot-fly 18s linear infinite; 
-            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2));
+
+        .butterfly {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flutter 4s ease-in-out infinite;
         }
-        .butterfly { 
-            animation: butterfly-jungle 20s linear infinite; 
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
-        }
-        .bee { 
-            animation: bee-buzz 16s linear infinite; 
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
-        }
-        .dragonfly { 
-            animation: dragonfly-dart 22s linear infinite; 
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
-        }
-        
-        @keyframes parrot-fly {
-            0% { left: -10%; top: 15%; transform: translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-25px) rotate(10deg); }
-            50% { transform: translateY(15px) rotate(-8deg); }
-            75% { transform: translateY(-15px) rotate(12deg); }
-            100% { left: 110%; top: 65%; transform: translateY(0px) rotate(0deg); }
-        }
-        
-        @keyframes butterfly-jungle {
-            0% { left: -8%; top: 25%; transform: translateY(0px) rotate(0deg); }
-            20% { transform: translateY(-20px) rotate(15deg); }
-            40% { transform: translateY(10px) rotate(-10deg); }
-            60% { transform: translateY(-15px) rotate(20deg); }
-            80% { transform: translateY(8px) rotate(-5deg); }
-            100% { left: 108%; top: 70%; transform: translateY(0px) rotate(0deg); }
-        }
-        
-        @keyframes bee-buzz {
-            0% { left: -8%; top: 40%; transform: translateY(0px); }
-            25% { transform: translateY(-15px); }
-            50% { transform: translateY(20px); }
-            75% { transform: translateY(-10px); }
-            100% { left: 108%; top: 30%; transform: translateY(0px); }
-        }
-        
-        @keyframes dragonfly-dart {
-            0% { left: -8%; top: 50%; transform: translateY(0px); }
-            30% { transform: translateY(-30px); }
-            60% { transform: translateY(12px); }
-            100% { left: 108%; top: 20%; transform: translateY(0px); }
-        }
-        
-        /* Floating Leaves */
-        .leaf {
+
+        .butterfly::before {
+            content: '';
             position: absolute;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: -10px;
+            left: 0;
+        }
+
+        .bird {
+            width: 30px;
+            height: 20px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            animation: fly 6s linear infinite;
+        }
+
+        .bird::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 15px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            top: -5px;
+            left: 15px;
+        }
+
+        .monkey {
+            width: 50px;
+            height: 50px;
+            background: #8B4513;
+            border-radius: 50%;
+            animation: swing 5s ease-in-out infinite;
+        }
+
+        .monkey::before {
+            content: '🐵';
+            position: absolute;
+            font-size: 40px;
+            top: 5px;
+            left: 5px;
+        }
+
+        @keyframes flutter {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(-10px) rotate(-5deg); }
+            75% { transform: translateY(-25px) rotate(3deg); }
+        }
+
+        @keyframes fly {
+            0% { transform: translateX(-100px) translateY(0px); }
+            50% { transform: translateX(50vw) translateY(-30px); }
+            100% { transform: translateX(calc(100vw + 100px)) translateY(0px); }
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: translateX(0px) rotate(0deg); }
+            25% { transform: translateX(30px) rotate(10deg); }
+            50% { transform: translateX(0px) rotate(0deg); }
+            75% { transform: translateX(-30px) rotate(-10deg); }
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(6, 68, 32, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid rgba(50, 205, 50, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
             font-size: 2rem;
-            opacity: 0.6;
-            animation: leaf-fall 25s linear infinite;
-            z-index: 2;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-        
-        @keyframes leaf-fall {
-            0% { 
-                top: -10%; 
-                transform: translateX(0px) rotate(0deg); 
-                opacity: 0.4; 
-            }
-            25% { 
-                transform: translateX(-20px) rotate(90deg); 
-                opacity: 0.7; 
-            }
-            50% { 
-                transform: translateX(15px) rotate(180deg); 
-                opacity: 0.8; 
-            }
-            75% { 
-                transform: translateX(-10px) rotate(270deg); 
-                opacity: 0.6; 
-            }
-            100% { 
-                top: 110%; 
-                transform: translateX(0px) rotate(360deg); 
-                opacity: 0.3; 
-            }
+
+        .logo::before {
+            content: '🦜';
+            margin-right: 10px;
+            font-size: 2.5rem;
+            animation: bounce 2s infinite;
         }
-        
-        /* Jungle Sounds Visualization */
-        .sound-wave {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 1.5rem;
-            animation: sound-pulse 3s ease-in-out infinite;
-            z-index: 2;
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
-        
-        @keyframes sound-pulse {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 0.6; transform: scale(1.2); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
         }
-        
-        .container {
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .nav-links a:hover {
+            background: rgba(50, 205, 50, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(50, 205, 50, 0.4);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: #90EE90;
+            border: 2px solid #90EE90;
+        }
+
+        .btn-register {
+            background: linear-gradient(45deg, #228B22, #32CD32);
+            color: white;
+            box-shadow: 0 4px 15px rgba(34, 139, 34, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(50, 205, 50, 0.4);
+        }
+
+        /* Main Content */
+        main {
             position: relative;
             z-index: 10;
-            max-width: 840px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
-        
-        .main-card {
-            background: linear-gradient(145deg, rgba(255, 248, 220, 0.95), rgba(245, 222, 179, 0.90));
-            backdrop-filter: blur(20px);
-            border-radius: 35px;
-            padding: 25px 35px;
-            box-shadow: 
-                0 25px 50px rgba(45, 80, 22, 0.3),
-                0 10px 25px rgba(255, 255, 255, 0.2) inset,
-                0 0 0 1px rgba(139, 69, 19, 0.2);
+
+        .hero {
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            border: 3px solid rgba(139, 69, 19, 0.3);
-            overflow: visible;
-            height: auto;
+            padding: 4rem 2rem;
+            color: #E0FFE0;
+            background: rgba(6, 68, 32, 0.3);
+            backdrop-filter: blur(5px);
         }
-        
-        .main-card::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            background: linear-gradient(45deg, #8B4513, #A0522D, #CD853F, #DEB887, #F4A460, #D2691E);
-            background-size: 400% 400%;
-            animation: wood-grain 10s ease infinite;
-            border-radius: 38px;
-            z-index: -1;
-            opacity: 0.8;
-        }
-        
-        @keyframes wood-grain {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        .header {
-            margin-bottom: 35px;
-        }
-        
-        .app-title {
-            font-family: 'Fredoka One', cursive;
+
+        .hero h1 {
             font-size: 3.5rem;
-            background: linear-gradient(45deg, #2d5016, #4a7c23, #7ed321, #228B22);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: jungle-text 8s ease-in-out infinite, gentle-sway 4s ease-in-out infinite;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 3px 6px rgba(45, 80, 22, 0.3));
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            animation: slideInDown 1s ease-out;
         }
-        
-        @keyframes jungle-text {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: slideInUp 1s ease-out 0.3s both;
         }
-        
-        @keyframes gentle-sway {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(0deg); }
-            40% { transform: translateY(-8px) rotate(1deg); }
-            60% { transform: translateY(-4px) rotate(-1deg); }
-        }
-        
-        .mascot-container {
-            position: relative;
-            display: inline-block;
-            margin: 15px 0 20px 0;
-        }
-        
-        .mascot {
-            font-size: 5.5rem;
-            animation: lion-roar 5s ease-in-out infinite;
-            display: block;
-            filter: drop-shadow(0 5px 10px rgba(45, 80, 22, 0.2));
-        }
-        
-        @keyframes lion-roar {
-            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-            25% { transform: translateY(-6px) rotate(-2deg) scale(1.03); }
-            50% { transform: translateY(-12px) rotate(0deg) scale(1.06); }
-            75% { transform: translateY(-6px) rotate(2deg) scale(1.03); }
-        }
-        
-        .jungle-vines {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.5rem;
-            animation: vines-swing 4s ease-in-out infinite;
-            opacity: 0.7;
-        }
-        
-        @keyframes vines-swing {
-            0%, 100% { transform: translateX(-50%) rotate(0deg); }
-            25% { transform: translateX(-50%) rotate(5deg); }
-            75% { transform: translateX(-50%) rotate(-5deg); }
-        }
-        
-        .tagline {
-            font-size: 1.4rem;
-            color: #2d5016;
-            font-weight: 700;
-            margin-bottom: 35px;
-            animation: tagline-breathe 5s ease-in-out infinite;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
-        }
-        
-        @keyframes tagline-breathe {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.02); opacity: 1; }
-        }
-        
-        .button-container {
-            display: flex;
-            gap: 25px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-        
-        .btn {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            padding: 18px 35px;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-            animation: btn-jungle-float 5s ease-in-out infinite;
+
+        .cta-button {
+            background: linear-gradient(45deg, #228B22, #32CD32, #90EE90);
             color: white;
-            box-shadow: 0 10px 25px rgba(45, 80, 22, 0.3);
-            border: 2px solid rgba(139, 69, 19, 0.3);
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 25px rgba(34, 139, 34, 0.5);
+            animation: slideInUp 1s ease-out 0.6s both;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-decoration:none;
         }
-        
-        .btn:nth-child(1) { animation-delay: 0s; }
-        .btn:nth-child(2) { animation-delay: 1.5s; }
-        
-        @keyframes btn-jungle-float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(50, 205, 50, 0.7);
+            background: linear-gradient(45deg, #32CD32, #90EE90, #98FB98);
         }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 50%;
-            transition: width 0.6s, height 0.6s;
-            transform: translate(-50%, -50%);
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        .btn:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(45, 80, 22, 0.4);
+
+        /* Sections */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        
-        .btn-login {
-            background: linear-gradient(135deg, #228B22, #32CD32, #7CFC00);
-        }
-        
-        .btn-register {
-            background: linear-gradient(135deg, #8B4513, #CD853F, #DEB887);
-        }
-        
-        .features {
-            margin-top: 25px;
-            display: flex;
-            justify-content: center;
-            gap: 35px;
-            flex-wrap: wrap;
-        }
-        
-        .feature {
+
+        .section h2 {
+            font-size: 2.5rem;
             text-align: center;
-            max-width: 110px;
-            animation: feature-jungle 6s ease-in-out infinite;
+            margin-bottom: 2rem;
+            color: hwb(120 96% 3%);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
         }
-        
-        .feature:nth-child(1) { animation-delay: 0s; }
-        .feature:nth-child(2) { animation-delay: 1.5s; }
-        .feature:nth-child(3) { animation-delay: 3s; }
-        
-        @keyframes feature-jungle {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-10px) scale(1.08); }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
-        
+
+        .feature-card {
+            background: rgba(240, 255, 240, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(6, 68, 32, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(50, 205, 50, 0.2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(34, 139, 34, 0.4);
+            border-color: rgba(50, 205, 50, 0.4);
+        }
+
         .feature-icon {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 3px 6px rgba(45, 80, 22, 0.2));
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: rotate 3s linear infinite;
         }
-        
-        .feature-text {
-            font-size: 1rem;
-            color: #2d5016;
-            font-weight: 700;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
-        
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .main-card {
-                padding: 35px 25px;
-                border-radius: 30px;
-            }
-            
-            .app-title {
-                font-size: 2.8rem;
-            }
-            
-            .mascot {
-                font-size: 4.5rem;
-            }
-            
-            .tagline {
-                font-size: 1.2rem;
-            }
-            
-            .btn {
-                font-size: 1.1rem;
-                padding: 15px 30px;
-                margin: 8px;
-            }
-            
-            .button-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .features {
-                gap: 25px;
-            }
-            
-            .flying-element {
-                font-size: 2rem;
-            }
+
+        .feature-card h3 {
+            color: #064420;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
-        
-        @media (max-width: 480px) {
-            .app-title {
-                font-size: 2.4rem;
-            }
-            
-            .mascot {
-                font-size: 4rem;
-            }
-            
-            .btn {
-                width: 220px;
-            }
+
+        .feature-card p {
+            color: #0a351a;
+            line-height: 1.6;
         }
-       
-.intro-card-separate {
-    background: linear-gradient(135deg, #f5f0dc, #e0eac1);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 25px rgba(45, 80, 22, 0.15);
-    max-width: 800px;
-    margin: 50px auto;
-    /* animation: feature-jungle 6s ease-in-out infinite; */
-    text-align: center;
+
+        /* Contact Section */
+        .contact-form {
+            background: rgba(240, 255, 240, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(6, 68, 32, 0.3);
+            border: 2px solid rgba(50, 205, 50, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #064420;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #228B22;
+            border-radius: 10px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #32CD32;
+            box-shadow: 0 0 10px rgba(50, 205, 50, 0.4);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        /* Footer */
+        /* footer {
+            background: rgba(6, 68, 32, 0.95);
+            color: #E0FFE0;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid rgba(50, 205, 50, 0.3);
+        } */
+        footer {
+    background: rgba(6, 68, 32, 0.95);
+    /* Check for padding-top or border-top here */
+    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(50, 205, 50, 0.1); /* This one is thin, likely not the main issue */
 }
 
-.intro-card-separate .intro-title {
-    font-family: 'Fredoka One', cursive;
-    font-size: 2rem;
-    color: #2d5016;
-    margin-bottom: 15px;
+        /* Kidora Specific Footer/Contact Section */
+/* Kidora Specific Footer/Contact Section */
+/* Kidora Specific Footer/Contact Section */
+.footer-kidora-section {
+    background: rgba(6, 68, 32, 0.95); /* Your existing nav background */
+    color: #E0FFE0; /* Your existing text color */
+    padding: 3rem 2rem;
+    /* REMOVED: margin-top: 4rem; */
+    border-top: 2px solid rgba(50, 205, 50, 0.3); /* Matches nav border */
 }
 
-.intro-card-separate .intro-text {
+.kidora-footer-grid {
+    display: grid;
+    /* UPDATED: Adjusted grid-template-columns for 3 columns */
+    grid-template-columns: 1.5fr 1fr 1.5fr; /* Logo | Quick Links | Contact Info */
+    gap: 2.5rem; /* More space between columns */
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.kidora-footer-column {
+    text-align: left; /* Default text alignment */
+}
+
+.kidora-footer-column h3 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    color: #90EE90; /* Light green for headings */
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Kidora Logo Section (first column) */
+.footer-kidora-logo-section .logo {
+    /* Reusing existing .logo styles for font, size, color, parrot icon */
+    font-size: 2.5rem; /* Make it a bit bigger for the footer */
+    margin-bottom: 10px;
+}
+
+.footer-kidora-logo-section .logo::before {
+    font-size: 3rem; /* Make parrot icon bigger too */
+}
+
+.kidora-tagline {
     font-size: 1.1rem;
-    color: #3e6b1f;
-    font-weight: 500;
-    line-height: 1.6;
+    font-style: italic;
+    color: #C0FFC0;
+    margin-bottom: 15px;
+    line-height: 1.4;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-image: url("{% static 'images/green.jpeg' %}"); /* path to your image */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
+.kidora-quote {
+    font-size: 0.9rem;
+    color: #A0FFA0;
+    line-height: 1.5;
 }
-.jungle-navbar {
-    width: 100%;
-    background: linear-gradient(90deg, #2d5016, #4a7c23, #56a832);
-    padding: 15px 30px;
+
+/* REMOVED: Socials Column styles as the column is no longer in HTML
+.kidora-socials .social-icons { ... }
+.kidora-socials .social-icons img { ... }
+.kidora-socials .social-icons img:hover { ... }
+*/
+
+/* Quick Links Column */
+.kidora-quick-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.kidora-quick-links li {
+    margin-bottom: 12px;
+}
+
+.kidora-quick-links a {
+    color: #E0FFE0;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block; /* For transform to work */
+}
+
+.kidora-quick-links a:hover {
+    color: #90EE90;
+    transform: translateX(5px); /* Little slide effect */
+}
+
+/* Contact Info Column */
+.kidora-contact-info p {
+    margin-bottom: 12px;
+    color: #E0FFE0;
+    display: flex; /* For icon alignment */
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+}
+
+.kidora-contact-info p .icon-mail,
+.kidora-contact-info p .icon-phone,
+.kidora-contact-info p .icon-location {
+    font-size: 1.3rem; /* Size for emoji icons */
+}
+
+.kidora-contact-info a {
+    color: #E0FFE0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.kidora-contact-info a:hover {
+    color: #90EE90;
+}
+
+/* REMOVED: Button styles as the button is no longer in HTML
+.btn-contact-kidora { ... }
+.btn-contact-kidora:hover { ... }
+*/
+
+
+/* Footer (bottom copyright and powered by) - re-adjusted for Kidora */
+footer {
+    background: rgba(6, 68, 32, 0.95); /* Keep the same dark green background */
+    color: #E0FFE0;
+    text-align: center;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(50, 205, 50, 0.1);
+}
+
+.footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: 0.9rem;
+    color: #A0FFA0; /* Slightly lighter green for copyright text */
+}
+
+.footer-bottom .powered-by {
+    color: #90EE90; /* Make "Powered By" stand out */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .kidora-footer-grid {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        text-align: center; /* Center content when stacked */
+    }
+
+    .footer-kidora-logo-section,
+    .kidora-quick-links,
+    .kidora-contact-info {
+        align-items: center; /* Center items in stacked columns */
+    }
+
+    /* .kidora-socials .social-icons { justify-content: center; } // REMOVED */
+
+    .kidora-quick-links ul,
+    .kidora-contact-info p {
+        align-items: center; /* Center bullet points and icons in stacked lists */
+        justify-content: center; /* Center contact info lines */
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .kidora-footer-grid {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        text-align: center; /* Center content when stacked */
+    }
+
+    .footer-kidora-logo-section,
+    .kidora-socials,
+    .kidora-quick-links,
+    .kidora-contact-info {
+        align-items: center; /* Center items in stacked columns */
+    }
+
+    .kidora-socials .social-icons {
+        justify-content: center; /* Center social icons */
+    }
+
+    .kidora-quick-links ul,
+    .kidora-contact-info p {
+        align-items: center; /* Center bullet points and icons in stacked lists */
+        justify-content: center; /* Center contact info lines */
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+/* How It Works Section */
+.how-it-works-section {
+    /* background: #bac2bde6;  */
+    color: #E0FFE0; /* Light green text */
+    padding: 6rem 2rem; /* More vertical padding */
+    text-align: center;
+    border-top: 3px solid rgba(144, 238, 144, 0.4);
+    border-bottom: 3px solid rgba(144, 238, 144, 0.4);
+    position: relative;
+    overflow: hidden; /* For any internal elements that might overflow */
+}
+
+.how-it-works-section::before {
+    content: '';
+    position: absolute;
     top: 0;
     left: 0;
-    z-index: 999;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    font-family: 'Fredoka One', cursive;
-    color: white;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%23228B22" opacity="0.05" d="M0 0h10v10H0zm20 0h10v10H20zm20 0h10v10H40zm20 0h10v10H60zm20 0h10v10H80zM0 20h10v10H0zm20 20h10v10H20zm40-20h10v10H60zm20 20h10v10H80zM0 40h10v10H0zm20 40h10v10H20zM40 40h10v10H40zm20 40h10v10H60zM80 40h10v10H80zM0 60h10v10H0zm20 60h10v10H20zm40-20h10v10H60zm20 20h10v10H80zM0 80h10v10H0zM40 80h10v10H40zm80-40h10v10H80z"/></svg>') repeat;
+    pointer-events: none;
+    mix-blend-mode: overlay; /* Subtle texture overlay */
+    z-index: 1;
 }
 
-.nav-logo {
-    font-size: 1.8rem;
-    animation: gentle-sway 4s ease-in-out infinite;
+.how-it-works-section .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative; /* For z-index to work */
+    z-index: 2; /* Ensure content is above pseudo-element */
 }
 
-.nav-links {
-    list-style: none;
+.how-it-works-section h2 {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    color: hsl(51, 64%, 2%); /* Gold/Yellow for heading */
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+    animation: fadeInScale 1s ease-out;
+}
+
+.how-it-works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2.5rem; /* Increased gap */
+    margin-top: 2rem;
+}
+
+.step-card {
+    background: linear-gradient(135deg, rgba(66, 179, 110, 0.9), rgba(34, 139, 34, 0.9)); 
+    border-radius: 20px; /* Rounded corners */
+    padding: 2.5rem 1.5rem; /* Ample padding */
+    box-shadow: 0 10px 25px rgba(0, 50, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid rgba(144, 238, 144, 0.5); /* Lighter border */
     display: flex;
-    gap: 25px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #E0FFE0;
+    position: relative;
+    overflow: hidden;
 }
 
-.nav-links li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 20px;
-    transition: background 0.3s, transform 0.3s;
-}
-html {
-  scroll-behavior: smooth;
-}
-
-.nav-links li a:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
+.step-card::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.05); /* Subtle white overlay */
+    border-radius: 50%;
+    filter: blur(15px);
+    z-index: 0;
 }
 
-
-.section-content {
-  background-color:#ffeaa7; /* light jungle green */
-  font-family: 'Comic Sans MS', cursive;
-  padding: 2rem;
-  margin: 2rem auto;
-  border-radius: 15px;
-  max-width: 800px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
-  color: #006400; /* dark text for readability */
-  
+.step-card:hover {
+    transform: translateY(-8px) rotateZ(1deg); /* Slight lift and rotation */
+    box-shadow: 0 15px 35px rgba(0, 50, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  margin-bottom: 10px;
+.step-icon {
+    width: 80px;
+    height: 80px;
+    background: #FFD700; /* Gold background for icons */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.6);
+    border: 3px solid white; /* White outline */
+    position: relative;
+    z-index: 1; /* Ensure icon is above pseudo-element */
 }
 
-button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #28a745;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.logo-image {
-    width: 200px;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    animation: floatLogo 3s ease-in-out infinite;
+.step-icon img {
+    max-width: 60%;
+    max-height: 60%;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5));
 }
 
-@keyframes floatLogo {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+.step-card h3 {
+    font-size: 1.8rem;
+    color: #FFD700; /* Gold/Yellow for step titles */
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
 }
 
+.step-card p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #C0FFC0; /* Slightly lighter green for text */
+    padding: 0 0.5rem;
+}
 
+.how-it-works-section .btn-lg {
+    padding: 1rem 2.5rem; /* Larger button for call to action */
+    font-size: 1.3rem;
+    margin-top: 3rem; /* Space above button */
+}
 
+/* Keyframe for initial animation */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .how-it-works-section h2 {
+        font-size: 2.5rem;
+    }
+    .how-it-works-grid {
+        grid-template-columns: 1fr; /* Stack on small screens */
+    }
+    .step-card {
+        padding: 2rem 1rem;
+    }
+    .step-icon {
+        width: 70px;
+        height: 70px;
+    }
+    .step-card h3 {
+        font-size: 1.6rem;
+    }
+    .how-it-works-section .btn-lg {
+        padding: 0.8rem 2rem;
+        font-size: 1.1rem;
+    }
+}
     </style>
 </head>
 <body>
-   <!-- Jungle Navbar -->
-<nav class="jungle-navbar">
-    <div class="nav-logo">🌴 Kidora</div>
-    <ul class="nav-links">
-        <li><a href="#">🏠 Home</a></li>
-        <li><a href="#about">📖 About</a></li>
-        <li><a href="#contact">📬 Contact</a></li>
-    </ul>
-</nav>
+    <!-- Animated Background Animals -->
+    <div class="floating-animal butterfly" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+    <div class="floating-animal butterfly" style="top: 60%; left: 80%; animation-delay: 2s;"></div>
+    <div class="floating-animal bird" style="top: 15%; animation-delay: 1s;"></div>
+    <div class="floating-animal bird" style="top: 45%; animation-delay: 3s;"></div>
+    <div class="floating-animal monkey" style="top: 70%; left: 5%; animation-delay: 1.5s;"></div>
+    <div class="floating-animal monkey" style="top: 30%; right: 10%; animation-delay: 4s;"></div>
 
+    <div class="jungle-bg"></div>
 
-    <!-- Jungle Flying Creatures -->
-    <div class="flying-element parrot" style="top: 12%; animation-delay: 0s;">🦜</div>
-    <div class="flying-element butterfly" style="top: 25%; animation-delay: 4s;">🦋</div>
-    <div class="flying-element bee" style="top: 35%; animation-delay: 8s;">🐝</div>
-    <div class="flying-element dragonfly" style="top: 45%; animation-delay: 12s;">🏺</div>
-    <div class="flying-element parrot" style="top: 60%; animation-delay: 16s;">🦜</div>
-    <div class="flying-element butterfly" style="top: 70%; animation-delay: 20s;">🦋</div>
-    <div class="flying-element bee" style="top: 15%; animation-delay: 6s;">🐝</div>
-    
-    <!-- Falling Leaves -->
-    <div class="leaf" style="left: 10%; animation-delay: 0s;">🍃</div>
-    <div class="leaf" style="left: 25%; animation-delay: 3s;">🌿</div>
-    <div class="leaf" style="left: 40%; animation-delay: 6s;">🍃</div>
-    <div class="leaf" style="left: 60%; animation-delay: 9s;">🌿</div>
-    <div class="leaf" style="left: 75%; animation-delay: 12s;">🍃</div>
-    <div class="leaf" style="left: 85%; animation-delay: 15s;">🌿</div>
-    
-    <!-- Jungle Sound Waves -->
-    <div class="sound-wave" style="top: 20%; left: 8%; animation-delay: 0.5s;">🌊</div>
-    <div class="sound-wave" style="top: 50%; right: 12%; animation-delay: 2s;">🌊</div>
-    <div class="sound-wave" style="bottom: 30%; left: 15%; animation-delay: 4s;">🌊</div>
-    <div class="sound-wave" style="bottom: 60%; right: 18%; animation-delay: 1s;">🌊</div>
-   
-    <div class="container">
-    <div class="main-card">
-        <div class="header">
-            <div class="mascot-container">
-                <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="logo-image">
+    <nav>
+        <div class="nav-container">
+            <div class="logo">KIDORA</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#works">How it Works</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-register">Register</a>
             </div>
-            <p class="tagline">Let's explore the jungle and learn!</p>
         </div>
+    </nav>
 
-            
-          
-            <div class="intro-card-separate">
-            <h2 class="intro-title">📚 Meet Kidora!</h2>
-            <p class="intro-text">
-                A fun app where kids ask questions and get answers in simple words, rhymes, or short stories! 🦁✨🌈
-            </p>
-        </div>
-   
-            <div class="button-container">
-                <a href="{% url 'login' %}" class="btn btn-login">🌟 Login</a>
-                <a href="{% url 'register' %}" class="btn btn-register">🚀 Register</a>
-            </div>
-            
+    <main>
+        <section id="home" class="hero">
+            <h1>Welcome to Kidora! 🌿</h1>
+            <p>Your magical jungle learning companion for stories, poems, and rhymes!</p>
+             <a href="{% url 'login' %}" class="cta-button">Start Your Adventure!</a>
+        </section>
+
+        <section id="about" class="section">
+            <h2>Explore Kidora 🦋</h2>
             <div class="features">
-                <div class="feature">
-                    <div class="feature-icon">🎯</div>
-                    <div class="feature-text">Adventure Fun</div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Interactive Stories</h3>
+                    <p>Dive into magical jungle adventures with our AI-generated stories that adapt to your child's interests and reading level.</p>
                 </div>
-                <div class="feature">
-                    <div class="feature-icon">🎮</div>
-                    <div class="feature-text">Jungle Games</div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3>Fun Rhymes & Poems</h3>
+                    <p>Learn through catchy rhymes and beautiful poems that make education enjoyable and memorable for young minds.</p>
                 </div>
-                <div class="feature">
-                    <div class="feature-icon">🏆</div>
-                    <div class="feature-text">Explorer Rewards</div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Creative Learning</h3>
+                    <p>Boost creativity with interactive content that encourages imagination while building essential learning skills.</p>
                 </div>
             </div>
-
-
+        </section>
+<main>
+   <section id="works" class="section how-it-works-section">
+    <div class="section-container">
+        <h2>How Kidora Works</h2>
+        <div class="how-it-works-grid">
+            <div class="step-card">
+                <div class="step-icon">
+                    <span role="img" aria-label="Join Adventure">🚀📝</span>
+                </div>
+                <h3>1. Join the Adventure</h3>
+                <p>Register for free and create your child's profile to begin their learning journey.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">
+                    <span role="img" aria-label="Explore Jungle">🌴🔍</span>
+                </div>
+                <h3>2. Explore & Learn</h3>
+                <p>Dive into interactive games, engaging lessons, and exciting quizzes across various subjects.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">
+                    <span role="img" aria-label="Track Progress">📊📈</span>
+                </div>
+                <h3>3. Track Progress</h3>
+                <p>Monitor your child's achievements and see their skills grow with detailed progress reports.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">
+                    <span role="img" aria-label="Achieve and Grow">🌟🏆</span>
+                </div>
+                <h3>4. Achieve & Grow</h3>
+                <p>Celebrate milestones, earn badges, and watch your child's confidence soar!</p>
+            </div>
         </div>
     </div>
-   <div class="intro-card-separate" id="about" style="animation-delay: 2s;">
-    <h2 class="intro-title">🌟 Welcome to Kidora!</h2>
-    <p class="intro-text">
-        Kidora is your magical jungle buddy! 🐾<br>
-        A fun learning app where kids explore maths, science, stories & more — all through rhymes, games, and rewards! 🎉
-    </p>
-
-    <h2 class="intro-title">🧠 How It Works</h2>
-    <p class="intro-text">
-        🦜 Ask a question or pick a topic.<br>
-        🦁 Get answers in fun rhymes or mini stories.<br>
-        🎵 Enjoy music, voice, and animations.<br>
-        🍌 Earn coins and bananas for daily learning!
-    </p>
-
-    <h2 class="intro-title">🌈 Why Kids Love It</h2>
-    <p class="intro-text">
-        Over 1,00,000 little learners explore with Kidora every day!<br>
-        It’s a jungle full of smart monkeys, kind lions, clever parrots, and friendly elephants! 🐵🦁🦜🐘
-    </p>
-
-    <h2 class="intro-title">🗣️ What Our Jungle Friends Say</h2>
-    <p class="intro-text">
-        🐘 <strong>Ellie:</strong> “I solved puzzles and earned 50 coins today!”<br>
-        🐱 <strong>Kitty:</strong> “Bedtime rhymes make me smile every night.”<br>
-        🐶 <strong>Doggo:</strong> “I learn and wag my tail at the same time!”<br>
-        🐵 <strong>Chimpu:</strong> “I’m the leaderboard champ — learning is a game!”
-    </p>
-
-    <h2 class="intro-title">🎯 Learn. Laugh. Roar.</h2>
-    <p class="intro-text">
-        With colorful quizzes, jungle stories, and playful rewards, Kidora makes learning unforgettable! 🌟📚
-    </p>
-</div>
-
-<!-- Contact Us Section -->
-
-<section id="contact"> 
-  <div class="section-content">
-    <h2>🌟📞 Feel Free to Contact Us! 🐾🌿</h2>
-
-    <div class="contact-details">
-      <p>👥 <strong>Team:</strong> Kidora Creators</p>
-      <p>📧 <strong>Email:</strong> <a href="mailto:support@kidora.com">support@kidora.com</a></p>
-      <p>📱 <strong>Phone:</strong> <a href="tel:+919876543210">+91-9876543210</a></p>
-    </div>
-
-    <p>🌟🐾 Thank you for reaching out to <strong>Kidora</strong> – Your Jungle Learning Buddy! 🐯🎒🌳</p>
-  </div>
 </section>
 
+    </main>
 
-    
+    <section id="contact" class="footer-kidora-section">
+            <div class="kidora-footer-grid">
+                <div class="kidora-footer-column footer-kidora-logo-section">
+                    <div class="logo">KIDORA</div> <p class="kidora-tagline">"Where every story is an exciting journey and learning is an adventure!"</p>
+                    <p class="kidora-quote">"Ignite curiosity, explore the jungle of knowledge!"</p>
+                </div>
 
-    <body>
-        <div class="hero-background"></div>
-    </body>
+               
+                <div class="kidora-footer-column kidora-quick-links">
+                    <h3>Quick Links</h3> <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="kidora-footer-column kidora-contact-info">
+                    <h3>Contact Us!</h3> <p><i class="icon-mail">📧</i> Email: <a href="mailto:hello@kidora.com">kidoraexplorer@gmail.com</a></p>
+                    <p><i class="icon-phone">📞</i> Phone: <a href="tel:+1234567890">+91 9876543210</a></p>
+            
+                </div>
+            </div>
+        </section>
+
+    <footer>
+        <p>&copy; 2025 Kidora. All rights reserved. Made with 💚 for curious young minds!</p>
+    </footer>
+
+    <script>
+        // Add more dynamic animations
+        function createFloatingElement() {
+            const animals = ['🦋', '🐦', '🐵', '🌺', '🍃'];
+            const element = document.createElement('div');
+            element.innerHTML = animals[Math.floor(Math.random() * animals.length)];
+            element.style.position = 'fixed';
+            element.style.fontSize = '2rem';
+            element.style.left = Math.random() * 100 + 'vw';
+            element.style.top = Math.random() * 100 + 'vh';
+            element.style.zIndex = '1';
+            element.style.pointerEvents = 'none';
+            element.style.animation = `flutter ${3 + Math.random() * 4}s ease-in-out infinite`;
+            
+            document.body.appendChild(element);
+            
+            setTimeout(() => {
+                element.remove();
+            }, 8000);
+        }
+
+        // Create floating elements periodically
+        setInterval(createFloatingElement, 3000);
+
+        // Smooth scrolling for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add parallax effect to floating animals
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelectorAll('.floating-animal');
+            
+            parallax.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you soon! 🌟');
+            this.reset();
+        });
+    </script>
 </body>
-
 </html>

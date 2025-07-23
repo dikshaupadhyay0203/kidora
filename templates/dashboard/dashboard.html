@@ -374,11 +374,16 @@
             background: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
             border-radius: 25px;
             padding: 30px;
+            width: 800px;
+             height: 400px;
+            margin: center ;
             color: white;
             box-shadow: 0 15px 35px rgba(50,205,50,0.3);
             border: 3px solid #FFD700;
             text-align: center;
             transition: background 0.5s ease-in-out, border-color 0.5s ease-in-out;
+            /* Adjustments for removing explorer badge */
+            grid-column: span 2; /* Make it span across both columns in main-content */
         }
 
         .buddy-icon {
@@ -499,30 +504,14 @@
 
         @keyframes spin {
             0% { transform: rotate(0deg); }
-            100% { transform: rotate(36deg); }
+            100% { transform: rotate(360deg); }
         }
 
+        /* explorer-badge removed */
         .explorer-badge {
-            background: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
-            border-radius: 20px;
-            padding: 20px;
-            color: white;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(50,205,50,0.3);
-            border: 3px solid #FFD700;
-            transition: background 0.5s ease-in-out, border-color 0.5s ease-in-out;
+            display: none; /* Hide the explorer badge */
         }
 
-        .badge-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .badge-text {
-            font-weight: 700;
-            font-size: 18px;
-        }
 
         /* Responsive design */
         @media (max-width: 1200px) {
@@ -636,7 +625,7 @@
         .sidebar.theme-jungle h3, .buddy-title.theme-jungle, .faq-title.theme-jungle {
             color: #FFD700;
         }
-        .stat-card.theme-jungle, .buddy-section.theme-jungle, .faq-section.theme-jungle, .profile-card.theme-jungle, .explorer-badge.theme-jungle {
+        .stat-card.theme-jungle, .buddy-section.theme-jungle, .faq-section.theme-jungle, .profile-card.theme-jungle {
             background: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
             border-color: #FFD700;
         }
@@ -658,7 +647,7 @@
         .sidebar.theme-anime h3, .buddy-title.theme-anime, .faq-title.theme-anime {
             color: #FFD700;
         }
-        .stat-card.theme-anime, .buddy-section.theme-anime, .faq-section.theme-anime, .profile-card.theme-anime, .explorer-badge.theme-anime {
+        .stat-card.theme-anime, .buddy-section.theme-anime, .faq-section.theme-anime, .profile-card.theme-anime {
             background: linear-gradient(135deg, #3E6CBB 0%, #5B8EDC 100%);
             border-color: #EE4D29;
         }
@@ -680,7 +669,7 @@
         .sidebar.theme-marvel h3, .buddy-title.theme-marvel, .faq-title.theme-marvel {
             color: #FFD700;
         }
-        .stat-card.theme-marvel, .buddy-section.theme-marvel, .faq-section.theme-marvel, .profile-card.theme-marvel, .explorer-badge.theme-marvel {
+        .stat-card.theme-marvel, .buddy-section.theme-marvel, .faq-section.theme-marvel, .profile-card.theme-marvel {
             background: linear-gradient(135deg, #343A40 0%, #495057 100%);
             border-color: #FFD700;
         }
@@ -702,7 +691,7 @@
         .sidebar.theme-disney h3, .buddy-title.theme-disney, .faq-title.theme-disney {
             color: #FFD700;
         }
-        .stat-card.theme-disney, .buddy-section.theme-disney, .faq-section.theme-disney, .profile-card.theme-disney, .explorer-badge.theme-disney {
+        .stat-card.theme-disney, .buddy-section.theme-disney, .faq-section.theme-disney, .profile-card.theme-disney {
             background: linear-gradient(135deg, #FFE4E1 0%, #F5F5DC 100%);
             border-color: #FFD700;
             color: #333; /* Adjust text color for light backgrounds */
@@ -713,25 +702,31 @@
 
         body.theme-doraemon {
             background-image: url("{% static 'images/doraemon.png' %}"); /* Replace with your Doraemon background image URL */
-            background-color: #00BFFF; /*Fallback color*/
+
+            background-color: #00BFFF;
+
+            background-color: #87CEEB; 
+
         }
         .header.theme-doraemon {
-            background: linear-gradient(45deg, #FF6347, #FF4500);
+            background: linear-gradient(45deg, #1E90FF, #4682B4); /* Dodger Blue to Steel Blue */
         }
         .sidebar.theme-doraemon {
-            background: linear-gradient(135deg, #1E90FF 0%, #00BFFF 100%);
-            border-color: #FF6347;
+            background: linear-gradient(135deg, #00BFFF 0%, #87CEEB 100%); /* Deep Sky Blue to Sky Blue */
+            border-color: #FFD700; /* Gold accent */
         }
         .sidebar.theme-doraemon h3, .buddy-title.theme-doraemon, .faq-title.theme-doraemon {
-            color: #FF6347;
+            color: #FFD700; /* Gold text for better contrast */
         }
-        .stat-card.theme-doraemon, .buddy-section.theme-doraemon, .faq-section.theme-doraemon, .profile-card.theme-doraemon, .explorer-badge.theme-doraemon {
-            background: linear-gradient(135deg, #FF6347 0%, #FF4500 100%);
-            border-color: #FFD700;
+        .stat-card.theme-doraemon, .buddy-section.theme-doraemon, .faq-section.theme-doraemon, .profile-card.theme-doraemon {
+            background: linear-gradient(135deg, #4682B4 0%, #6A5ACD 100%); /* Steel Blue to Slate Blue */
+            border-color: #FFD700; /* Gold accent */
+            color: white; /* Ensure text is white for contrast */
         }
         .progress-ring.theme-doraemon {
-            border-top-color: #FFD700;
+            border-top-color: #FFD700; /* Gold accent for progress ring */
         }
+
 
         /* Hide specific elements based on theme using opacity and pointer-events */
         .hide-animated-elements .jungle-bg,
@@ -790,7 +785,12 @@
             </div>
             <div class="user-profile-dropdown" id="userProfileDropdown">
                 <div class="user-profile">
+<<<<<<< HEAD
                     🌟 Hi, {{ first_name }}
+=======
+                    <p>🌟Hi, {{ user.first_name }}!</p>
+                    
+>>>>>>> 48b6fd5 (Updated homepage hero section)
                 </div>
                 <div class="profile-dropdown-content">
                     <div class="profile-dropdown-item">
@@ -833,6 +833,9 @@
             </div>
             <div class="menu-item">
                 🕳️ Story Caves
+            </div>
+             <div class="menu-item">
+                🍥 Rhymes & Riddles
             </div>
 
             <h3>🏆 QUIZ CHALLENGE</h3>
@@ -891,11 +894,7 @@
                 </div>
             </div>
 
-            <div class="explorer-badge">
-                <span class="badge-icon">🔍</span>
-                <div class="badge-text">Top Explorer</div>
-            </div>
-        </aside>
+            </aside>
     </div>
 
     <script>
@@ -910,44 +909,103 @@
             });
         });
 
-        // Simulate button click
-        document.querySelector('.ask-button').addEventListener('click', () => {
-            const input = document.querySelector('.buddy-input');
-            if(input.value.trim()) {
-                alert('🦜 Great question! Your jungle buddy is thinking... 🌿');
-                input.value = '';
-            } else {
-                alert('🌺 Please type your jungle adventure question first! 🐒');
+        // Theme Toggle Functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleButton = document.getElementById('themeToggleButton');
+            const userProfileDropdown = document.getElementById('userProfileDropdown');
+            const body = document.body;
+            const header = document.getElementById('mainHeader');
+            const sidebar = document.querySelector('.sidebar');
+            const buddySection = document.querySelector('.buddy-section');
+            const faqSection = document.querySelector('.faq-section');
+            const profileCard = document.querySelector('.profile-card');
+            const statCards = document.querySelectorAll('.stat-card');
+            const progressRing = document.querySelector('.progress-ring');
+            const buddyTitle = document.querySelector('.buddy-title');
+            const faqTitle = document.querySelector('.faq-title');
+            const sidebarH3 = document.querySelector('.sidebar h3');
+
+            const animatedElements = document.querySelectorAll('.jungle-bg, .jungle-animals, .butterfly, .jungle-decoration');
+
+            // Function to apply a theme
+            function applyTheme(themeName) {
+                // Remove all existing theme classes
+                body.className = '';
+                header.className = 'header';
+                sidebar.className = 'sidebar';
+                buddySection.className = 'buddy-section';
+                faqSection.className = 'faq-section';
+                profileCard.className = 'profile-card';
+                progressRing.className = 'progress-ring';
+                buddyTitle.className = 'buddy-title';
+                faqTitle.className = 'faq-title';
+                sidebarH3.className = ''; // Remove existing class from h3
+
+                statCards.forEach(card => card.className = 'stat-card');
+
+                // Add the new theme class
+                body.classList.add(`theme-${themeName}`);
+                header.classList.add(`theme-${themeName}`);
+                sidebar.classList.add(`theme-${themeName}`);
+                buddySection.classList.add(`theme-${themeName}`);
+                faqSection.classList.add(`theme-${themeName}`);
+                profileCard.classList.add(`theme-${themeName}`);
+                progressRing.classList.add(`theme-${themeName}`);
+                buddyTitle.classList.add(`theme-${themeName}`);
+                faqTitle.classList.add(`theme-${themeName}`);
+                sidebarH3.classList.add(`theme-${themeName}`);
+
+                statCards.forEach(card => card.classList.add(`theme-${themeName}`));
+
+                // Hide/show animated elements based on theme (only hide for non-jungle themes)
+                if (themeName !== 'jungle') {
+                    animatedElements.forEach(el => el.classList.add('hide-animated-elements'));
+                    body.classList.add('hide-animated-elements'); // Apply to body to affect fixed elements
+                } else {
+                    animatedElements.forEach(el => el.classList.remove('hide-animated-elements'));
+                    body.classList.remove('hide-animated-elements');
+                }
+
+                // Store theme preference
+                localStorage.setItem('selectedTheme', themeName);
             }
+
+            // Load saved theme or default to jungle
+            const savedTheme = localStorage.getItem('selectedTheme') || 'jungle';
+            applyTheme(savedTheme);
+
+            // Toggle theme dropdown
+            themeToggleButton.addEventListener('click', function(event) {
+                this.classList.toggle('active');
+                event.stopPropagation(); // Prevent click from closing immediately
+            });
+
+            // Handle theme selection
+            document.querySelectorAll('.theme-dropdown-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const theme = this.dataset.theme;
+                    applyTheme(theme);
+                    themeToggleButton.classList.remove('active'); // Close dropdown after selection
+                });
+            });
+
+            // Toggle user profile dropdown
+            userProfileDropdown.addEventListener('click', function(event) {
+                this.classList.toggle('active');
+                event.stopPropagation(); // Prevent click from closing immediately
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!themeToggleButton.contains(event.target)) {
+                    themeToggleButton.classList.remove('active');
+                }
+                if (!userProfileDropdown.contains(event.target)) {
+                    userProfileDropdown.classList.remove('active');
+                }
+            });
         });
 
-        // Add sparkle effect on coin hover
-        document.querySelector('.coins').addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.1)';
-            this.style.boxShadow = '0 8px 30px rgba(255,215,0,0.8)';
-        });
-
-        document.querySelector('.coins').addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-            this.style.boxShadow = '0 6px 20px rgba(255,215,0,0.4)';
-        });
-
-        // User Profile Dropdown Functionality
-        const userProfileDropdown = document.getElementById('userProfileDropdown');
-        const profileDropdownContent = userProfileDropdown.querySelector('.profile-dropdown-content');
-
-        // Toggle dropdown on click
-        userProfileDropdown.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent document click listener from closing it immediately
-            userProfileDropdown.classList.toggle('active');
-        });
-
-        // Close dropdown if clicked outside
-        document.addEventListener('click', (event) => {
-            if (!userProfileDropdown.contains(event.target)) {
-                userProfileDropdown.classList.remove('active');
-            }
-        });
 
         // Prevent dropdown from closing when clicking inside it
         profileDropdownContent.addEventListener('click', (event) => {
