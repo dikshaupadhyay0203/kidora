@@ -790,18 +790,17 @@
             </div>
             <div class="user-profile-dropdown" id="userProfileDropdown">
                 <div class="user-profile">
-                    🌟 Hi, Arpita
+                    🌟 Hi, {{ first_name }}
                 </div>
                 <div class="profile-dropdown-content">
                     <div class="profile-dropdown-item">
                         👤 My Profile
                     </div>
                     <div class="profile-dropdown-item">
-                        ✏️ Edit Profile
+                        <a href="{% url 'edit' %}" style="text-decoration:none; color:white">✏️ Edit Profile</a>
                     </div>
                     <div class="profile-dropdown-item">
-                        <a href="{% url 'logout' %}">🚪 Logout</a>
-                        
+                        <a href="{% url 'logout' %}" style="text-decoration:none; color:white">🚪 Logout</a> 
                     </div>
                 </div>
             </div>
@@ -963,7 +962,9 @@
                     alert('Navigating to My Profile!');
                     // In a real application, you'd navigate to a new page or show a modal
                 } else if (action === '✏️ Edit Profile') {
+
                     alert('Opening Edit Profile options!');
+
                 } else if (action === '🚪 Logout') {
                     alert('Logging out...');
                 }
