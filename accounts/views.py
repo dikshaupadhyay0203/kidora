@@ -6,7 +6,7 @@ def home_view(request):
     return render(request, 'accounts/home.html')
 
 
-#==============Register==========
+# ==============Register==========
 def register(request):
 
 
