@@ -1,0 +1,1096 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kidora - Jungle Adventure</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Nunito:wght@400;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            transition: background-image 0.5s ease-in-out, background-color 0.5s ease-in-out;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            /* Default Jungle Theme Background */
+            background-image: url('URL_TO_YOUR_JUNGLE_BACKGROUND_IMAGE'); /* Replace with your jungle background image URL */
+            background-color: #2d5016; /* Fallback for jungle theme */
+        }
+
+        /* Animated jungle background elements */
+        .jungle-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            opacity: 1; /* Default visible */
+            transition: opacity 0.5s ease-in-out; /* Smooth fade */
+            pointer-events: auto; /* Allow interaction if any, or auto for normal */
+        }
+
+        .leaf, .vine, .flower {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .leaf1 { top: 10%; left: 5%; font-size: 60px; animation-delay: 0s; }
+        .leaf2 { top: 20%; right: 10%; font-size: 45px; animation-delay: 2s; }
+        .leaf3 { bottom: 30%; left: 8%; font-size: 50px; animation-delay: 4s; }
+        .leaf4 { top: 50%; left: 3%; font-size: 55px; animation-delay: 1s; }
+        .leaf5 { bottom: 15%; right: 12%; font-size: 40px; animation-delay: 3s; }
+        .vine1 { top: 0; right: 20%; font-size: 80px; animation-delay: 1s; }
+        .vine2 { top: 0; left: 30%; font-size: 70px; animation-delay: 5s; }
+        .flower1 { top: 40%; left: 2%; font-size: 40px; animation-delay: 3s; }
+        .flower2 { bottom: 20%; right: 5%; font-size: 35px; animation-delay: 5s; }
+        .flower3 { top: 65%; right: 3%; font-size: 38px; animation-delay: 2s; }
+        .flower4 { bottom: 45%; left: 5%; font-size: 42px; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: linear-gradient(45deg, #32CD32 0%, #228B22 50%, #FFD700 100%); /* Default Jungle Header */
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 20px;
+            transition: background 0.5s ease-in-out;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(45deg, #32CD32, #228B22);
+            width: 60px;
+            height: 60px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .logo-text {
+            font-family: 'Fredoka One', cursive;
+            font-size: 36px;
+            color: #2d5016;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .coins {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 24px;
+            color: #2d5016;
+            box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* User Profile with Dropdown */
+        .user-profile-dropdown {
+            position: relative;
+        }
+
+        .user-profile {
+            background: linear-gradient(45deg, #32CD32, #228B22);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(50,205,50,0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-profile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(50,205,50,0.6);
+        }
+
+        .profile-dropdown-content {
+            display: none;
+            position: absolute;
+            background: linear-gradient(135deg, #6A4C93 0%, #9A4993 100%);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 101; /* Higher than theme dropdown */
+            min-width: 180px;
+            right: 0; /* Align to the right of the profile button */
+            top: calc(100% + 10px); /* Position below the button */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+            padding: 10px 0;
+        }
+
+        .user-profile-dropdown:hover .profile-dropdown-content,
+        .user-profile-dropdown.active .profile-dropdown-content { /* Added active class for click behavior */
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .profile-dropdown-item {
+            color: white;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-dropdown-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+
+        /* Theme Selector Button */
+        .theme-selector-btn {
+            background: linear-gradient(45deg, #A020F0, #8A2BE2); /* Purple-ish */
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+            position: relative; /* For dropdown */
+        }
+
+        .theme-selector-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(160, 32, 240, 0.6);
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%; /* Position below the button */
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 100;
+            min-width: 150px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+            padding: 10px 0;
+        }
+
+        .theme-selector-btn.active .theme-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-dropdown-item {
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .theme-dropdown-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+
+        /* Main container */
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr 350px;
+            gap: 30px;
+            padding: 0 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: linear-gradient(135deg, #2d5016 0%, #3a6b2f 100%);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border: 3px solid #FFD700;
+            transition: background 0.5s ease-in-out, border-color 0.5s ease-in-out;
+        }
+
+        .sidebar h3 {
+            color: #FFD700;
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.5s ease-in-out;
+        }
+
+        .menu-item {
+            background: linear-gradient(45deg, #32CD32, #228B22);
+            color: white;
+            padding: 18px 25px;
+            margin: 15px 0;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 6px 20px rgba(50,205,50,0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-item:hover {
+            transform: translateX(10px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(50,205,50,0.5);
+        }
+
+        .menu-item.active {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #2d5016;
+            box-shadow: 0 8px 25px rgba(255,215,0,0.4);
+        }
+
+        /* Main content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(50,205,50,0.3);
+            border: 2px solid #FFD700;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(50,205,50,0.4);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .stat-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .buddy-section {
+            background: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
+            border-radius: 25px;
+            padding: 30px;
+            color: white;
+            box-shadow: 0 15px 35px rgba(50,205,50,0.3);
+            border: 3px solid #FFD700;
+            text-align: center;
+            transition: background 0.5s ease-in-out, border-color 0.5s ease-in-out;
+        }
+
+        .buddy-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: block;
+            animation: wiggle 2s infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 7% { transform: rotateZ(0); }
+            15% { transform: rotateZ(-15deg); }
+            20% { transform: rotateZ(10deg); }
+            25% { transform: rotateZ(-10deg); }
+            30% { transform: rotateZ(6deg); }
+            35% { transform: rotateZ(-4deg); }
+            40%, 100% { transform: rotateZ(0); }
+        }
+
+        .buddy-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transition: color 0.5s ease-in-out;
+        }
+
+        .buddy-input {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 15px;
+            padding: 15px 20px;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .buddy-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .ask-button {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #2d5016;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+        }
+
+        .ask-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,215,0,0.6);
+        }
+
+        .faq-section {
+            background: linear-gradient(135deg, #6A4C93 0%, #9A4993 100%);
+            border-radius: 25px;
+            padding: 30px;
+            color: white;
+            box-shadow: 0 15px 35px rgba(106,76,147,0.3);
+            border: 3px solid #FFD700;
+            transition: background 0.5s ease-in-out, border-color 0.5s ease-in-out;
+        }
+
+        .faq-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #FFD700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: color 0.5s ease-in-out;
+        }
+
+        /* Right sidebar */
+        .right-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(50,205,50,0.3);
+            border: 2px solid #FFD700;
+            transition: background 0.5s ease-in-out, border-color 0.5s ease-in-out;
+        }
+
+        .progress-ring {
+            width: 80px;
+            height: 80px;
+            border: 6px solid rgba(255,255,255,0.3);
+            border-top: 6px solid #FFD700;
+            border-radius: 50%;
+            margin: 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            animation: spin 2s linear infinite;
+            position: relative;
+            transition: border-top-color 0.5s ease-in-out;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(36deg); }
+        }
+
+        .explorer-badge {
+            background: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(50,205,50,0.3);
+            border: 3px solid #FFD700;
+            transition: background 0.5s ease-in-out, border-color 0.5s ease-in-out;
+        }
+
+        .badge-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .badge-text {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 250px 1fr 300px;
+                gap: 20px;
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .right-sidebar {
+                order: -1;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Fun jungle animals floating around */
+        .jungle-animals {
+            position: fixed;
+            font-size: 35px;
+            z-index: 1;
+            animation: floatAround 8s infinite ease-in-out;
+            pointer-events: none;
+            opacity: 1; /* Default visible */
+            transition: opacity 0.5s ease-in-out; /* Smooth fade */
+        }
+
+        .animal1 { top: 15%; left: 15%; animation-delay: 0s; }
+        .animal2 { top: 60%; right: 15%; animation-delay: 2s; }
+        .animal3 { bottom: 25%; left: 25%; animation-delay: 4s; }
+        .animal4 { top: 35%; right: 30%; animation-delay: 1s; }
+        .animal5 { bottom: 40%; right: 20%; animation-delay: 3s; }
+        .animal6 { top: 70%; left: 40%; animation-delay: 5s; }
+        .animal7 { top: 25%; left: 60%; animation-delay: 6s; }
+        .animal8 { bottom: 60%; left: 70%; animation-delay: 7s; }
+
+        .butterfly {
+            position: fixed;
+            font-size: 25px;
+            z-index: 2;
+            animation: butterflyFly 6s infinite ease-in-out;
+            pointer-events: none;
+            opacity: 1; /* Default visible */
+            transition: opacity 0.5s ease-in-out; /* Smooth fade */
+        }
+
+        .butterfly1 { top: 20%; left: 80%; animation-delay: 0s; }
+        .butterfly2 { top: 50%; left: 10%; animation-delay: 1.5s; }
+        .butterfly3 { bottom: 30%; right: 40%; animation-delay: 3s; }
+        .butterfly4 { top: 40%; right: 70%; animation-delay: 4.5s; }
+        .butterfly5 { bottom: 50%; left: 50%; animation-delay: 2s; }
+        .butterfly6 { top: 80%; right: 30%; animation-delay: 5.5s; }
+
+        @keyframes floatAround {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -20px) rotate(8deg); }
+            50% { transform: translate(-15px, -35px) rotate(-8deg); }
+            75% { transform: translate(25px, 15px) rotate(5deg); }
+        }
+
+        @keyframes butterflyFly {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            20% { transform: translate(-25px, -30px) rotate(-10deg) scale(1.2); }
+            40% { transform: translate(40px, -20px) rotate(15deg) scale(0.8); }
+            60% { transform: translate(-30px, 25px) rotate(-8deg) scale(1.1); }
+            80% { transform: translate(20px, -15px) rotate(12deg) scale(0.9); }
+        }
+
+        /* Additional jungle decorations */
+        .jungle-decoration {
+            position: fixed;
+            font-size: 50px;
+            z-index: 0;
+            animation: gentleFloat 4s infinite ease-in-out;
+            pointer-events: none;
+            opacity: 0.3; /* Default visible with opacity */
+            transition: opacity 0.5s ease-in-out; /* Smooth fade */
+        }
+
+        .deco1 { top: 10%; right: 5%; animation-delay: 0s; }
+        .deco2 { bottom: 20%; left: 10%; animation-delay: 1s; }
+        .deco3 { top: 60%; right: 8%; animation-delay: 2s; }
+        .deco4 { bottom: 10%; right: 25%; animation-delay: 3s; }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Theme-specific styles with background images */
+        body.theme-jungle {
+            background-image: url("{% static 'images/jungle.jpg' %}"); /* Replace with your jungle background image URL */
+            background-color: #2d5016; /* Fallback */
+        }
+        .header.theme-jungle {
+            background: linear-gradient(45deg, #32CD32 0%, #228B22 50%, #FFD700 100%);
+        }
+        .sidebar.theme-jungle {
+            background: linear-gradient(135deg, #2d5016 0%, #3a6b2f 100%);
+            border-color: #FFD700;
+        }
+        .sidebar.theme-jungle h3, .buddy-title.theme-jungle, .faq-title.theme-jungle {
+            color: #FFD700;
+        }
+        .stat-card.theme-jungle, .buddy-section.theme-jungle, .faq-section.theme-jungle, .profile-card.theme-jungle, .explorer-badge.theme-jungle {
+            background: linear-gradient(135deg, #32CD32 0%, #228B22 100%);
+            border-color: #FFD700;
+        }
+        .progress-ring.theme-jungle {
+            border-top-color: #FFD700;
+        }
+
+        body.theme-anime {
+            background-image: url("{% static 'images/anime.png' %}"); /* Replace with your anime background image URL */
+            background-color: #1A202C; /* Fallback color */
+        }
+        .header.theme-anime {
+            background: linear-gradient(45deg, #FF6B6B, #EE4D29);
+        }
+        .sidebar.theme-anime {
+            background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);
+            border-color: #EE4D29;
+        }
+        .sidebar.theme-anime h3, .buddy-title.theme-anime, .faq-title.theme-anime {
+            color: #FFD700;
+        }
+        .stat-card.theme-anime, .buddy-section.theme-anime, .faq-section.theme-anime, .profile-card.theme-anime, .explorer-badge.theme-anime {
+            background: linear-gradient(135deg, #3E6CBB 0%, #5B8EDC 100%);
+            border-color: #EE4D29;
+        }
+        .progress-ring.theme-anime {
+            border-top-color: #EE4D29;
+        }
+
+        body.theme-marvel {
+            background-image: url("{% static 'images/marvels.jpg' %}"); /* Replace with your Marvel background image URL */
+            background-color: #8B0000; /* Fallback color */
+        }
+        .header.theme-marvel {
+            background: linear-gradient(45deg, #B22222, #CD5C5C);
+        }
+        .sidebar.theme-marvel {
+            background: linear-gradient(135deg, #CD5C5C 0%, #B22222 100%);
+            border-color: #FFD700;
+        }
+        .sidebar.theme-marvel h3, .buddy-title.theme-marvel, .faq-title.theme-marvel {
+            color: #FFD700;
+        }
+        .stat-card.theme-marvel, .buddy-section.theme-marvel, .faq-section.theme-marvel, .profile-card.theme-marvel, .explorer-badge.theme-marvel {
+            background: linear-gradient(135deg, #343A40 0%, #495057 100%);
+            border-color: #FFD700;
+        }
+        .progress-ring.theme-marvel {
+            border-top-color: #FFD700;
+        }
+
+        body.theme-disney {
+            background-image: url("{% static 'images/disney.png' %}"); /* Replace with your Disney background image URL */
+            background-color: #4A90E2; /* Fallback color */
+        }
+        .header.theme-disney {
+            background: linear-gradient(45deg, #FFC0CB, #DA70D6);
+        }
+        .sidebar.theme-disney {
+            background: linear-gradient(135deg, #DA70D6 0%, #FFC0CB 100%);
+            border-color: #FFD700;
+        }
+        .sidebar.theme-disney h3, .buddy-title.theme-disney, .faq-title.theme-disney {
+            color: #FFD700;
+        }
+        .stat-card.theme-disney, .buddy-section.theme-disney, .faq-section.theme-disney, .profile-card.theme-disney, .explorer-badge.theme-disney {
+            background: linear-gradient(135deg, #FFE4E1 0%, #F5F5DC 100%);
+            border-color: #FFD700;
+            color: #333; /* Adjust text color for light backgrounds */
+        }
+        .progress-ring.theme-disney {
+            border-top-color: #FFD700;
+        }
+
+        body.theme-doraemon {
+            background-image: url("{% static 'images/doraemon.png' %}"); /* Replace with your Doraemon background image URL */
+            background-color: #00BFFF; Fallback color
+        }
+        .header.theme-doraemon {
+            background: linear-gradient(45deg, #FF6347, #FF4500);
+        }
+        .sidebar.theme-doraemon {
+            background: linear-gradient(135deg, #1E90FF 0%, #00BFFF 100%);
+            border-color: #FF6347;
+        }
+        .sidebar.theme-doraemon h3, .buddy-title.theme-doraemon, .faq-title.theme-doraemon {
+            color: #FF6347;
+        }
+        .stat-card.theme-doraemon, .buddy-section.theme-doraemon, .faq-section.theme-doraemon, .profile-card.theme-doraemon, .explorer-badge.theme-doraemon {
+            background: linear-gradient(135deg, #FF6347 0%, #FF4500 100%);
+            border-color: #FFD700;
+        }
+        .progress-ring.theme-doraemon {
+            border-top-color: #FFD700;
+        }
+
+        /* Hide specific elements based on theme using opacity and pointer-events */
+        .hide-animated-elements .jungle-bg,
+        .hide-animated-elements .jungle-animals,
+        .hide-animated-elements .butterfly,
+        .hide-animated-elements .jungle-decoration {
+            opacity: 0;
+            pointer-events: none; /* Prevents interaction and makes them non-clickable */
+        }
+    </style>
+</head>
+<body>
+    <div class="jungle-bg">
+        <div class="leaf leaf1">🍃</div>
+        <div class="leaf leaf2">🌿</div>
+        <div class="leaf leaf3">🍀</div>
+        <div class="leaf leaf4">🌱</div>
+        <div class="leaf leaf5">🌾</div>
+        <div class="vine vine1">🌱</div>
+        <div class="vine vine2">🎋</div>
+        <div class="flower flower1">🌺</div>
+        <div class="flower flower2">🌸</div>
+        <div class="flower flower3">🌼</div>
+        <div class="flower flower4">🌻</div>
+    </div>
+
+    <div class="jungle-animals animal1">🐒</div>
+    <div class="jungle-animals animal2">🦜</div>
+    <div class="jungle-animals animal3">🐅</div>
+    <div class="jungle-animals animal4">🦎</div>
+    <div class="jungle-animals animal5">🐍</div>
+    <div class="jungle-animals animal6">🦥</div>
+    <div class="jungle-animals animal7">🐆</div>
+    <div class="jungle-animals animal8">🦓</div>
+
+    <div class="butterfly butterfly1">🦋</div>
+    <div class="butterfly butterfly2">🦋</div>
+    <div class="butterfly butterfly3">🦋</div>
+    <div class="butterfly butterfly4">🦋</div>
+    <div class="butterfly butterfly5">🦋</div>
+    <div class="butterfly butterfly6">🦋</div>
+
+    <div class="jungle-decoration deco1">🌴</div>
+    <div class="jungle-decoration deco2">🌺</div>
+    <div class="jungle-decoration deco3">🥥</div>
+    <div class="jungle-decoration deco4">🌿</div>
+
+    <header class="header" id="mainHeader">
+        <div class="logo">
+            <div class="logo-icon">K</div>
+            <div class="logo-text">KIDORA</div>
+        </div>
+        <div class="header-right">
+            <div class="coins">
+                🪙 237
+            </div>
+            <div class="user-profile-dropdown" id="userProfileDropdown">
+                <div class="user-profile">
+                    🌟 Hi, Arpita
+                </div>
+                <div class="profile-dropdown-content">
+                    <div class="profile-dropdown-item">
+                        👤 My Profile
+                    </div>
+                    <div class="profile-dropdown-item">
+                        ✏️ Edit Profile
+                    </div>
+                    <div class="profile-dropdown-item">
+                        <a href="{% url 'logout' %}">🚪 Logout</a>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="theme-selector-btn" id="themeToggleButton">
+                🎨 Theme
+                <div class="theme-dropdown">
+                    <div class="theme-dropdown-item" data-theme="jungle">Jungle 🌴</div>
+                    <div class="theme-dropdown-item" data-theme="anime">Anime 🍥</div>
+                    <div class="theme-dropdown-item" data-theme="marvel">Marvel 💥</div>
+                    <div class="theme-dropdown-item" data-theme="disney">Disney ✨</div>
+                    <div class="theme-dropdown-item" data-theme="doraemon">Doraemon 🤖</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>🌴 MY JUNGLE</h3>
+            <div class="menu-item active">
+                🌞 Explore Today
+            </div>
+            <div class="menu-item">
+                ❤️ My Favourite
+            </div>
+
+            <h3>🎓 LEARNING</h3>
+            <div class="menu-item">
+                🌳 Topic Forest
+            </div>
+            <div class="menu-item">
+                🕳️ Story Caves
+            </div>
+
+            <h3>🏆 QUIZ CHALLENGE</h3>
+            <div class="menu-item">
+                💪 Strength Your Learning
+            </div>
+
+            <h3>📊 PROGRESS</h3>
+            <div class="menu-item">
+                🏅 Progress Level
+            </div>
+
+            <h3>🆘 HELP DESK</h3>
+            <div class="menu-item">
+                💬 Feedback
+            </div>
+            <div class="menu-item">
+                👤 My Profile
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-icon">🏆</span>
+                    <div class="stat-number">55</div>
+                    <div class="stat-label">Jungle Quests Completed</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🍀</span>
+                    <div class="stat-number">10%</div>
+                    <div class="stat-label">Adventure Progress</div>
+                </div>
+            </div>
+
+            <div class="buddy-section">
+                <span class="buddy-icon">🦜</span>
+                <h2 class="buddy-title">Ask Your Buddy</h2>
+                <input type="text" class="buddy-input" placeholder="What's on your jungle mind? 🌿">
+                <button class="ask-button">Ask Now</button>
+            </div>
+
+            <div class="faq-section">
+                <h2 class="faq-title">
+                    🌴 Jungle FAQs
+                </h2>
+                <p>Discover amazing jungle secrets and learning tips! 🐒🌺</p>
+            </div>
+        </main>
+
+        <aside class="right-sidebar">
+            <div class="profile-card">
+                <h3>🌟 Profile Progress</h3>
+                <div class="progress-ring">
+                    10%
+                </div>
+            </div>
+
+            <div class="explorer-badge">
+                <span class="badge-icon">🔍</span>
+                <div class="badge-text">Top Explorer</div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Add some interactive hover effects
+        document.querySelectorAll('.menu-item, .stat-card, .ask-button').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = item.classList.contains('stat-card') ? 'translateY(-5px) scale(1.02)' : 'translateX(10px) scale(1.05)';
+            });
+
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateX(0) translateY(0) scale(1)';
+            });
+        });
+
+        // Simulate button click
+        document.querySelector('.ask-button').addEventListener('click', () => {
+            const input = document.querySelector('.buddy-input');
+            if(input.value.trim()) {
+                alert('🦜 Great question! Your jungle buddy is thinking... 🌿');
+                input.value = '';
+            } else {
+                alert('🌺 Please type your jungle adventure question first! 🐒');
+            }
+        });
+
+        // Add sparkle effect on coin hover
+        document.querySelector('.coins').addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1)';
+            this.style.boxShadow = '0 8px 30px rgba(255,215,0,0.8)';
+        });
+
+        document.querySelector('.coins').addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = '0 6px 20px rgba(255,215,0,0.4)';
+        });
+
+        // User Profile Dropdown Functionality
+        const userProfileDropdown = document.getElementById('userProfileDropdown');
+        const profileDropdownContent = userProfileDropdown.querySelector('.profile-dropdown-content');
+
+        // Toggle dropdown on click
+        userProfileDropdown.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent document click listener from closing it immediately
+            userProfileDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', (event) => {
+            if (!userProfileDropdown.contains(event.target)) {
+                userProfileDropdown.classList.remove('active');
+            }
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        profileDropdownContent.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+
+        // Handle clicks on dropdown items (e.g., for navigation)
+        profileDropdownContent.querySelectorAll('.profile-dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const action = item.textContent.trim(); // Get the text content for action
+                if (action === '👤 My Profile') {
+                    alert('Navigating to My Profile!');
+                    // In a real application, you'd navigate to a new page or show a modal
+                } else if (action === '✏️ Edit Profile') {
+                    alert('Opening Edit Profile options!');
+                } else if (action === '🚪 Logout') {
+                    alert('Logging out...');
+                }
+                userProfileDropdown.classList.remove('active'); // Close dropdown after selection
+            });
+        });
+
+
+        // Theme Toggle Functionality
+        const themeToggleButton = document.getElementById('themeToggleButton');
+        const themeDropdown = themeToggleButton.querySelector('.theme-dropdown');
+        const themeDropdownItems = themeDropdown.querySelectorAll('.theme-dropdown-item');
+        const body = document.body;
+        const mainHeader = document.getElementById('mainHeader');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarH3s = sidebar.querySelectorAll('h3');
+        const buddySection = document.querySelector('.buddy-section');
+        const buddyTitle = buddySection.querySelector('.buddy-title');
+        const faqSection = document.querySelector('.faq-section');
+        const faqTitle = faqSection.querySelector('.faq-title');
+        const profileCard = document.querySelector('.profile-card');
+        const progressRing = document.querySelector('.progress-ring');
+        const explorerBadge = document.querySelector('.explorer-badge');
+        const statCards = document.querySelectorAll('.stat-card');
+
+        // Get references to all animated background elements
+        const animatedElements = document.querySelectorAll('.jungle-bg, .jungle-animals, .butterfly, .jungle-decoration');
+
+        // Define background images for each theme
+        const themeBackgrounds = {
+            jungle: {
+                image: '{% static 'images/jungle.jpg' %}', // Replace with actual URL
+                color: '#2d5016'
+            },
+            anime: {
+                image: '{% static 'images/anime.png' %}', // Replace with actual URL
+                color: '#1A202C'
+            },
+            marvel: {
+                image: '{% static 'images/marvels.jpg' %}', // Replace with actual URL
+                color: '#8B0000'
+            },
+            disney: {
+                image: '{% static 'images/disney.png' %}', // Replace with actual URL
+                color: '#4A90E2'
+            },
+            doraemon: {
+                image: '{% static 'images/doraemon.png' %}', // Replace with actual URL
+                color: '#00BFFF'
+            }
+        };
+
+        themeToggleButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            themeToggleButton.classList.toggle('active');
+        });
+
+        themeDropdownItems.forEach(item => {
+            item.addEventListener('click', function(event) {
+                event.stopPropagation();
+                const selectedTheme = this.dataset.theme;
+                applyTheme(selectedTheme);
+                themeToggleButton.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!themeToggleButton.contains(event.target)) {
+                themeToggleButton.classList.remove('active');
+            }
+        });
+
+        function applyTheme(theme) {
+            // Remove existing theme classes
+            body.className = '';
+            mainHeader.className = 'header';
+            sidebar.className = 'sidebar';
+            buddySection.className = 'buddy-section';
+            buddyTitle.className = 'buddy-title';
+            faqSection.className = 'faq-section';
+            faqTitle.className = 'faq-title';
+            profileCard.className = 'profile-card';
+            progressRing.className = 'progress-ring';
+            explorerBadge.className = 'explorer-badge';
+            statCards.forEach(card => card.className = 'stat-card');
+            sidebarH3s.forEach(h3 => {
+                h3.className = '';
+            });
+
+            // Apply the new theme class
+            body.classList.add(`theme-${theme}`);
+            mainHeader.classList.add(`theme-${theme}`);
+            sidebar.classList.add(`theme-${theme}`);
+            buddySection.classList.add(`theme-${theme}`);
+            buddyTitle.classList.add(`theme-${theme}`);
+            faqSection.classList.add(`theme-${theme}`);
+            faqTitle.classList.add(`theme-${theme}`);
+            profileCard.classList.add(`theme-${theme}`);
+            progressRing.classList.add(`theme-${theme}`);
+            explorerBadge.classList.add(`theme-${theme}`);
+            statCards.forEach(card => card.classList.add(`theme-${theme}`));
+            sidebarH3s.forEach(h3 => {
+                h3.classList.add(`theme-${theme}`);
+            });
+
+            // Apply background image and color
+            const themeProps = themeBackgrounds[theme];
+            if (themeProps) {
+                body.style.backgroundImage = `url('${themeProps.image}')`;
+                body.style.backgroundColor = themeProps.color;
+            } else {
+                // Fallback for themes without explicit image/color config
+                body.style.backgroundImage = 'none';
+                body.style.backgroundColor = ''; // Revert to default or a general fallback
+            }
+
+            // Show/hide animated jungle elements
+            if (theme !== 'jungle') {
+                body.classList.add('hide-animated-elements');
+            } else {
+                body.classList.remove('hide-animated-elements');
+            }
+        }
+
+        // Apply default theme on load (optional, set to 'jungle' or your preferred starting theme)
+        applyTheme('jungle');
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - Kidora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-image: url({% static 'images/cloud.png' %}); /* Jungle background */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .register-container {
+      background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+      max-width: 500px;
+      margin: 5rem auto;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      color: #2e2e2e;
+    }
+
+    .register-container h2 {
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+
+    .register-container label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+      font-weight: 600;
+    }
+
+    .register-container input {
+      width: 100%;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .register-container button {
+      background-color: #00c9a7;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease;
+    }
+
+    .register-container button:hover {
+      background-color: #00b59c;
+    }
+
+    .emoji-header {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .alert {
+  background-color: #ffdddd;
+  color: #a94442;
+  border: 1px solid #f5c6cb;
+  padding: 10px 15px;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="register-container">
+      
+      <div class="emoji-header">🌿 Welcome to Kidora! 🐾</div>
+      <h2>Register Now</h2>
+      {% if messages %}
+    {% for message in messages %}
+      <div class="alert">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+      <label for="fname">First Name</label>
+      <input type="text" id="fname" name="first_name" placeholder="Enter your first name" required>
+
+      <label for="lname">Last Name</label>
+      <input type="text" id="lname" name="last_name" placeholder="Enter your last name" required>
+
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="Choose a username" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Create a password" required>
+
+      <button type="submit">🎉 Register</button>
+    </form>
+  </div>
+
+</body>
+</html>
