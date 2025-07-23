@@ -713,7 +713,7 @@
 
         body.theme-doraemon {
             background-image: url("{% static 'images/doraemon.png' %}"); /* Replace with your Doraemon background image URL */
-            background-color: #00BFFF; Fallback color
+            background-color: #00BFFF; /*Fallback color*/
         }
         .header.theme-doraemon {
             background: linear-gradient(45deg, #FF6347, #FF4500);
@@ -995,23 +995,23 @@
         // Define background images for each theme
         const themeBackgrounds = {
             jungle: {
-                image: '{% static 'images/jungle.jpg' %}', // Replace with actual URL
+                image: "{% static 'images/jungle.jpg' %}", // Replace with actual URL
                 color: '#2d5016'
             },
             anime: {
-                image: '{% static 'images/anime.png' %}', // Replace with actual URL
+                image: "{% static 'images/anime.png' %}", // Replace with actual URL
                 color: '#1A202C'
             },
             marvel: {
-                image: '{% static 'images/marvels.jpg' %}', // Replace with actual URL
+                image: "{% static 'images/marvels.jpg' %}", // Replace with actual URL
                 color: '#8B0000'
             },
             disney: {
-                image: '{% static 'images/disney.png' %}', // Replace with actual URL
+                image: "{% static 'images/disney.png' %}", // Replace with actual URL
                 color: '#4A90E2'
             },
             doraemon: {
-                image: '{% static 'images/doraemon.png' %}', // Replace with actual URL
+                image: "{% static 'images/doraemon.png' %}", // Replace with actual URL
                 color: '#00BFFF'
             }
         };
