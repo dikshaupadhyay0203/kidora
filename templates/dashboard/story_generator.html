@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Kidora - Jungle Adventure</title>
+    <title>Kidora - Story Generator</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fredoka+One:wght@400&display=swap');
 
@@ -100,94 +100,11 @@
             --background-image: url("{% static 'images/spider.jpg' %}"); /* Marvel background image */
         }
 
-        .container {
+        .container-fluid {
             display: flex;
             min-height: 100vh;
-            /* Removed primary-bg here as body handles the full background */
             position: relative;
         }
-
-        .container::before {
-            /* This pseudo-element was for a subtle pattern overlay.
-               If you just want the image, you can remove or comment this out.
-               If you want a subtle overlay *on top* of your image, adjust opacity. */
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            /* Removed fixed pattern, now the image handles background */
-            /* background-image: url('data:image/svg+xml,...'); */
-            opacity: 0; /* Set to 0 if you don't want any overlay */
-            z-index: -1;
-        }
-
-        /* Animated Background Elements */
-        .jungle-animals {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .butterfly, .bird, .monkey {
-            position: absolute;
-            font-size: 20px;
-            opacity: 0.4;
-            animation-duration: 8s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-        }
-
-        .butterfly {
-            animation-name: flutter;
-        }
-
-        .bird {
-            animation-name: fly;
-            font-size: 18px;
-        }
-
-        .monkey {
-            animation-name: swing;
-            font-size: 22px;
-        }
-
-        @keyframes flutter {
-            0%, 100% { transform: translateX(-50px) translateY(0px) rotate(0deg); }
-            25% { transform: translateX(150px) translateY(-30px) rotate(5deg); }
-            50% { transform: translateX(350px) translateY(20px) rotate(-3deg); }
-            75% { transform: translateX(200px) translateY(-20px) rotate(8deg); }
-        }
-
-        @keyframes fly {
-            0% { transform: translateX(-100px) translateY(0px); }
-            50% { transform: translateX(calc(100vw + 50px)) translateY(-50px); }
-            100% { transform: translateX(-100px) translateY(0px); }
-        }
-
-        @keyframes swing {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-40px) rotate(10deg); }
-        }
-
-        .butterfly:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
-        .butterfly:nth-child(2) { top: 60%; left: 70%; animation-delay: 2s; }
-        .butterfly:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
-        .butterfly:nth-child(4) { top: 30%; left: 80%; animation-delay: 6s; }
-
-        .bird:nth-child(5) { top: 25%; left: -50px; animation-delay: 1s; }
-        .bird:nth-child(6) { top: 45%; left: -50px; animation-delay: 5s; }
-        .bird:nth-child(7) { top: 70%; left: -50px; animation-delay: 8s; }
-
-        .monkey:nth-child(8) { top: 20%; right: 15%; animation-delay: 0s; }
-        .monkey:nth-child(9) { top: 50%; right: 25%; animation-delay: 3s; }
-        .monkey:nth-child(10) { top: 75%; right: 5%; animation-delay: 6s; }
 
         /* Header */
         .header {
@@ -356,7 +273,6 @@
 
         .nav-section {
             margin-bottom: 25px;
-            text-decoration: none;
         }
 
         .nav-title {
@@ -367,7 +283,6 @@
             text-transform: uppercase;
             letter-spacing: 1.2px;
             font-family: 'Fredoka One', cursive;
-            text-decoration: none;
         }
 
         .nav-item {
@@ -384,7 +299,6 @@
             font-weight: 600;
             font-size: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-decoration: none;
         }
 
         .nav-item:hover {
@@ -399,7 +313,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
         }
 
         /* Main Content */
@@ -408,13 +321,9 @@
             margin-left: 280px;
             margin-top: 70px;
             padding: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            align-content: start;
+            color: var(--text-color);
         }
 
-        /* Cards */
         .card {
             background: var(--card-bg);
             border-radius: 20px;
@@ -422,161 +331,57 @@
             color: var(--text-color);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
 
         .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
+            background: none;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .card-title {
-            font-size: 20px;
-            font-weight: 700;
+        .card-header h3 {
             font-family: 'Fredoka One', cursive;
-        }
-
-        .progress-ring {
-            width: 80px;
-            height: 80px;
-            margin: 20px auto;
-            position: relative;
-        }
-
-        .progress-circle {
-            fill: none;
-            stroke: rgba(255,255,255,0.3);
-            stroke-width: 8;
-        }
-
-        .progress-fill {
-            fill: none;
-            stroke: var(--accent-color);
-            stroke-width: 8;
-            stroke-linecap: round;
-            transition: stroke-dasharray 0.5s ease;
-        }
-
-        .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 18px;
-            font-weight: 700;
-            font-family: 'Fredoka One', cursive;
-        }
-
-        .stats-number {
-            font-size: 42px;
-            font-weight: 700;
             color: var(--accent-color);
-            text-align: center;
-            margin: 15px 0;
-            font-family: 'Fredoka One', cursive;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
-        .stats-label {
-            text-align: center;
-            opacity: 0.9;
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .ask-buddy {
-            grid-column: 1 / -1;
-            padding: 40px;
-            text-align: center;
-            background: var(--card-bg);
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 2px solid var(--accent-color);
-        }
-
-        .buddy-input {
-            width: 100%;
-            max-width: 600px;
-            padding: 20px 25px;
-            border: none;
-            border-radius: 30px;
-            background: rgba(255,255,255,0.2);
+        .form-control {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
             color: var(--text-color);
-            font-size: 18px;
-            margin: 25px 0;
-            backdrop-filter: blur(10px);
-            font-weight: 600;
-            box-shadow: inset 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            padding: 15px;
         }
 
-        .buddy-input::placeholder {
+        .form-control::placeholder {
             color: rgba(255,255,255,0.7);
         }
 
-        .ask-button {
+        .btn-primary {
             background: var(--accent-color);
+            border-color: var(--accent-color);
             color: #333;
-            border: none;
-            padding: 18px 40px;
-            border-radius: 35px;
-            font-size: 20px;
-            font-weight: 700;
-            cursor: pointer;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 25px;
             transition: all 0.3s ease;
-            font-family: 'Fredoka One', cursive;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .ask-button:hover {
-            transform: scale(1.15) translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
 
-        .fact-content {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
+        .carousel-item img {
             border-radius: 15px;
-            margin-top: 15px;
-            text-align: center;
         }
 
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .sidebar {
-                width: 250px;
-            }
-            .main-content {
-                margin-left: 250px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-            }
-            .main-content {
-                margin-left: 0;
-            }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: var(--accent-color);
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -612,28 +417,13 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="jungle-animals">
-            <div class="butterfly">🦋</div>
-            <div class="butterfly">🦋</div>
-            <div class="butterfly">🦋</div>
-            <div class="butterfly">🦋</div>
-
-            <div class="bird">🐦</div>
-            <div class="bird">🐦</div>
-            <div class="bird">🐦</div>
-
-            <div class="monkey">🐒</div>
-            <div class="monkey">🐒</div>
-            <div class="monkey">🐒</div>
-        </div>
-
+    <div class="container-fluid">
         <div class="sidebar">
             <div class="nav-section">
                 <div class="nav-title">🌳 My Jungle 🦋</div>
                 <div class="nav-item">
                     <div class="nav-icon">🌟</div>
-                    Explore Today! ✨
+                    <a href="javascript:void(0);" class="user-option">Explore Today! ✨</a>
                 </div>
                 <div class="nav-item">
                     <div class="nav-icon">❤️</div>
@@ -657,7 +447,7 @@
                 <div class="nav-title">🎯 Quiz Challenge 🏆</div>
                 <div class="nav-item">
                     <div class="nav-icon">💪</div>
-                    <a href="{% url 'quiz' %}" style : text-decoration: none;>Strengthen Learning 🧠</a>
+                    Strengthen Learning 🧠
                 </div>
             </div>
 
@@ -677,83 +467,79 @@
                 </div>
                 <div class="nav-item">
                     <div class="nav-icon">👤</div>
-                    <a href="{% url 'user_profile' %}" class="user-option">My Profile 🌟</a>
+                    My Profile 🌟
                 </div>
             </div>
         </div>
 
         <div class="main-content">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-            <div class="card ask-buddy">
-                <div class="card-header" style="justify-content: center; margin-bottom: 25px;">
-                    <div class="card-icon" style="width: 60px; height: 60px; font-size: 30px;">🦜</div>
-                    <div class="card-title" style="font-size: 28px;">Ask Your Buddy 💬</div>
-                </div>
-                <p style="font-size: 18px; margin-bottom: 20px; opacity: 0.9; font-weight: 600;">Your friendly jungle companion is here to help! 🌿✨</p>
-                <input type="text" class="buddy-input" placeholder="What's on your jungle mind? 🌿💭">
-                <br>
-                <button class="ask-button">Ask Now! 🚀</button>
-            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header">
+                            <h3 class="text-center">Create Your Story</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-center">Tell me what you want to see in a story, and I'll bring it to life with pictures!</p>
+                            <form action="{% url 'story_generate' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <textarea class="form-control" id="user_input" name="user_input" rows="4" placeholder="e.g., A curious cat exploring a magical forest at night..."></textarea>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button type="submit" class="btn btn-primary">Generate Story</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🎮</div>
-                    <div class="card-title">Jungle Quests 🗺️</div>
-                </div>
-                <div class="stats-number">55</div>
-                <div class="stats-label">Jungle Quests Completed! 🎉</div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">⚡</div>
-                    <div class="card-title">Adventure Progress 🌟</div>
-                </div>
-                <div class="progress-ring">
-                    <svg width="80" height="80">
-                        <circle class="progress-circle" cx="40" cy="40" r="32"></circle>
-                        <circle class="progress-fill" cx="40" cy="40" r="32"
-                                stroke-dasharray="20 200"
-                                stroke-dashoffset="0"
-                                transform="rotate(-90 40 40)"></circle>
-                    </svg>
-                    <div class="progress-text">10%</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">❓</div>
-                    <div class="card-title">FAQs 🤔</div>
-                </div>
-                <div class="fact-content">
-                    <p>Frequently Asked Questions 💭</p>
-                    <p style="margin-top: 10px; opacity: 0.8; font-size: 14px;">Get answers to common questions about your jungle adventure! 🌿✨</p>
+                    {% if user_input %}
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            <h3 class="text-center">Your Generated Story</h3>
+                             <p class="text-center">Based on your prompt: "<em>{{ user_input }}</em>"</p>
+                        </div>
+                        <div class="card-body">
+                            <div id="storyCarousel" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="{% static 'generated_images/1.png' %}" class="d-block w-100" alt="Story image 1">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{% static 'generated_images/2.png' %}" class="d-block w-100" alt="Story image 2">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{% static 'generated_images/3.png' %}" class="d-block w-100" alt="Story image 3">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{% static 'generated_images/4.png' %}" class="d-block w-100" alt="Story image 4">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{% static 'generated_images/5.png' %}" class="d-block w-100" alt="Story image 5">
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#storyCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#storyCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
         function toggleUserDropdown() {
             const dropdown = document.getElementById('userDropdown');
             dropdown.classList.toggle('show');
-        }
-
-        function editProfile() {
-            alert('✏️ Edit Profile clicked! 🌟');
-            toggleUserDropdown();
-        }
-
-        function logout() {
-            if(confirm('🚪 Are you sure you want to logout? 😊')) {
-                alert('👋 Goodbye Dikshaa! See you soon! 🌟');
-            }
-            toggleUserDropdown();
         }
 
         function toggleThemeDropdown() {
@@ -788,33 +574,13 @@
             const userInfo = document.querySelector('.user-info');
             const userDropdown = document.getElementById('userDropdown');
 
-            // Check if the click is outside the theme selector or its dropdown
-            if (!themeSelector.contains(event.target)) {
+            if (themeSelector && !themeSelector.contains(event.target)) {
                 themeDropdown.classList.remove('show');
             }
 
-            // Check if the click is outside the user info or its dropdown
-            if (!userInfo.contains(event.target)) {
+            if (userInfo && !userInfo.contains(event.target)) {
                 userDropdown.classList.remove('show');
             }
-        });
-
-        // Add hover effects to cards
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px) scale(1.02)';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-
-        // Initialize theme on load (optional, you might load from user settings)
-        document.addEventListener('DOMContentLoaded', () => {
-            // You can load the initial theme from a user setting or a cookie here
-            // For now, it defaults to 'jungle' from the body class
-            // changeTheme('jungle'); // Uncomment if you want to explicitly run this on load
         });
     </script>
 </body>
