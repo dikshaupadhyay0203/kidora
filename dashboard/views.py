@@ -42,6 +42,7 @@ def change_password(request):
      return render(request, 'dashboard/dashboard.html')
 
 @login_required
+
 def feedback_form(request):
      if request.method == "POST":
         feedback = Feedback(
@@ -61,6 +62,31 @@ def user_profile(request):
                 'email': request.user.email, 'username': request.user.username
                }
      return render(request, 'dashboard/user-profile.html',context)
+
+
+def story_generate(request):
+     if request.method == "GET":
+          context = {
+               'user_input': None
+          }
+          return render(request, 'dashboard/story_generator.html', context)
+
+     if request.method == "POST":
+          user_input = request.POST.get('user_input')
+          static_dir = os.path.join(settings.BASE_DIR, "static","generated_images")
+          if user_input:
+               main_generate(user_input, static_dir)
+               context = {
+                'user_input': user_input
+            }
+               return render(request, 'dashboard/story_generator.html', context)
+          else:
+               messages.error(request, "Please enter a valid input.")
+    
+     return render(request, 'dashboard/story_generator.html')
+
+def quiz(request):
+     return render(request,"dashboard/quiz.html")
 
 
 

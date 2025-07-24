@@ -1,0 +1,5 @@
+python-dotenv
+langchain
+langchain_google_genai
+together
+django
