@@ -42,6 +42,7 @@ def change_password(request):
      return render(request, 'dashboard/dashboard.html')
 
 @login_required
+
 def feedback_form(request):
      if request.method == "POST":
         feedback = Feedback(
@@ -77,6 +78,9 @@ def story_generate(request):
                messages.error(request, "Please enter a valid input.")
     
      return render(request, 'dashboard/story_generator.html')
+
+def quiz(request):
+     return render(request,"dashboard/quiz.html")
 
 
 
