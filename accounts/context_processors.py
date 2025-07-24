@@ -1,10 +1,11 @@
 from .models import UserProfile
 
-def coins_processor(request):
+def coins_context(request):
+    coins = 0
     if request.user.is_authenticated:
         try:
             profile = UserProfile.objects.get(user=request.user)
-            return {'coins': profile.coins}
+            coins = profile.coins
         except UserProfile.DoesNotExist:
-            return {'coins': 0}
-    return {'coins': 0}
+            pass
+    return {'coins': coins}
