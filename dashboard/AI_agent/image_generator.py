@@ -33,8 +33,8 @@ def generate_image(
     index: int,
     output_dir: str,
     steps: int = 2,
-    width: int = 512,
-    height: int = 384,
+    width: int = 1024,
+    height: int = 1024,
     timeout_seconds: int = 60,
     max_retries: int = 3,
 ) -> str:
