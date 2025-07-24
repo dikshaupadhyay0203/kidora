@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Kidora - Jungle Adventure{% endblock %}</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-bg: #d4edda;
+      --accent-color: #155724;
+      --sidebar-bg: #c3e6cb;
+      --card-bg: #ffffff;
+    }
+
+    .theme-doraemon {
+      --primary-bg: #d0e7f9;
+      --accent-color: #007bff;
+      --sidebar-bg: #a3d3f5;
+      --card-bg: #ffffff;
+    }
+
+    .theme-jungle {
+      --primary-bg: #e6f5e9;
+      --accent-color: #2e7d32;
+      --sidebar-bg: #c8e6c9;
+      --card-bg: #ffffff;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: var(--primary-bg);
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar {
+      background-color: var(--sidebar-bg);
+      padding: 1rem;
+      width: 200px;
+      min-height: 100vh;
+      float: left;
+    }
+
+    .content {
+      margin-left: 200px;
+      padding: 2rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .theme-switcher {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .emoji-bg {
+      position: fixed;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .butterfly {
+      font-size: 30px;
+      animation: float 10s infinite;
+      position: absolute;
+    }
+
+    .bird, .monkey {
+      position: absolute;
+      animation: fly 20s linear infinite;
+    }
+
+    .monkey {
+      animation-delay: 5s;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes fly {
+      0% { left: -100px; }
+      100% { left: 100vw; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+        position: absolute;
+        background-color: var(--sidebar-bg);
+        z-index: 10;
+        height: 100vh;
+        top: 0;
+        left: 0;
+      }
+
+      .content {
+        margin-left: 0;
+      }
+    }
+  </style>
+
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body class="theme-jungle">
+
+  <!-- Theme switcher -->
+  <div class="theme-switcher">
+    <select onchange="changeTheme(this.value)">
+      <option value="theme-jungle">🌿 Jungle</option>
+      <option value="theme-doraemon">🤖 Doraemon</option>
+    </select>
+  </div>
+
+  <!-- Header -->
+  <div class="navbar">
+    <h1>Kidora - Jungle Adventure</h1>
+    <div>
+      <span>Welcome, {{ first_name }}</span>
+      <a href="{% url 'logout' %}" style="color: white; text-decoration: none; margin-left: 20px;">Logout</a>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <ul>
+      <li><a href="{% url 'dashboard' %}">🏠 Dashboard</a></li>
+      <li><a href="{% url 'profile' %}">👤 Profile</a></li>
+      <li><a href="{% url 'jungle_game' %}">🌴 Jungle Game</a></li>
+      <li><a href="{% url 'quiz' %}">🧠 Quiz</a></li>
+      <li><a href="{% url 'rewards' %}">🎁 Rewards</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    {% block content %}
+    <!-- Page-specific content goes here -->
+    {% endblock %}
+  </div>
+
+  <!-- Animated Jungle Background -->
+  <div class="emoji-bg">
+    <div class="butterfly" style="top: 10%; left: 20%;">🦋</div>
+    <div class="butterfly" style="top: 30%; left: 50%;">🦋</div>
+    <div class="butterfly" style="top: 50%; left: 70%;">🦋</div>
+    <div class="bird" style="top: 20%;"><img src="{% static 'images/bird.png' %}" alt="bird" height="50"></div>
+    <div class="monkey" style="top: 60%;"><img src="{% static 'images/monkey.png' %}" alt="monkey" height="60"></div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function changeTheme(theme) {
+      document.body.className = theme;
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.style.display = (sidebar.style.display === "block") ? "none" : "block";
+    }
+
+    window.onload = function () {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) document.body.className = savedTheme;
+    };
+  </script>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

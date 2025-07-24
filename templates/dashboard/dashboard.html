@@ -356,6 +356,7 @@
 
         .nav-section {
             margin-bottom: 25px;
+            text-decoration: none;
         }
 
         .nav-title {
@@ -366,6 +367,7 @@
             text-transform: uppercase;
             letter-spacing: 1.2px;
             font-family: 'Fredoka One', cursive;
+            text-decoration: none;
         }
 
         .nav-item {
@@ -382,6 +384,7 @@
             font-weight: 600;
             font-size: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-decoration: none;
         }
 
         .nav-item:hover {
@@ -396,6 +399,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
         }
 
         /* Main Content */
@@ -653,7 +657,7 @@
                 <div class="nav-title">🎯 Quiz Challenge 🏆</div>
                 <div class="nav-item">
                     <div class="nav-icon">💪</div>
-                    Strengthen Learning 🧠
+                    <a href="{% url 'quiz' %}" style : text-decoration: none;>Strengthen Learning 🧠</a>
                 </div>
             </div>
 
