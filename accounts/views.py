@@ -61,3 +61,20 @@ def logout(request):
     auth.logout(request)
 
     return redirect("home")
+
+
+
+
+from accounts.models import UserProfile
+
+def quiz_view(request):
+    profile = UserProfile.objects.get(user=request.user)
+    profile.coins += 2  # Add coins logic
+    profile.save()
+
+    return render(request, 'dashboard/quiz.html', {'coins': profile.coins})
+
+
+def dashboard_view(request):
+    profile = UserProfile.objects.get(user=request.user)
+    return render(request, 'dashboard/dashboard.html', {'coins': profile.coins})
