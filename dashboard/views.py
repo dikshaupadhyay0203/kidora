@@ -57,4 +57,26 @@ def feedback_form(request):
      return render(request, 'dashboard/feedback-form.html')
 
 
+def story_generate(request):
+     if request.method == "GET":
+          context = {
+               'user_input': None
+          }
+          return render(request, 'dashboard/story_generator.html', context)
+
+     if request.method == "POST":
+          user_input = request.POST.get('user_input')
+          static_dir = os.path.join(settings.BASE_DIR, "static","generated_images")
+          if user_input:
+               main_generate(user_input, static_dir)
+               context = {
+                'user_input': user_input
+            }
+               return render(request, 'dashboard/story_generator.html', context)
+          else:
+               messages.error(request, "Please enter a valid input.")
+    
+     return render(request, 'dashboard/story_generator.html')
+
+
 
