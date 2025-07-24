@@ -5,12 +5,19 @@ from .extract_story_data import extract_story_data, extract_story_steps, extract
 from .post_image_generation.add_text_layer import add_text_to_image
 
 def main_generate(question: str, img_path: str) -> str:
-    raw_story = generate_story(question)
-    print("Story generated successfully!")
-    # Step 2: Extract structured information from the story
-    story_response = extract_story_data(raw_story)
-    story_steps = story_response["story_steps"]
     # Step 3: Generate images using each visual description
+    max_tries = 3
+    i = 0 
+    while i < max_tries:
+        raw_story = generate_story(question)
+        print("Story generated successfully!")
+        # Step 2: Extract structured information from the story
+        story_response = extract_story_data(raw_story)
+        story_steps = story_response["story_steps"]
+        if len(story_steps) == 5:
+            break
+        i += 1
+        
     for i in range(5):
         image_prompt = generate_image_prompt(
             setting=story_response['story_setting'],
