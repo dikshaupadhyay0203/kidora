@@ -75,6 +75,6 @@ def quiz_view(request):
     return render(request, 'dashboard/quiz.html', {'coins': profile.coins})
 
 
-def dashboard_view(request):
+def dashboard(request):
     profile = UserProfile.objects.get(user=request.user)
     return render(request, 'dashboard/dashboard.html', {'coins': profile.coins})

@@ -825,7 +825,7 @@
         </div>
         <div class="header-right">
             <div class="coins">
-                🪙 <span id="coinCount">237</span> ✨
+                🪙 <span id="coinCount">{{ coins }}</span> 
             </div>
             <div class="user-info" onclick="toggleUserDropdown()">
                 👋 Hi, {{ user.first_name }} 💖
@@ -999,7 +999,7 @@
                     <button class="submit-btn hidden" id="submitBtn" onclick="showResults()">Submit Quiz 🎯</button>
                 </div>
             </div>
-
+            
             <!-- Results Page -->
             <div id="resultPage" class="hidden">
                 <div class="result-panel">

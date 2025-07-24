@@ -6,6 +6,7 @@ from django.contrib import messages
 from .AI_agent.ai_main import main_generate
 from django.conf import settings
 import os
+from accounts.models import UserProfile
 # Create your views here.
 # Create your views he
 
@@ -85,9 +86,25 @@ def story_generate(request):
     
      return render(request, 'dashboard/story_generator.html')
 
+
+@login_required
+def dashboard(request):
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    return render(request, 'dashboard/dashboard.html', {'coins': profile.coins})
+
+
+
+
 @login_required
 def quiz(request):
-     return render(request, "dashboard/quiz.html", {'user': request.user})
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    return render(request, "dashboard/quiz.html", {'user': request.user, 'coins': profile.coins})
 
+@login_required
+def quiz_complete(request):
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    profile.coins += 2
+    profile.save()
+    return redirect('dashboard')  # assuming your URL name is 'dashboard'
 
 
