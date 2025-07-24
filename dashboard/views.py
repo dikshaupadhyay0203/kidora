@@ -42,7 +42,6 @@ def change_password(request):
      return render(request, 'dashboard/dashboard.html')
 
 @login_required
-
 def feedback_form(request):
      if request.method == "POST":
         feedback = Feedback(
@@ -57,13 +56,14 @@ def feedback_form(request):
      
      return render(request, 'dashboard/feedback-form.html')
 
+@login_required
 def user_profile(request):
      context = {'first_name': request.user.first_name, 'last_name': request.user.last_name, 
                 'email': request.user.email, 'username': request.user.username
                }
      return render(request, 'dashboard/user-profile.html',context)
 
-
+@login_required
 def story_generate(request):
      if request.method == "GET":
           context = {
@@ -85,8 +85,9 @@ def story_generate(request):
     
      return render(request, 'dashboard/story_generator.html')
 
+@login_required
 def quiz(request):
-     return render(request,"dashboard/quiz.html")
+     return render(request, "dashboard/quiz.html", {'user': request.user})
 
 
 
