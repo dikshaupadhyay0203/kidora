@@ -47,4 +47,4 @@ def add_text_to_image(image_path: str, text: str):
     # Save over original
     new_image.save(image_path)
 
-add_text_to_image("/home/mithun-arulmani/ghostdrive/django/ai_prototype/images/3.png", "A detective duck wearing a detective costume, solving a case in a small town.")
+# add_text_to_image("/home/mithun-arulmani/ghostdrive/django/ai_prototype/images/3.png", "A detective duck wearing a detective costume, solving a case in a small town.")
