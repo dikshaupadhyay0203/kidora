@@ -6,6 +6,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts for a playful look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;700&display=swap" rel="stylesheet">
+
   <title>Edit Profile - Kidora</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap"
     rel="stylesheet">
@@ -186,93 +193,13 @@
       background-color: rgba(255, 255, 255, 0.1);
     }
 
-    /* Register Container */
-    .register-container {
-      /* Changed background to green gradient */
-      background: linear-gradient(135deg, #8BC34A, #4CAF50);
-      /* Green gradient */
-      max-width: 500px;
-      /* Margin-top adjusted to account for fixed header height */
-      margin: calc(80px + 3rem) auto 5rem auto;
-      /* Header height (approx 80px) + 3rem spacing */
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-      color: #fff;
-      /* Changed text color to white for better contrast */
-    }
-
-    .register-container h2 {
-      text-align: center;
-      font-family: 'Fredoka One', cursive;
-      margin-bottom: 1.5rem;
-      font-size: 2rem;
-      color: #fff;
-      /* Ensure heading is white */
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    }
-
-    .register-container label {
-      display: block;
-      margin: 0.5rem 0 0.2rem;
-      font-weight: 600;
-      color: #fff;
-      /* Ensure labels are white */
-    }
-
-    .register-container input {
-      width: 100%;
-      padding: 0.6rem;
-      border: none;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      background-color: rgba(255, 255, 255, 0.8);
-      /* Slightly transparent white input */
-      color: #2e2e2e;
-    }
-
-    .register-container button {
-      background-color: #228B22;
-      /* Darker green for button */
-      color: white;
-      border: none;
-      padding: 0.8rem;
-      border-radius: 12px;
-      font-size: 1rem;
-      cursor: pointer;
-      width: 100%;
-      transition: background 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .register-container button:hover {
-      background-color: #1A721A;
-      /* Even darker green on hover */
-      transform: translateY(-1px);
-    }
-
-    .emoji-header {
-      text-align: center;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: #fff;
-      /* Emoji header text white */
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    }
-
-    .alert {
-      background-color: rgba(255, 221, 221, 0.9);
-      /* Slightly transparent alert */
-      color: #a94442;
-      border: 1px solid #f5c6cb;
-      padding: 10px 15px;
-      margin-bottom: 1rem;
-      border-radius: 10px;
-      font-weight: bold;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+    .btn-orange-shadow {
+            box-shadow: 0 4px 0 #c25a00; /* A darker orange for a 3D effect */
+        }
+        .btn-orange-shadow:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #c25a00;
+        }
   </style>
 </head>
 
@@ -280,7 +207,7 @@
   <header class="header" id="mainHeader">
     <div class="logo">
       <div class="logo-icon">K</div>
-      <div class="logo-text">KIDORA</div>
+      <a href="{% url 'dashboard' %}" class="logo-text">KIDORA</a>
     </div>
     <div class="header-right">
       <div class="coins">
@@ -291,9 +218,9 @@
           🌟 Hi, {{ user.first_name }}
         </div>
         <div class="profile-dropdown-content">
-          <div class="profile-dropdown-item">
+          <a href="{% url 'user_profile' %}" class="profile-dropdown-item">
             👤 My Profile
-          </div>
+          </a>
           <div class="profile-dropdown-item">
             <a href="{% url 'dashboard' %}" style="text-decoration:none; color:white">✏️ Dashboard</a>
           </div>
@@ -304,29 +231,69 @@
       </div>
     </div>
   </header>
-  <div class="register-container">
-    <div class="emoji-header">🌿 Welcome to Kidora! 🐾</div>
-    <h2>Submit your feedback</h2>
-    <form method="POST">
-      {% csrf_token %}
-      <h2>Edit Your Profile</h2>
-        <form method="POST">
-            {% csrf_token %}
-            <label for="fname">First Name</label>
-            <input type="text" id="fname" name="first_name" value="{{ user.first_name }}" required>
 
-            <label for="lname">Last Name</label>
-            <input type="text" id="lname" name="last_name" value="{{ user.last_name }}" required>
+  <main class="flex items-center justify-center min-h-[calc(100vh-64px)] p-4 mt-12">
+    <div class="w-full max-w-xl p-8 space-y-6 bg-green-500 bg-opacity-80 rounded-3xl shadow-2xl backdrop-blur-sm">
+      <!-- Profile Header -->
+      <div class="text-center text-white">
+        <h2 class="text-4xl font-bold">Edit My Profile</h2>
+      </div>
 
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" value="{{ user.username }}" required>
+      <!-- Profile Picture -->
+      <div class="flex justify-center">
+        <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-md">
+          <!-- Placeholder for a user avatar or icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-500" viewBox="0 0 20 20"
+            fill="currentColor">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+          </svg>
+        </div>
+      </div>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" value="{{ user.email }}" required>
+      <form method="POST">
+        {% csrf_token %}
+        <!-- Profile Information Fields -->
+        <div class="space-y-4">
+          <div>
+            <label for="first_name" class="block text-lg font-medium text-white">First Name</label>
+            <input type="text" name="first_name"
+              class="mt-1 w-full p-3 bg-white border border-gray-300 rounded-xl shadow-sm text-gray-700 text-lg"
+              value="{{ user.first_name }}">
+          </div>
+        </div>
 
-            <button type="submit">🎉 Save</button>
+        <div>
+          <label for="last_name" class="block text-lg font-medium text-white">Last Name</label>
+          <input name="last_name"
+            class="mt-1 w-full p-3 bg-white border border-gray-300 rounded-xl shadow-sm text-gray-700 text-lg"
+            value="{{ user.last_name }}">
+        </div>
+
+        <div>
+          <label for="username" class="block text-lg font-medium text-white">Username</label>
+          <input name="username"
+            class="mt-1 w-full p-3 bg-white border border-gray-300 rounded-xl shadow-sm text-gray-700 text-lg"
+            value="{{ user.username }}">
+        </div>
+
+        <div>
+          <label for="email" class="block text-lg font-medium text-white">Email Address</label>
+          <input name="email"
+            class="mt-1 w-full p-3 bg-white border border-gray-300 rounded-xl shadow-sm text-gray-700 text-lg"
+            value="{{ user.email }}">
+          {{ email }}
+        </div>
+        
+        <!-- Action Button -->
+         <br>
+        <button type="submit"
+        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-xl font-bold text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200 btn-orange-shadow">
+        🎉 Save 
+      </button>
     </form>
-</div>
+  </div>
+  </main>
 
 </body>
+
 </html>

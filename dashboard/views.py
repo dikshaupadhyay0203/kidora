@@ -56,5 +56,11 @@ def feedback_form(request):
      
      return render(request, 'dashboard/feedback-form.html')
 
+def user_profile(request):
+     context = {'first_name': request.user.first_name, 'last_name': request.user.last_name, 
+                'email': request.user.email, 'username': request.user.username
+               }
+     return render(request, 'dashboard/user-profile.html',context)
+
 
 

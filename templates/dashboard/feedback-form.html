@@ -91,6 +91,7 @@
             font-family: 'Fredoka One', cursive;
             font-size: 36px;
             color: #FFF;
+            text-decoration:none;
             /* Changed to white for better contrast on green */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             /* Adjusted shadow for white text */
@@ -293,7 +294,7 @@
     <header class="header" id="mainHeader">
         <div class="logo">
             <div class="logo-icon">K</div>
-            <div class="logo-text">KIDORA</div>
+            <a href="{% url 'dashboard' %}" class="logo-text">KIDORA</a>
         </div>
         <div class="header-right">
             <div class="coins">
