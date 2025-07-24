@@ -509,6 +509,11 @@
                 grid-template-columns: 1fr;
             }
         }
+        .emoji-header {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -534,6 +539,8 @@
     <main>
         <div class="login-form">
             <form method="POST">
+                <div class="emoji-header">🌿 Welcome to Kidora! 🐾</div>
+               <h2>Login Now</h2>
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
