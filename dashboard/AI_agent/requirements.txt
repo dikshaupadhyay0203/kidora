@@ -1,6 +1,5 @@
-langchain_google_genai
-langchain
 python-dotenv
+langchain
+langchain_google_genai
 together
-requests
-Pillow
+django
