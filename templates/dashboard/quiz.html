@@ -828,12 +828,10 @@
                 🪙 <span id="coinCount">237</span> ✨
             </div>
             <div class="user-info" onclick="toggleUserDropdown()">
-                👋 Hi, Dikshaa 💖
+                👋 Hi, {{ user.first_name }} 💖
                 <div class="user-dropdown" id="userDropdown">
-                    <div class="user-option">✏️ Edit Profile</div>
-                    <br>
-                    <br>
-                    <div class="user-option">🚪 Logout</div>
+                    <div class="user-option"><a href="{% url 'edit' %}" style="text-decoration:none; color:white">✏️ Edit Profile</a></div>
+                    <div class="user-option"><a href="{% url 'logout' %}" style="text-decoration:none; color:white">🚪 Logout</a></div>
                 </div>
             </div>
             <div class="theme-selector" onclick="toggleThemeDropdown()">
@@ -893,7 +891,7 @@
 
             <div class="nav-section">
                 <div class="nav-title">🎯 Quiz Challenge 🏆</div>
-                <div class="nav-item active" onclick="showQuizChallenge()">
+                <div class="nav-item active" onclick="showQuizChallenge()" style="text-decoration:none; color:white">
                     <div class="nav-icon">💪</div>
                     Strengthen Learning 🧠
                 </div>
@@ -911,11 +909,11 @@
                 <div class="nav-title">💬 Help Desk 🆘</div>
                 <div class="nav-item">
                     <div class="nav-icon">📝</div>
-                    Feedback 💭
+                    <a href="{% url 'feedback' %}" style="text-decoration:none; color:white">Feedback 💭</a>
                 </div>
                 <div class="nav-item">
                     <div class="nav-icon">👤</div>
-                    My Profile 🌟
+                    <a href="{% url 'user_profile' %}" style="text-decoration:none; color:white">My Profile 🌟</a>
                 </div>
             </div>
         </div>
