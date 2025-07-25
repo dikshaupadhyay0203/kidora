@@ -383,15 +383,13 @@
             KIDORA 🌟
         </div>
         <div class="header-right">
-            <div class="coins">
-                🪙 237 ✨
-            </div>
+           
             <div class="user-info" onclick="toggleUserDropdown()">
                 👋 Hi, {{first_name}} 💖
                 <div class="user-dropdown" id="userDropdown">
-                    <a href="{% url 'edit' %}" class="user-option">✏️ Edit Profile</a>
+                    <a href="{% url 'edit' %}" class="user-option">✏️Edit Profile</a>
                     <br><br>
-                    <a href="{% url 'logout' %}" class="user-option">🚪 Logout</a>
+                    <a href="{% url 'logout' %}" class="user-option">🚪Logout</a>
                 </div>
             </div>
             <div class="theme-selector" onclick="toggleThemeDropdown()">
@@ -414,7 +412,7 @@
                 <div class="nav-title">🌳 My Jungle 🦋</div>
                 <div class="nav-item">
                     <div class="nav-icon">🌟</div>
-                    <a href="javascript:void(0);" class="user-option">Explore Today! ✨</a>
+                    <a href="{% url 'dashboard' %}" class="user-option"> Explore Today! ✨ </a>
                 </div>
                 <div class="nav-item">
                     <div class="nav-icon">❤️</div>
@@ -424,10 +422,7 @@
 
             <div class="nav-section">
                 <div class="nav-title">📚 Learning Zone 🎓</div>
-                <div class="nav-item">
-                    <div class="nav-icon">🌲</div>
-                    Topic Forest 🌿
-                </div>
+               
                 <div class="nav-item">
                     <div class="nav-icon">🕳️</div>
                     <a href="{% url 'story_generate' %}" class="user-option">Story Caves 📖</a>
@@ -441,8 +436,8 @@
             <div class="nav-section">
                 <div class="nav-title">🎯 Quiz Challenge 🏆</div>
                 <div class="nav-item">
-                    <div class="nav-icon">💪</div>
-                    Strengthen Learning 🧠
+                   <div class="nav-icon">💪</div>
+                    <a href="{% url 'quiz' %}" class="user-option" color:white>Strengthen Learning 🧠</a>
                 </div>
             </div>
 
@@ -461,8 +456,8 @@
                     <a href="{% url 'feedback' %}" class="user-option">Feedback 💭</a>
                 </div>
                 <div class="nav-item">
-                    <div class="nav-icon">👤</div>
-                    My Profile 🌟
+                  <div class="nav-icon">👤</div>
+                    <a href="{% url 'user_profile' %}" class="user-option">My Profile 🌟</a>
                 </div>
             </div>
         </div>
