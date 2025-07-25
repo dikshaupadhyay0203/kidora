@@ -6,7 +6,7 @@ def add_text_to_image(image_path: str, text: str):
     width, height = image.size
 
     # Create a new image with extra height for the text area
-    extra_height = 120
+    extra_height = 150
     new_height = height + extra_height
     new_image = Image.new("RGB", (width, new_height), (255, 255, 255))
     new_image.paste(image, (0, 0))
