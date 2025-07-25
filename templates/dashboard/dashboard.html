@@ -689,6 +689,8 @@
                 {% endfor %}
             {% endif %}
             <div class="card ask-buddy">
+                <form action="{% url 'ask_buddy' %}" method="POST">
+                    {% csrf_token %}
                 <div class="card-header" style="justify-content: center; margin-bottom: 25px;">
                     <div class="card-icon" style="width: 60px; height: 60px; font-size: 30px;">🦜</div>
                     <div class="card-title" style="font-size: 28px;">Ask Your Buddy 💬</div>
@@ -697,6 +699,7 @@
                 <input type="text" class="buddy-input" placeholder="What's on your jungle mind? 🌿💭">
                 <br>
                 <button class="ask-button">Ask Now! 🚀</button>
+                </form>
             </div>
 
             <div class="card">
