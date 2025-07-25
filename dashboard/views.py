@@ -108,3 +108,52 @@ def quiz_complete(request):
     return redirect('dashboard')  # assuming your URL name is 'dashboard'
 
 
+
+@login_required
+def rhyme_generator(request):
+    if request.method == "GET":
+        context = {
+            'user_input': None,
+            'rhyme': None
+        }
+        return render(request, 'dashboard/rhyme_generator.html', context)
+
+    if request.method == "POST":
+        user_input = request.POST.get('user_input')
+        if user_input:
+            rhyme = generate_rhyme(user_input)
+            context = {
+                'user_input': user_input,
+                'rhyme': rhyme
+            }
+            return render(request, 'dashboard/rhyme_generator.html', context)
+        else:
+            messages.error(request, "Please enter a valid input.")
+    
+    return render(request, 'dashboard/rhyme_generator.html')
+
+
+@login_required
+def ask_buddy(request):
+     if request.method == "GET":
+          context = {
+               'user_input': None,
+               'response': None
+          }
+          return render(request, 'dashboard/ask_buddy.html', context)
+     
+     if request.method == "POST":
+          user_input = request.POST.get('user_input')
+          if user_input:
+               response = ask_your_buddy(user_input)
+               context = {
+                    'user_input': user_input,
+                    'response': response
+               }
+               return render(request, 'dashboard/ask_buddy.html', context)
+          else:
+               messages.error(request, "Please enter a valid input.")
+     
+     return render(request, 'dashboard/ask_buddy.html')
+
+
