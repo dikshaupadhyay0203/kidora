@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Feedback
 from django.contrib import messages
 from .AI_agent.ai_main import main_generate
+from .AI_agent.chat_bot import generate_rhyme, ask_your_buddy
 from django.conf import settings
 import os
 from accounts.models import UserProfile
