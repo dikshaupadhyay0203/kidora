@@ -1,0 +1,556 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Kidora - Rhyme Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fredoka+One:wght@400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            /* Apply the background image and properties here */
+            background-image: var(--background-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* Theme Variables */
+        :root {
+            /* Jungle Theme (Default) */
+            --primary-bg: linear-gradient(135deg, #4CAF50, #8BC34A);
+            --secondary-bg: #2E7D32;
+            --accent-color: #FFC107;
+            --text-color: #ffffff;
+            --card-bg: rgba(76, 175, 80, 0.9);
+            --nav-bg: rgba(46, 125, 50, 0.95);
+            --hover-color: #66BB6A;
+            --background-image: url("{% static 'images/monkey.png' %}"); /* Default Jungle background image */
+        }
+
+        /* Doraemon Theme */
+        .theme-doraemon {
+            --primary-bg: linear-gradient(135deg, #0288D1, #03A9F4);
+            --secondary-bg: #0277BD;
+            --accent-color: #FF5722;
+            --text-color: #ffffff;
+            --card-bg: rgba(2, 136, 209, 0.9);
+            --nav-bg: rgba(2, 119, 189, 0.95);
+            --hover-color: #29B6F6;
+            --background-image: url("{% static 'images/doraemon.png' %}"); /* Doraemon background image */
+        }
+
+        /* Disney Theme */
+        .theme-disney {
+            --primary-bg: linear-gradient(135deg, #E91E63, #F06292);
+            --secondary-bg: #C2185B;
+            --accent-color: #FFD700;
+            --text-color: #ffffff;
+            --card-bg: rgba(233, 30, 99, 0.9);
+            --nav-bg: rgba(194, 24, 91, 0.95);
+            --hover-color: #F48FB1;
+            --background-image: url("{% static 'images/princess.jpg' %}"); /* Disney background image */
+        }
+
+        /* Shinchan Theme */
+        .theme-shinchan {
+            --primary-bg: linear-gradient(135deg, #FF9800, #FFC107);
+            --secondary-bg: #F57C00;
+            --accent-color: hsl(120, 9%, 6%);
+            --text-color: #ffffff;
+            --card-bg: hsla(13, 86%, 28%, 0.9);
+            --nav-bg: hsla(8, 78%, 61%, 0.95);
+            --hover-color: #FFB74D;
+            --background-image: url("{% static 'images/sinchan.jpg' %}"); /* Shinchan background image */
+        }
+
+        /* Anime Theme */
+        .theme-anime {
+            --primary-bg: linear-gradient(135deg, #9C27B0, #E91E63);
+            --secondary-bg: #7B1FA2;
+            --accent-color: #00BCD4;
+            --text-color: #ffffff;
+            --card-bg: rgba(156, 39, 176, 0.9);
+            --nav-bg: rgba(123, 31, 162, 0.95);
+            --hover-color: #BA68C8;
+            --background-image: url("{% static 'images/animen.jpg' %}"); /* Anime background image */
+        }
+
+        /* Marvel Theme */
+        .theme-marvel {
+            --primary-bg: linear-gradient(135deg, #D32F2F, #F44336);
+            --secondary-bg: #C62828;
+            --accent-color: #FFD700;
+            --text-color: #ffffff;
+            --card-bg: rgba(211, 47, 47, 0.9);
+            --nav-bg: rgba(198, 40, 40, 0.95);
+            --hover-color: #EF5350;
+            --background-image: url("{% static 'images/spider.jpg' %}"); /* Marvel background image */
+        }
+
+        .container-fluid {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--nav-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-color);
+            font-family: 'Fredoka One', cursive;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .coins {
+            background: var(--accent-color);
+            color: #333;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .user-info {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 18px;
+            border-radius: 25px;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .user-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--nav-bg);
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 150px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            margin-top: 5px;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .user-option {
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+            color: var(--text-color); /* Ensure dropdown text color is consistent */
+            text-decoration: none;
+        }
+
+        .user-option:hover {
+            background: var(--hover-color);
+        }
+
+        .theme-selector {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 18px;
+            border-radius: 25px;
+            color: var(--text-color);
+            cursor: pointer;
+            position: relative;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-selector:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--nav-bg);
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 150px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .theme-dropdown.show {
+            display: block;
+        }
+
+        .theme-option {
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            color: var(--text-color); /* Ensure dropdown text color is consistent */
+        }
+
+        .theme-option:hover {
+            background: var(--hover-color);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--nav-bg);
+            padding: 20px;
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            position: fixed;
+            left: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-section {
+            margin-bottom: 25px;
+        }
+
+        .nav-title {
+            color: var(--accent-color);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .nav-item {
+            background: var(--card-bg);
+            margin-bottom: 10px;
+            padding: 15px 18px;
+            border-radius: 15px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-item:hover {
+            background: var(--hover-color);
+            transform: translateX(8px) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 30px;
+            color: var(--text-color);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            color: var(--text-color);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            background: none;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-header h3 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--accent-color);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .form-control {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text-color);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #333;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+    </style>
+</head>
+<body class="theme-jungle">
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">🌿</div>
+            KIDORA 🌟
+        </div>
+        <div class="header-right">
+            <div class="coins">
+                🪙 237 ✨
+            </div>
+            <div class="user-info" onclick="toggleUserDropdown()">
+                👋 Hi, {{first_name}} 💖
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="{% url 'edit' %}" class="user-option">✏️ Edit Profile</a>
+                    <br><br>
+                    <a href="{% url 'logout' %}" class="user-option">🚪 Logout</a>
+                </div>
+            </div>
+            <div class="theme-selector" onclick="toggleThemeDropdown()">
+                🎨 Theme 🌈
+                <div class="theme-dropdown" id="themeDropdown">
+                    <div class="theme-option" onclick="changeTheme('jungle')">🌿 Jungle Adventure</div>
+                    <div class="theme-option" onclick="changeTheme('doraemon')">🤖 Doraemon Magic</div>
+                    <div class="theme-option" onclick="changeTheme('disney')">🏰 Disney Dreams</div>
+                    <div class="theme-option" onclick="changeTheme('shinchan')">😄 Shinchan Fun</div>
+                    <div class="theme-option" onclick="changeTheme('anime')">⚡ Anime Power</div>
+                    <div class="theme-option" onclick="changeTheme('marvel')">🦸 Marvel Heroes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">🌳 My Jungle 🦋</div>
+                <div class="nav-item">
+                    <div class="nav-icon">🌟</div>
+                    <a href="javascript:void(0);" class="user-option">Explore Today! ✨</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">❤️</div>
+                    My Favourite 💕
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">📚 Learning Zone 🎓</div>
+                <div class="nav-item">
+                    <div class="nav-icon">🌲</div>
+                    Topic Forest 🌿
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">🕳️</div>
+                    <a href="{% url 'story_generate' %}" class="user-option">Story Caves 📖</a>
+                </div>
+                 <div class="nav-item">
+                    <div class="nav-icon">✒️</div>
+                    <a href="{% url 'rhyme_generator' %}" class="user-option">Rhyme Generator 📝</a>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">🎯 Quiz Challenge 🏆</div>
+                <div class="nav-item">
+                    <div class="nav-icon">💪</div>
+                    Strengthen Learning 🧠
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">📊 Progress Track 🚀</div>
+                <div class="nav-item">
+                    <div class="nav-icon">📈</div>
+                    Progress Level 📊
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">💬 Help Desk 🆘</div>
+                <div class="nav-item">
+                    <div class="nav-icon">📝</div>
+                    <a href="{% url 'feedback' %}" class="user-option">Feedback 💭</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">👤</div>
+                    My Profile 🌟
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header">
+                            <h3 class="text-center">Create a Rhyme</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-center">Enter a word or a phrase, and I'll find some rhymes for you!</p>
+                            <form action="{% url 'rhyme_generator' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="user_input" name="user_input" placeholder="e.g., cat, star, happy...">
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button type="submit" class="btn btn-primary">Generate Rhyme</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    {% if rhyme %}
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            <h3 class="text-center">Here are your rhymes!</h3>
+                             <p class="text-center">For the word: "<em>{{ user_input }}</em>"</p>
+                        </div>
+                        <div class="card-body">
+                           <p class="text-center" style="white-space: pre-wrap;">{{ rhyme }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function toggleThemeDropdown() {
+            const dropdown = document.getElementById('themeDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function changeTheme(theme) {
+            const body = document.body;
+            body.className = `theme-${theme}`;
+
+            // Update logo icon based on theme
+            const logoIcon = document.querySelector('.logo-icon');
+            const themeIcons = {
+                jungle: '🌿',
+                doraemon: '🤖',
+                disney: '🏰',
+                shinchan: '😄',
+                anime: '⚡',
+                marvel: '🦸'
+            };
+            logoIcon.textContent = themeIcons[theme];
+
+            // Close dropdown after selection
+            toggleThemeDropdown();
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const themeSelector = document.querySelector('.theme-selector');
+            const themeDropdown = document.getElementById('themeDropdown');
+            const userInfo = document.querySelector('.user-info');
+            const userDropdown = document.getElementById('userDropdown');
+
+            if (themeSelector && !themeSelector.contains(event.target)) {
+                themeDropdown.classList.remove('show');
+            }
+
+            if (userInfo && !userInfo.contains(event.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
