@@ -830,8 +830,8 @@
             <div class="user-info" onclick="toggleUserDropdown()">
                 👋 Hi, {{ user.first_name }} 💖
                 <div class="user-dropdown" id="userDropdown">
-                    <div class="user-option"><a href="{% url 'edit' %}" style="text-decoration:none; color:white">✏️ Edit Profile</a></div>
-                    <div class="user-option"><a href="{% url 'logout' %}" style="text-decoration:none; color:white">🚪 Logout</a></div>
+                    <div class="user-option"><a href="{% url 'edit' %}" style="text-decoration:none; color:white">✏️Edit Profile</a></div>
+                    <div class="user-option"><a href="{% url 'logout' %}" style="text-decoration:none; color:white">🚪Logout</a></div>
                 </div>
             </div>
             <div class="theme-selector" onclick="toggleThemeDropdown()">
@@ -869,7 +869,7 @@
                 <div class="nav-title">🌳 My Jungle 🦋</div>
                 <div class="nav-item" onclick="showWelcome()">
                     <div class="nav-icon">🌟</div>
-                    Explore Today! ✨
+                    <a href="{% url 'dashboard' %}" class="user-option"> Explore Today! ✨ </a>
                 </div>
                 <div class="nav-item">
                     <div class="nav-icon">❤️</div>
@@ -879,13 +879,14 @@
 
             <div class="nav-section">
                 <div class="nav-title">📚 Learning Zone 🎓</div>
-                <div class="nav-item">
-                    <div class="nav-icon">🌲</div>
-                    Topic Forest 🌿
-                </div>
-                <div class="nav-item">
+                
+              <div class="nav-item">
                     <div class="nav-icon">🕳️</div>
-                    Story Caves 📖
+                    <a href="{% url 'story_generate' %}" class="user-option">Story Caves 📖</a>
+                </div>
+                  <div class="nav-item">
+                    <div class="nav-icon">✒️</div>
+                    <a href="{% url 'rhyme_generator' %}" class="user-option">Rhymes World 📝</a>
                 </div>
             </div>
 

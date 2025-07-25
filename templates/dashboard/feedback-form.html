@@ -297,16 +297,14 @@
             <a href="{% url 'dashboard' %}" class="logo-text">KIDORA</a>
         </div>
         <div class="header-right">
-            <div class="coins">
-                🪙 237
-            </div>
+            
             <div class="user-profile-dropdown" id="userProfileDropdown">
                 <div class="user-profile">
                     🌟 Hi, {{ user.first_name }}
                 </div>
                 <div class="profile-dropdown-content">
                     <div class="profile-dropdown-item">
-                        👤 My Profile
+                       <a href="{% url 'user_profile' %}" style="text-decoration:none; color:white">👤 My Profile </a>
                     </div>
                     <div class="profile-dropdown-item">
                         <a href="{% url 'dashboard' %}" style="text-decoration:none; color:white">✏️ Dashboard</a>
@@ -323,14 +321,6 @@
         <h2>Submit your feedback</h2>
         <form method="POST">
             {% csrf_token %}
-            <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject" placeholder="Your Subject" required>
-
-            <label for="message">Message</label>
-            <textarea id="message" name="message" 
-                placeholder="Here goes your feedback" rows=10 cols=48
-                required></textarea>
-
             <label for="feedback_type">Feedback Type</label>
             <select name="feedback_type" required>
                 <option selected>Choose a category...</option>
@@ -339,6 +329,14 @@
                 <option value="compliment">Compliment</option>
                 <option value="complaint">Complaint</option>
             </select>
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Your Subject" required>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" 
+                placeholder="Here goes your feedback" rows=10 cols=48
+                required></textarea>
+
             <br><br>
             <button type="submit">🎉 Submit Feedback</button>
         </form>

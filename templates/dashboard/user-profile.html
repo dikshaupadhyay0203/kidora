@@ -224,13 +224,15 @@
             KIDORA 🌟
         </a>
         <div class="header-right">
-            <div class="coins">
-                🪙 237 ✨
-            </div>
+           
             <div class="user-info" onclick="toggleUserDropdown()">
                 👋 Hi, {{first_name}} 💖
+
                 <div class="user-dropdown" id="userDropdown">
-                    <a href="{% url 'edit' %}" class="user-option">✏️ Edit Profile</a>
+                 
+                        <a href="{% url 'dashboard' %}" class="user-option">✏️Dashboard</a>
+                    <br><br>
+                    <a href="{% url 'edit' %}" class="user-option">✏️Edit Profile</a>
                     <br><br>
                     <a href="{% url 'logout' %}" class="user-option">🚪 Logout</a>
                 </div>
@@ -238,7 +240,7 @@
         </div>
     </div>
 
-    <main class="flex items-center justify-center min-h-[calc(100vh-64px)] p-4 mt-8">
+    <main class="flex items-center justify-center min-h-[calc(100vh-64px)] p-4 mt-20">
     <div class="w-full max-w-xl p-8 space-y-6 bg-green-500 bg-opacity-80 rounded-3xl shadow-2xl backdrop-blur-sm">
             
             <!-- Profile Header -->
@@ -246,15 +248,14 @@
                 <h2 class="text-4xl font-bold">My Profile</h2>
             </div>
             
-            <!-- Profile Picture -->
-            <div class="flex justify-center">
-                <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-md">
-                    <!-- Placeholder for a user avatar or icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-            </div>
+           <!-- Profile Picture -->
+<div class="flex justify-center">
+    <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-md overflow-hidden">
+        <!-- Replace the SVG with your PNG image -->
+        <img src="{% static 'images/avatar.png' %}" alt="Profile Picture" class="w-full h-full object-cover" />
+    </div>
+</div>
+
 
             <!-- Profile Information Fields -->
             <div class="space-y-4">
