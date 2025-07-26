@@ -1,21 +1,50 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Feedback
+from .models import Feedback, Subject, Quiz, Progress, Topic
 from django.contrib import messages
 from .AI_agent.ai_main import main_generate
 from .AI_agent.chat_bot import generate_rhyme, ask_your_buddy
 from django.conf import settings
 import os
 from accounts.models import UserProfile
-# Create your views here.
-# Create your views he
+from django.db.models import Avg, F, Prefetch
 
+@login_required
+def progress_level(request):
+    user = request.user
+    
+    # Get all subjects
+    all_subjects = Subject.objects.all()
+    
+    # Get subjects for which the user already has progress
+    subjects_with_progress_ids = Progress.objects.filter(user=user).values_list('subject_id', flat=True)
+    
+    # Find subjects for which progress needs to be created
+    subjects_to_create_progress_for = all_subjects.exclude(id__in=subjects_with_progress_ids)
+    
+    # Create progress objects in bulk
+    if subjects_to_create_progress_for:
+        Progress.objects.bulk_create([
+            Progress(user=user, subject=subject) for subject in subjects_to_create_progress_for
+        ])
+    
+    # Now fetch all subjects with prefetched progress
+    subjects = all_subjects.prefetch_related(
+        Prefetch('progress_set', queryset=Progress.objects.filter(user=user), to_attr='user_progress'),
+        Prefetch('quiz_set', queryset=Quiz.objects.filter(user=user).select_related('topic'))
+    )
 
+    for subject in subjects:
+        # Since we ensured progress exists, user_progress should not be empty.
+        subject.progress = subject.user_progress[0]
+
+    return render(request, 'dashboard/progress_level.html', {'subjects': subjects, 'first_name': user.first_name})
 
 @login_required
 def dashboard(request):
-    return render(request,"dashboard/dashboard.html",{'first_name': request.user.first_name })
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    return render(request, 'dashboard/dashboard.html', {'coins': profile.coins, 'first_name': request.user.first_name})
 
 @login_required
 def edit_profile(request):
@@ -87,15 +116,6 @@ def story_generate(request):
     
      return render(request, 'dashboard/story_generator.html')
 
-
-@login_required
-def dashboard(request):
-    profile, _ = UserProfile.objects.get_or_create(user=request.user)
-    return render(request, 'dashboard/dashboard.html', {'coins': profile.coins})
-
-
-
-
 @login_required
 def quiz(request):
     profile, _ = UserProfile.objects.get_or_create(user=request.user)
@@ -103,12 +123,40 @@ def quiz(request):
 
 @login_required
 def quiz_complete(request):
-    profile, _ = UserProfile.objects.get_or_create(user=request.user)
-    profile.coins += 2
-    profile.save()
-    return redirect('dashboard')  # assuming your URL name is 'dashboard'
+    if request.method == 'POST':
+        subject_name = request.POST.get('subject')
+        topic_name = request.POST.get('topic')
+        score = float(request.POST.get('score'))
+        user = request.user
 
+        subject, _ = Subject.objects.get_or_create(name=subject_name)
+        topic, _ = Topic.objects.get_or_create(name=topic_name, subject=subject)
 
+        Quiz.objects.create(user=user, subject=subject, topic=topic, score=score)
+
+        progress, _ = Progress.objects.get_or_create(user=user, subject=subject)
+        progress.last_score = score
+
+        # Calculate average of last 5 quizzes for the subject
+        recent_quizzes = Quiz.objects.filter(user=user, subject=subject).order_by('-completed_at')[:5]
+        average_score = recent_quizzes.aggregate(Avg('score'))['score__avg'] or 0
+        progress.average_percentage = average_score
+
+        # Generate suggestion based on topics with lowest average scores
+        topic_averages = Quiz.objects.filter(user=user, subject=subject, topic__isnull=False).values('topic__name').annotate(average=Avg('score')).order_by('average')
+        
+        if topic_averages:
+            min_topic = topic_averages[0]['topic__name']
+            progress.suggestion = f"You seem to be struggling with {min_topic}. We suggest you to read more about it."
+        
+        progress.save()
+
+        profile, _ = UserProfile.objects.get_or_create(user=user)
+        profile.coins = F('coins') + 2
+        profile.save()
+        
+        return redirect('progress_level')
+    return redirect('dashboard')
 
 @login_required
 def rhyme_generator(request):
@@ -156,5 +204,3 @@ def ask_buddy(request):
                messages.error(request, "Please enter a valid input.")
      
      return render(request, 'dashboard/ask_buddy.html')
-
-
