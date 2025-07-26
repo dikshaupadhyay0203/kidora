@@ -1,0 +1,874 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Kidora - Progress Level</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fredoka+One:wght@400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            /* Apply the background image and properties here */
+            background-image: var(--background-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* Theme Variables */
+        :root {
+            /* Jungle Theme (Default) */
+            --primary-bg: linear-gradient(135deg, #4CAF50, #8BC34A);
+            --secondary-bg: #2E7D32;
+            --accent-color: #FFC107;
+            --text-color: #ffffff;
+            --card-bg: rgba(76, 175, 80, 0.9);
+            --nav-bg: rgba(46, 125, 50, 0.95);
+            --hover-color: #66BB6A;
+            --background-image: url("{% static 'images/monkey.png' %}"); /* Default Jungle background image */
+        }
+
+        /* Doraemon Theme */
+        .theme-doraemon {
+            --primary-bg: linear-gradient(135deg, #0288D1, #03A9F4);
+            --secondary-bg: #0277BD;
+            --accent-color: #FF5722;
+            --text-color: #ffffff;
+            --card-bg: rgba(2, 136, 209, 0.9);
+            --nav-bg: rgba(2, 119, 189, 0.95);
+            --hover-color: #29B6F6;
+            --background-image: url("{% static 'images/doraemon.png' %}"); /* Doraemon background image */
+        }
+
+        /* Disney Theme */
+        .theme-disney {
+            --primary-bg: linear-gradient(135deg, #E91E63, #F06292);
+            --secondary-bg: #C2185B;
+            --accent-color: #FFD700;
+            --text-color: #ffffff;
+            --card-bg: rgba(233, 30, 99, 0.9);
+            --nav-bg: rgba(194, 24, 91, 0.95);
+            --hover-color: #F48FB1;
+            --background-image: url("{% static 'images/princess.jpg' %}"); /* Disney background image */
+        }
+
+        /* Shinchan Theme */
+        .theme-shinchan {
+            --primary-bg: linear-gradient(135deg, #FF9800, #FFC107);
+            --secondary-bg: #F57C00;
+            --accent-color: hsl(120, 9%, 6%);
+            --text-color: #ffffff;
+            --card-bg: hsla(13, 86%, 28%, 0.9);
+            --nav-bg: hsla(8, 78%, 61%, 0.95);
+            --hover-color: #FFB74D;
+            --background-image: url("{% static 'images/sinchan.jpg' %}"); /* Shinchan background image */
+        }
+
+        /* Anime Theme */
+        .theme-anime {
+            --primary-bg: linear-gradient(135deg, #9C27B0, #E91E63);
+            --secondary-bg: #7B1FA2;
+            --accent-color: #00BCD4;
+            --text-color: #ffffff;
+            --card-bg: rgba(156, 39, 176, 0.9);
+            --nav-bg: rgba(123, 31, 162, 0.95);
+            --hover-color: #BA68C8;
+            --background-image: url("{% static 'images/animen.jpg' %}"); /* Anime background image */
+        }
+
+        /* Marvel Theme */
+        .theme-marvel {
+            --primary-bg: linear-gradient(135deg, #D32F2F, #F44336);
+            --secondary-bg: #C62828;
+            --accent-color: #FFD700;
+            --text-color: #ffffff;
+            --card-bg: rgba(211, 47, 47, 0.9);
+            --nav-bg: rgba(198, 40, 40, 0.95);
+            --hover-color: #EF5350;
+            --background-image: url("{% static 'images/spider.jpg' %}"); /* Marvel background image */
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            /* Removed primary-bg here as body handles the full background */
+            position: relative;
+        }
+
+        .container::before {
+            /* This pseudo-element was for a subtle pattern overlay.
+               If you just want the image, you can remove or comment this out.
+               If you want a subtle overlay *on top* of your image, adjust opacity. */
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* Removed fixed pattern, now the image handles background */
+            /* background-image: url('data:image/svg+xml,...'); */
+            opacity: 0; /* Set to 0 if you don't want any overlay */
+            z-index: -1;
+        }
+
+        /* Animated Background Elements */
+        .jungle-animals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .butterfly, .bird, .monkey {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.4;
+            animation-duration: 8s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+
+        .butterfly {
+            animation-name: flutter;
+        }
+
+        .bird {
+            animation-name: fly;
+            font-size: 18px;
+        }
+
+        .monkey {
+            animation-name: swing;
+            font-size: 22px;
+        }
+
+        @keyframes flutter {
+            0%, 100% { transform: translateX(-50px) translateY(0px) rotate(0deg); }
+            25% { transform: translateX(150px) translateY(-30px) rotate(5deg); }
+            50% { transform: translateX(350px) translateY(20px) rotate(-3deg); }
+            75% { transform: translateX(200px) translateY(-20px) rotate(8deg); }
+        }
+
+        @keyframes fly {
+            0% { transform: translateX(-100px) translateY(0px); }
+            50% { transform: translateX(calc(100vw + 50px)) translateY(-50px); }
+            100% { transform: translateX(-100px) translateY(0px); }
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-40px) rotate(10deg); }
+        }
+
+        .butterfly:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+        .butterfly:nth-child(2) { top: 60%; left: 70%; animation-delay: 2s; }
+        .butterfly:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
+        .butterfly:nth-child(4) { top: 30%; left: 80%; animation-delay: 6s; }
+
+        .bird:nth-child(5) { top: 25%; left: -50px; animation-delay: 1s; }
+        .bird:nth-child(6) { top: 45%; left: -50px; animation-delay: 5s; }
+        .bird:nth-child(7) { top: 70%; left: -50px; animation-delay: 8s; }
+
+        .monkey:nth-child(8) { top: 20%; right: 15%; animation-delay: 0s; }
+        .monkey:nth-child(9) { top: 50%; right: 25%; animation-delay: 3s; }
+        .monkey:nth-child(10) { top: 75%; right: 5%; animation-delay: 6s; }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--nav-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-color);
+            font-family: 'Fredoka One', cursive;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .coins {
+            background: var(--accent-color);
+            color: #333;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .user-info {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 18px;
+            border-radius: 25px;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .user-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--nav-bg);
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 150px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            margin-top: 5px;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .user-option {
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+            color: var(--text-color); /* Ensure dropdown text color is consistent */
+            text-decoration: none;
+        }
+
+        .user-option:hover {
+            background: var(--hover-color);
+        }
+
+        .theme-selector {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 18px;
+            border-radius: 25px;
+            color: var(--text-color);
+            cursor: pointer;
+            position: relative;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-selector:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--nav-bg);
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 150px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .theme-dropdown.show {
+            display: block;
+        }
+
+        .theme-option {
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            color: var(--text-color); /* Ensure dropdown text color is consistent */
+        }
+
+        .theme-option:hover {
+            background: var(--hover-color);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--nav-bg);
+            padding: 20px;
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            position: fixed;
+            left: 0;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+        }
+
+        .nav-section {
+            margin-bottom: 25px;
+            text-decoration: none;
+        }
+
+        .nav-title {
+            color: var(--accent-color);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-family: 'Fredoka One', cursive;
+            text-decoration: none;
+        }
+
+        .nav-item {
+            background: var(--card-bg);
+            margin-bottom: 10px;
+            padding: 15px 18px;
+            border-radius: 15px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: var(--hover-color);
+            transform: translateX(8px) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            align-content: start;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            color: var(--text-color);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .progress-ring {
+            width: 80px;
+            height: 80px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .progress-circle {
+            fill: none;
+            stroke: rgba(255,255,255,0.3);
+            stroke-width: 8;
+        }
+
+        .progress-fill {
+            fill: none;
+            stroke: var(--accent-color);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dasharray 0.5s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .stats-number {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-align: center;
+            margin: 15px 0;
+            font-family: 'Fredoka One', cursive;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .stats-label {
+            text-align: center;
+            opacity: 0.9;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .ask-buddy {
+            grid-column: 1 / -1;
+            padding: 40px;
+            text-align: center;
+            background: var(--card-bg);
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 2px solid var(--accent-color);
+        }
+
+        .buddy-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px 25px;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.2);
+            color: var(--text-color);
+            font-size: 18px;
+            margin: 25px 0;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+            box-shadow: inset 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .buddy-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .ask-button {
+            background: var(--accent-color);
+            color: #333;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 35px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Fredoka One', cursive;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ask-button:hover {
+            transform: scale(1.15) translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+
+        .fact-content {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 250px;
+            }
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .progress {
+            height: 20px;
+            border-radius: 10px;
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        .progress-bar {
+            background-color: var(--accent-color);
+        }
+
+        .last-score {
+            font-weight: 600;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border-radius: 15px;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .modal-title {
+            font-family: 'Fredoka One', cursive;
+            color: var(--accent-color);
+        }
+
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 40vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="theme-jungle">
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">🌿</div>
+            KIDORA 🌟
+        </div>
+        <div class="header-right">
+            
+            <div class="user-info" onclick="toggleUserDropdown()">
+                👋 Hi, {{first_name}} 💖
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="{% url 'edit' %}" class="user-option">✏️Edit Profile</a>
+                    <br><br>
+                    <a href="{% url 'logout' %}" class="user-option">🚪Logout</a>
+                </div>
+            </div>
+            <div class="theme-selector" onclick="toggleThemeDropdown()">
+                🎨 Theme 🌈
+                <div class="theme-dropdown" id="themeDropdown">
+                    <div class="theme-option" onclick="changeTheme('jungle')">🌿 Jungle Adventure</div>
+                    <div class="theme-option" onclick="changeTheme('doraemon')">🤖 Doraemon Magic</div>
+                    <div class="theme-option" onclick="changeTheme('disney')">🏰 Disney Dreams</div>
+                    <div class="theme-option" onclick="changeTheme('shinchan')">😄 Shinchan Fun</div>
+                    <div class="theme-option" onclick="changeTheme('anime')">⚡ Anime Power</div>
+                    <div class="theme-option" onclick="changeTheme('marvel')">🦸 Marvel Heroes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="jungle-animals">
+            <div class="butterfly">🦋</div>
+            <div class="butterfly">🦋</div>
+            <div class="butterfly">🦋</div>
+            <div class="butterfly">🦋</div>
+
+            <div class="bird">🐦</div>
+            <div class="bird">🐦</div>
+            <div class="bird">🐦</div>
+
+            <div class="monkey">🐒</div>
+            <div class="monkey">🐒</div>
+            <div class="monkey">🐒</div>
+        </div>
+
+        <div class="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">🌳 My Jungle 🦋</div>
+                <div class="nav-item">
+                    <div class="nav-icon">🌟</div>
+                    <a href="{% url 'dashboard' %}" class="user-option"> Explore Today! ✨ </a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">❤️</div>
+                    My Favourite 💕
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">📚 Learning Zone 🎓</div>
+                
+                <div class="nav-item">
+                    <div class="nav-icon">🕳️</div>
+                    <a href="{% url 'story_generate' %}" class="user-option">Story Caves 📖</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">✒️</div>
+                    <a href="{% url 'rhyme_generator' %}" class="user-option">Rhymes World 📝</a>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">🎯 Quiz Challenge 🏆</div>
+                <div class="nav-item">
+                    <div class="nav-icon">💪</div>
+                    <a href="{% url 'quiz' %}" class="user-option" color:white>Strengthen Learning 🧠</a>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">���� Progress Track 🚀</div>
+                <div class="nav-item">
+                    <div class="nav-icon">📈</div>
+                    <a href="{% url 'progress_level' %}" class="user-option">Progress Level 📊</a>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">💬 Help Desk 🆘</div>
+                <div class="nav-item">
+                    <div class="nav-icon">📝</div>
+                    <a href="{% url 'feedback' %}" class="user-option">Feedback 💭</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">👤</div>
+                    <a href="{% url 'user_profile' %}" class="user-option">My Profile 🌟</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            {% for subject in subjects %}
+            <div class="card" data-bs-toggle="modal" data-bs-target="#subjectModal-{{ subject.id }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ subject.name }}</h5>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Overall Progress</span>
+                            <span>{{ subject.progress.average_percentage|floatformat:2 }}%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: {{ subject.progress.average_percentage }}%;" aria-valuenow="{{ subject.progress.average_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="last-score">
+                        Last Score: {{ subject.progress.last_score|default:"N/A" }}%
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="subjectModal-{{ subject.id }}" tabindex="-1" aria-labelledby="subjectModalLabel-{{ subject.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="subjectModalLabel-{{ subject.id }}">{{ subject.name }} Analysis</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {% if subject.quiz_set.all %}
+                                <div class="chart-container">
+                                    <canvas class="quiz-chart" 
+                                            data-labels='[{% for quiz in subject.quiz_set.all %}"{{ quiz.topic.name|default:"General" }}"{% if not forloop.last %},{% endif %}{% endfor %}]'
+                                            data-scores='[{% for quiz in subject.quiz_set.all %}{{ quiz.score }}{% if not forloop.last %},{% endif %}{% endfor %}]'>
+                                    </canvas>
+                                </div>
+                                {% if subject.progress.suggestion %}
+                                    <hr>
+                                    <h5>Suggestions for you to read:</h5>
+                                    <p>{{ subject.progress.suggestion }}</p>
+                                {% endif %}
+                            {% else %}
+                                <p class="text-center">No quiz data available for this subject yet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/progress_level.js' %}"></script>
+    <script>
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function editProfile() {
+            alert('✏️ Edit Profile clicked! 🌟');
+            toggleUserDropdown();
+        }
+
+        function logout() {
+            if(confirm('🚪 Are you sure you want to logout? 😊')) {
+                alert('👋 Goodbye Dikshaa! See you soon! 🌟');
+            }
+            toggleUserDropdown();
+        }
+
+        function toggleThemeDropdown() {
+            const dropdown = document.getElementById('themeDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function changeTheme(theme) {
+            const body = document.body;
+            body.className = `theme-${theme}`;
+
+            // Update logo icon based on theme
+            const logoIcon = document.querySelector('.logo-icon');
+            const themeIcons = {
+                jungle: '🌿',
+                doraemon: '🤖',
+                disney: '🏰',
+                shinchan: '😄',
+                anime: '⚡',
+                marvel: '🦸'
+            };
+            logoIcon.textContent = themeIcons[theme];
+
+            // Close dropdown after selection
+            toggleThemeDropdown();
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const themeSelector = document.querySelector('.theme-selector');
+            const themeDropdown = document.getElementById('themeDropdown');
+            const userInfo = document.querySelector('.user-info');
+            const userDropdown = document.getElementById('userDropdown');
+
+            // Check if the click is outside the theme selector or its dropdown
+            if (themeSelector && !themeSelector.contains(event.target)) {
+                themeDropdown.classList.remove('show');
+            }
+
+            // Check if the click is outside the user info or its dropdown
+            if (userInfo && !userInfo.contains(event.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
+
+        // Add hover effects to cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Initialize theme on load (optional, you might load from user settings)
+        document.addEventListener('DOMContentLoaded', () => {
+            // You can load the initial theme from a user setting or a cookie here
+            // For now, it defaults to 'jungle' from the body class
+            // changeTheme('jungle'); // Uncomment if you want to explicitly run this on load
+        });
+    </script>
+</body>
+</html>
