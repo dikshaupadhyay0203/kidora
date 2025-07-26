@@ -425,24 +425,38 @@
         {% endfor %}
         {% endif %}
         <form method="POST">
-            {% csrf_token %}
-            <label for="fname">First Name</label>
-            <input type="text" id="fname" name="first_name" placeholder="Enter your first name" required>
+    {% csrf_token %}
+    
+    {% if form.errors %}
+        <div class="alert">
+            {% for field, error_list in form.errors.items %}
+                {% for error in error_list %}
+                    {{ error }}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
 
-            <label for="lname">Last Name</label>
-            <input type="text" id="lname" name="last_name" placeholder="Enter your last name" required>
+    <label for="{{ form.first_name.id_for_label }}">First Name</label>
+    {{ form.first_name }}
 
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Choose a username" required>
+    <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+    {{ form.last_name }}
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+    <label for="{{ form.username.id_for_label }}">Username</label>
+    {{ form.username }}
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Create a password" required>
+    <label for="{{ form.email.id_for_label }}">Email</label>
+    {{ form.email }}
 
-            <button type="submit">🎉 Register</button>
-        </form>
+    <label for="{{ form.password.id_for_label }}">Password</label>
+    {{ form.password }}
+
+    <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+    {{ form.password2 }}
+
+    <button type="submit">🎉 Register</button>
+</form>
     </div>
     <br>
     <br>
