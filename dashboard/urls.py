@@ -10,7 +10,7 @@ urlpatterns = [
     path('ask-buddy/', views.ask_buddy, name='ask_buddy'),
     path('quiz/',views.quiz,name="quiz"),
     path('quiz/complete/', views.quiz_complete, name='quiz_complete'),
-
+    path('progress-level/', views.progress_level, name='progress_level'),
     path('user-profile', views.user_profile, name="user_profile"),
 ]
 
