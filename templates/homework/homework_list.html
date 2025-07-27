@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Kidora - Jungle Adventure</title>
+    <title>Kidora - My Homework</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fredoka+One:wght@400&display=swap');
 
@@ -19,7 +19,6 @@
             font-family: 'Quicksand', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
-            /* Apply the background image and properties here */
             background-image: var(--background-image);
             background-size: cover;
             background-position: center;
@@ -37,7 +36,7 @@
             --card-bg: rgba(76, 175, 80, 0.9);
             --nav-bg: rgba(46, 125, 50, 0.95);
             --hover-color: #66BB6A;
-            --background-image: url("{% static 'images/monkey.png' %}"); /* Default Jungle background image */
+            --background-image: url("{% static 'images/monkey.png' %}");
         }
 
         /* Doraemon Theme */
@@ -49,7 +48,7 @@
             --card-bg: rgba(2, 136, 209, 0.9);
             --nav-bg: rgba(2, 119, 189, 0.95);
             --hover-color: #29B6F6;
-            --background-image: url("{% static 'images/doraemon.png' %}"); /* Doraemon background image */
+            --background-image: url("{% static 'images/doraemon.png' %}");
         }
 
         /* Disney Theme */
@@ -61,7 +60,7 @@
             --card-bg: rgba(233, 30, 99, 0.9);
             --nav-bg: rgba(194, 24, 91, 0.95);
             --hover-color: #F48FB1;
-            --background-image: url("{% static 'images/princess.jpg' %}"); /* Disney background image */
+            --background-image: url("{% static 'images/princess.jpg' %}");
         }
 
         /* Shinchan Theme */
@@ -73,7 +72,7 @@
             --card-bg: hsla(13, 86%, 28%, 0.9);
             --nav-bg: hsla(8, 78%, 61%, 0.95);
             --hover-color: #FFB74D;
-            --background-image: url("{% static 'images/sinchan.jpg' %}"); /* Shinchan background image */
+            --background-image: url("{% static 'images/sinchan.jpg' %}");
         }
 
         /* Anime Theme */
@@ -85,7 +84,7 @@
             --card-bg: rgba(156, 39, 176, 0.9);
             --nav-bg: rgba(123, 31, 162, 0.95);
             --hover-color: #BA68C8;
-            --background-image: url("{% static 'images/animen.jpg' %}"); /* Anime background image */
+            --background-image: url("{% static 'images/animen.jpg' %}");
         }
 
         /* Marvel Theme */
@@ -97,29 +96,23 @@
             --card-bg: rgba(211, 47, 47, 0.9);
             --nav-bg: rgba(198, 40, 40, 0.95);
             --hover-color: #EF5350;
-            --background-image: url("{% static 'images/spider.jpg' %}"); /* Marvel background image */
+            --background-image: url("{% static 'images/spider.jpg' %}");
         }
 
         .container {
             display: flex;
             min-height: 100vh;
-            /* Removed primary-bg here as body handles the full background */
             position: relative;
         }
 
         .container::before {
-            /* This pseudo-element was for a subtle pattern overlay.
-               If you just want the image, you can remove or comment this out.
-               If you want a subtle overlay *on top* of your image, adjust opacity. */
             content: '';
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            /* Removed fixed pattern, now the image handles background */
-            /* background-image: url('data:image/svg+xml,...'); */
-            opacity: 0; /* Set to 0 if you don't want any overlay */
+            opacity: 0;
             z-index: -1;
         }
 
@@ -233,19 +226,6 @@
             gap: 15px;
         }
 
-        .coins {
-            background: var(--accent-color);
-            color: #333;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
         .user-info {
             background: rgba(255,255,255,0.2);
             padding: 10px 18px;
@@ -287,7 +267,7 @@
             cursor: pointer;
             transition: background 0.3s;
             font-weight: 600;
-            color: var(--text-color); /* Ensure dropdown text color is consistent */
+            color: var(--text-color);
             text-decoration: none;
         }
 
@@ -334,7 +314,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s;
-            color: var(--text-color); /* Ensure dropdown text color is consistent */
+            color: var(--text-color);
         }
 
         .theme-option:hover {
@@ -401,7 +381,6 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-
         }
 
         /* Main Content */
@@ -410,155 +389,264 @@
             margin-left: 280px;
             margin-top: 70px;
             padding: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            align-content: start;
         }
 
-        /* Cards */
-        .card {
+        /* Homework Page Specific Styles */
+        .homework-header {
             background: var(--card-bg);
             border-radius: 20px;
-            padding: 25px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
             color: var(--text-color);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2);
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .card-title {
-            font-size: 20px;
+        .homework-title {
+            font-size: 36px;
             font-weight: 700;
             font-family: 'Fredoka One', cursive;
-        }
-
-        .progress-ring {
-            width: 80px;
-            height: 80px;
-            margin: 20px auto;
-            position: relative;
-        }
-
-        .progress-circle {
-            fill: none;
-            stroke: rgba(255,255,255,0.3);
-            stroke-width: 8;
-        }
-
-        .progress-fill {
-            fill: none;
-            stroke: var(--accent-color);
-            stroke-width: 8;
-            stroke-linecap: round;
-            transition: stroke-dasharray 0.5s ease;
-        }
-
-        .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 18px;
-            font-weight: 700;
-            font-family: 'Fredoka One', cursive;
-        }
-
-        .stats-number {
-            font-size: 42px;
-            font-weight: 700;
+            margin-bottom: 10px;
             color: var(--accent-color);
-            text-align: center;
-            margin: 15px 0;
-            font-family: 'Fredoka One', cursive;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
-        .stats-label {
-            text-align: center;
-            opacity: 0.9;
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .ask-buddy {
-            grid-column: 1 / -1;
-            padding: 40px;
-            text-align: center;
-            background: var(--card-bg);
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 2px solid var(--accent-color);
-        }
-
-        .buddy-input {
-            width: 100%;
-            max-width: 600px;
-            padding: 20px 25px;
-            border: none;
-            border-radius: 30px;
-            background: rgba(255,255,255,0.2);
-            color: var(--text-color);
+        .homework-subtitle {
             font-size: 18px;
-            margin: 25px 0;
-            backdrop-filter: blur(10px);
+            opacity: 0.9;
             font-weight: 600;
-            box-shadow: inset 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
-        .buddy-input::placeholder {
-            color: rgba(255,255,255,0.7);
-        }
-
-        .ask-button {
+        .add-homework-btn {
             background: var(--accent-color);
             color: #333;
             border: none;
-            padding: 18px 40px;
-            border-radius: 35px;
-            font-size: 20px;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Fredoka One', cursive;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
             text-transform: uppercase;
             letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .ask-button:hover {
-            transform: scale(1.15) translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        .add-homework-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            color: #333;
+            text-decoration: none;
         }
 
-        .fact-content {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 15px;
+        /* Homework List Styles */
+        .homework-list {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            color: var(--text-color);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .homework-list-title {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Fredoka One', cursive;
+            margin-bottom: 25px;
+            color: var(--accent-color);
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .homework-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .homework-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--accent-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .homework-item:hover {
+            transform: translateX(5px) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .homework-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .homework-item:hover::before {
+            transform: translateX(100%);
+        }
+
+        .homework-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .homework-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .homework-title-item {
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'Fredoka One', cursive;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .homework-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .due-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .completion-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .status-completed {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status-pending {
+            background: #FF9800;
+            color: white;
+        }
+
+        .homework-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .edit-btn {
+            background: var(--accent-color);
+            color: #333;
+        }
+
+        .delete-btn {
+            background: #FF5252;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05) translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .edit-btn:hover {
+            color: #333;
+        }
+
+        .delete-btn:hover {
+            color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            border: 2px dashed rgba(255,255,255,0.3);
+        }
+
+        .empty-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Fredoka One', cursive;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .empty-description {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 25px;
         }
 
         /* Responsive */
@@ -579,6 +667,13 @@
             .main-content {
                 margin-left: 0;
             }
+            .homework-content {
+                flex-direction: column;
+            }
+            .homework-actions {
+                justify-content: center;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -589,7 +684,6 @@
             KIDORA 🌟
         </div>
         <div class="header-right">
-            
             <div class="user-info" onclick="toggleUserDropdown()">
                 👋 Hi, {{first_name}} 💖
                 <div class="user-dropdown" id="userDropdown">
@@ -637,14 +731,13 @@
                 </div>
                 <div class="nav-item">
                     <div class="nav-icon">❤️</div>
-                    <a href="{% url 'homework_list' %}" class="user-option"> Task Treehouse🌲</a>
-
+                   <a href="{% url 'homework_list' %}" class="user-option"> Task Treehouse🌲</a>
+                   
                 </div>
             </div>
 
             <div class="nav-section">
                 <div class="nav-title">📚 Learning Zone 🎓</div>
-                
                 <div class="nav-item">
                     <div class="nav-icon">🕳️</div>
                     <a href="{% url 'story_generate' %}" class="user-option">Story Caves 📖</a>
@@ -659,7 +752,7 @@
                 <div class="nav-title">🎯 Quiz Challenge 🏆</div>
                 <div class="nav-item">
                     <div class="nav-icon">💪</div>
-                    <a href="{% url 'quiz' %}" class="user-option" color:white>Strengthen Learning 🧠</a>
+                    <a href="{% url 'quiz' %}" class="user-option">Strengthen Learning 🧠</a>
                 </div>
             </div>
 
@@ -690,75 +783,66 @@
                     <div class="alert alert-{{ message.tags }}">{{ message }}</div>
                 {% endfor %}
             {% endif %}
-            <div class="card ask-buddy">
-                <form action="{% url 'ask_buddy' %}" method="POST">
-                    {% csrf_token %}
-                <div class="card-header" style="justify-content: center; margin-bottom: 25px;">
-                    <div class="card-icon" style="width: 60px; height: 60px; font-size: 30px;">🦜</div>
-                    <div class="card-title" style="font-size: 28px;">Ask Your Buddy 💬</div>
-                </div>
-                <p style="font-size: 18px; margin-bottom: 20px; opacity: 0.9; font-weight: 600;">Your friendly jungle companion is here to help! 🌿✨</p>
-                <input type="text" class="buddy-input" placeholder="What's on your jungle mind? 🌿💭">
-                <br>
-                <button class="ask-button">Ask Now! 🚀</button>
-                </form>
+
+            <!-- Homework Page Header -->
+            <div class="homework-header">
+                <div class="homework-title">📚 My Homework 📝</div>
+                <div class="homework-subtitle">Keep track of all your assignments and never miss a deadline! 🎯✨</div>
+                <a href="{% url 'add_homework' %}" class="add-homework-btn">
+                    ➕ Add New Homework 🌟
+                </a>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🎮</div>
-                    <div class="card-title">Jungle Quests 🗺️</div>
+            <!-- Homework List -->
+            <div class="homework-list">
+                <div class="homework-list-title">
+                    <span>📋</span> All Homework <span>🎒</span>
                 </div>
-                <div class="stats-number">55</div>
-                <div class="stats-label">Jungle Quests Completed! 🎉</div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">⚡</div>
-                    <div class="card-title">Adventure Progress 🌟</div>
-                </div>
-                <div class="progress-ring">
-                    <svg width="80" height="80">
-                        <circle class="progress-circle" cx="40" cy="40" r="32"></circle>
-                        <circle class="progress-fill" cx="40" cy="40" r="32"
-                                stroke-dasharray="20 200"
-                                stroke-dashoffset="0"
-                                transform="rotate(-90 40 40)"></circle>
-                    </svg>
-                    <div class="progress-text">10%</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">❓</div>
-                    <div class="card-title">FAQs 🤔</div>
-                </div>
-                <div class="fact-content">
-                    <p>Frequently Asked Questions 💭</p>
-                    <p style="margin-top: 10px; opacity: 0.8; font-size: 14px;">Get answers to common questions about your jungle adventure! 🌿✨</p>
-                </div>
+                
+                <ul class="homework-items">
+                    {% for hw in homeworks %}
+                        <li class="homework-item">
+                            <div class="homework-content">
+                                <div class="homework-info">
+                                    <div class="homework-title-item">
+                                        📖 {{ hw.title }}
+                                    </div>
+                                    <div class="homework-meta">
+                                        <div class="due-date">
+                                            <span>📅</span> Due: {{ hw.due_date }}
+                                        </div>
+                                        <div class="completion-status {% if hw.completed %}status-completed{% else %}status-pending{% endif %}">
+                                            {% if hw.completed %}
+                                                <span>✅</span> Completed
+                                            {% else %}
+                                                <span>⏳</span> Pending
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="homework-actions">
+                                    <a href="{% url 'update_homework' hw.pk %}" class="action-btn edit-btn">
+                                        <span>✏️</span> Edit
+                                    </a>
+                                    <a href="{% url 'delete_homework' hw.pk %}" class="action-btn delete-btn">
+                                        <span>🗑️</span> Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    {% empty %}
+                        <li class="empty-state">
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
 
     <script>
+        // Dropdown functions
         function toggleUserDropdown() {
             const dropdown = document.getElementById('userDropdown');
             dropdown.classList.toggle('show');
-        }
-
-        function editProfile() {
-            alert('✏️ Edit Profile clicked! 🌟');
-            toggleUserDropdown();
-        }
-
-        function logout() {
-            if(confirm('🚪 Are you sure you want to logout? 😊')) {
-                alert('👋 Goodbye Dikshaa! See you soon! 🌟');
-            }
-            toggleUserDropdown();
         }
 
         function toggleThemeDropdown() {
@@ -804,23 +888,108 @@
             }
         });
 
-        // Add hover effects to cards
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px) scale(1.02)';
+        // Add hover effects to homework items
+        document.querySelectorAll('.homework-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(8px) translateY(-3px)';
+                this.style.boxShadow = '0 12px 35px rgba(0,0,0,0.4)';
             });
 
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0) translateY(0)';
+                this.style.boxShadow = 'none';
             });
         });
 
-        // Initialize theme on load (optional, you might load from user settings)
+        // Add click animation to buttons
+        document.querySelectorAll('.action-btn, .add-homework-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255,255,255,0.6)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.pointerEvents = 'none';
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add CSS animation for ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            .homework-item {
+                animation: slideIn 0.5s ease-out forwards;
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            
+            @keyframes slideIn {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Animate homework items on load
         document.addEventListener('DOMContentLoaded', () => {
-            // You can load the initial theme from a user setting or a cookie here
-            // For now, it defaults to 'jungle' from the body class
-            // changeTheme('jungle'); // Uncomment if you want to explicitly run this on load
+            const items = document.querySelectorAll('.homework-item');
+            items.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+            });
         });
+
+        // Confirmation for delete actions
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (!confirm('🗑️ Are you sure you want to delete this homework? This action cannot be undone! 😢')) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Add pulse animation to completion status
+        document.querySelectorAll('.completion-status').forEach(status => {
+            if (status.classList.contains('status-pending')) {
+                status.style.animation = 'pulse 2s infinite';
+            }
+        });
+
+        // Add CSS for pulse animation
+        const pulseStyle = document.createElement('style');
+        pulseStyle.textContent = `
+            @keyframes pulse {
+                0% { opacity: 1; }
+                50% { opacity: 0.7; }
+                100% { opacity: 1; }
+            }
+        `;
+        document.head.appendChild(pulseStyle);
     </script>
 </body>
 </html>

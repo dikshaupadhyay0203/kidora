@@ -157,8 +157,8 @@ def quiz_complete(request):
         profile.coins = F('coins') + 2
         profile.save()
         
-        return redirect('progress_level')
-    return redirect('dashboard')
+        return redirect('quiz_complete')
+    return redirect('quiz_complete')
 
 @login_required
 def rhyme_generator(request):
