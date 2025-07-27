@@ -709,8 +709,9 @@
                     <div class="card-icon">🎮</div>
                     <div class="card-title">Jungle Quests 🗺️</div>
                 </div>
-                <div class="stats-number">55</div>
-                <div class="stats-label">Jungle Quests Completed! 🎉</div>
+                <div class="stats-label" style="margin-bottom: 15px;">A new quest will begin in 2 days. Stay tuned!</div>
+                <div class="stats-number" style="font-size: 28px; margin-bottom: 5px;">96.7th</div>
+                <div class="stats-label">Percentile Rank</div>
             </div>
 
             <div class="card">
@@ -722,24 +723,27 @@
                     <svg width="80" height="80">
                         <circle class="progress-circle" cx="40" cy="40" r="32"></circle>
                         <circle class="progress-fill" cx="40" cy="40" r="32"
-                                stroke-dasharray="20 200"
+                                stroke-dasharray="{{ stroke_dasharray_value }} {{ circumference }}"
                                 stroke-dashoffset="0"
                                 transform="rotate(-90 40 40)"></circle>
                     </svg>
-                    <div class="progress-text">10%</div>
+                    <div class="progress-text">{{ overall_average|floatformat:0 }}%</div>
                 </div>
+                <div class="stats-label" style="margin-top: 15px; font-style: italic;">"Every quiz you take is a step forward in your adventure. Keep going!</div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">❓</div>
-                    <div class="card-title">FAQs 🤔</div>
+            <a href="{% url 'faq' %}" style="text-decoration: none; color: inherit;">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">❓</div>
+                        <div class="card-title">FAQs 🤔</div>
+                    </div>
+                    <div class="fact-content">
+                        <p>Frequently Asked Questions 💭</p>
+                        <p style="margin-top: 10px; opacity: 0.8; font-size: 14px;">Get answers to common questions about your jungle adventure! 🌿✨</p>
+                    </div>
                 </div>
-                <div class="fact-content">
-                    <p>Frequently Asked Questions 💭</p>
-                    <p style="margin-top: 10px; opacity: 0.8; font-size: 14px;">Get answers to common questions about your jungle adventure! 🌿✨</p>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
 
