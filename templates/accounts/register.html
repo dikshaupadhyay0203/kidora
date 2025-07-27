@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kidora - Jungle Learning Adventure</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
+        /* Import Google Fonts at the very top of your style block */
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fredoka+One&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -13,9 +17,7 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Comic Sans MS', cursive, sans-serif; /* Set the font here */
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand to the body */
             overflow-x: hidden;
             background: linear-gradient(135deg, #1a4a2e 0%, #2d6a42 50%, #0f2617 100%);
             min-height: 100vh;
@@ -30,13 +32,17 @@
             height: 100%;
             z-index: -1;
             background:
+                /* 🌟 REPLACE 'YOUR_IMAGE_URL_HERE' WITH YOUR JUNGLE BACKGROUND IMAGE URL 🌟 */
                 url("{% static 'images/background.png' %}")
                 no-repeat center center / cover,
+                /* Dark overlay for better text readability */
                 linear-gradient(rgba(6, 68, 32, 0.4), rgba(15, 38, 23, 0.6)),
+                /* Fallback gradient in case image doesn't load */
                 linear-gradient(135deg, #1a4a2e 0%, #2d6a42 50%, #0f2617 100%);
-            background-attachment: fixed;
+            background-attachment: fixed; /* Creates parallax effect */
         }
 
+        /* Optional: Add a subtle overlay pattern on top of your image */
         .jungle-bg::after {
             content: '';
             position: absolute;
@@ -45,6 +51,7 @@
             width: 100%;
             height: 100%;
             background:
+                /* Subtle leaf pattern overlay */
                 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><ellipse cx="50" cy="50" rx="15" ry="30" fill="%23228B22" opacity="0.1" transform="rotate(45)"/><ellipse cx="150" cy="150" rx="20" ry="35" fill="%2332CD32" opacity="0.08" transform="rotate(-30)"/></svg>') repeat;
             pointer-events: none;
         }
@@ -56,11 +63,78 @@
             pointer-events: none;
         }
 
+        .butterfly {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flutter 4s ease-in-out infinite;
+        }
+
+        .butterfly::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: -10px;
+            left: 0;
+        }
+
+        .bird {
+            width: 30px;
+            height: 20px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            animation: fly 6s linear infinite;
+        }
+
+        .bird::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 15px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            top: -5px;
+            left: 15px;
+        }
+
+        .monkey {
+            width: 50px;
+            height: 50px;
+            background: #8B4513;
+            border-radius: 50%;
+            animation: swing 5s ease-in-out infinite;
+        }
+
+        .monkey::before {
+            content: '🐵';
+            position: absolute;
+            font-size: 40px;
+            top: 5px;
+            left: 5px;
+        }
+
         @keyframes flutter {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             25% { transform: translateY(-20px) rotate(5deg); }
             50% { transform: translateY(-10px) rotate(-5deg); }
             75% { transform: translateY(-25px) rotate(3deg); }
+        }
+
+        @keyframes fly {
+            0% { transform: translateX(-100px) translateY(0px); }
+            50% { transform: translateX(50vw) translateY(-30px); }
+            100% { transform: translateX(calc(100vw + 100px)) translateY(0px); }
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: translateX(0px) rotate(0deg); }
+            25% { transform: translateX(30px) rotate(10deg); }
+            50% { transform: translateX(0px) rotate(0deg); }
+            75% { transform: translateX(-30px) rotate(-10deg); }
         }
 
         /* Navigation */
@@ -90,14 +164,10 @@
             font-weight: bold;
             color: white;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-family: 'Fredoka One', cursive; /* Applied Fredoka One to the logo */
         }
 
-        .logo::before {
-            content: '🦜';
-            margin-right: 10px;
-            font-size: 2.5rem;
-            animation: bounce 2s infinite;
-        }
+        
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0px); }
@@ -118,6 +188,7 @@
             border-radius: 25px;
             transition: all 0.3s ease;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand to nav links */
         }
 
         .nav-links a:hover {
@@ -139,6 +210,7 @@
             text-decoration: none;
             transition: all 0.3s ease;
             cursor: pointer;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand to buttons */
         }
 
         .btn-login {
@@ -172,6 +244,7 @@
             border-radius: 20px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             color: #2e2e2e;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
         }
 
         .register-container h2 {
@@ -194,6 +267,7 @@
             border-radius: 10px;
             margin-bottom: 1rem;
             font-size: 1rem;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
         }
 
         .register-container button {
@@ -206,6 +280,7 @@
             cursor: pointer;
             width: 100%;
             transition: background 0.3s ease;
+            font-family: 'Fredoka One', cursive; /* Applied Fredoka One */
         }
 
         .register-container button:hover {
@@ -226,6 +301,7 @@
             border-radius: 10px;
             font-weight: bold;
             text-align: center;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
         }
 
 
@@ -256,11 +332,13 @@
             color: #90EE90;
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-family: 'Fredoka One', cursive; /* Applied Fredoka One to footer headings */
         }
 
         .footer-kidora-logo-section .logo {
             font-size: 2.5rem;
             margin-bottom: 10px;
+            font-family: 'Fredoka One', cursive; /* Ensure Fredoka One for footer logo */
         }
 
         .footer-kidora-logo-section .logo::before {
@@ -273,12 +351,14 @@
             color: #C0FFC0;
             margin-bottom: 15px;
             line-height: 1.4;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand to tagline */
         }
 
         .kidora-quote {
             font-size: 0.9rem;
             color: #A0FFA0;
             line-height: 1.5;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand to quote */
         }
 
         .kidora-quick-links ul {
@@ -296,6 +376,7 @@
             text-decoration: none;
             transition: color 0.3s ease, transform 0.3s ease;
             display: inline-block;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand to quick links */
         }
 
         .kidora-quick-links a:hover {
@@ -309,6 +390,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand to contact info paragraphs */
         }
 
         .kidora-contact-info p .icon-mail,
@@ -321,6 +403,7 @@
             color: #E0FFE0;
             text-decoration: none;
             transition: color 0.3s ease;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand to contact info links */
         }
 
         .kidora-contact-info a:hover {
@@ -344,6 +427,7 @@
             margin: 0 auto;
             font-size: 0.9rem;
             color: #A0FFA0;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand to footer bottom text */
         }
 
         .footer-bottom .powered-by {
@@ -395,6 +479,26 @@
                 gap: 10px;
             }
         }
+      
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    width: 40px;
+    height: auto;
+}
+
+.logo-text {
+    font-family: 'Fredoka One', cursive;
+    font-size: 28px;
+    color: white;
+    font-weight: bold;
+}
+
     </style>
 </head>
 <body>
@@ -402,7 +506,10 @@
 
     <nav>
         <div class="nav-container">
-            <div class="logo">Kidora</div>
+           <div class="logo">
+        <img src="{% static 'images/main_logo.jpeg' %}" alt="Kidora Logo" class="logo-icon">
+        <span class="logo-text"><a href="{% url 'home' %}" style="text-decoration: none; color: white;">  KIDORA</a></span>
+    </div>
             <ul class="nav-links">
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'home' %}">About Us</a></li>
