@@ -1,0 +1,570 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Kidora - FAQs</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fredoka+One:wght@400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-image: var(--background-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        :root {
+            --primary-bg: linear-gradient(135deg, #4CAF50, #8BC34A);
+            --secondary-bg: #2E7D32;
+            --accent-color: #FFC107;
+            --text-color: #ffffff;
+            --card-bg: rgba(76, 175, 80, 0.9);
+            --nav-bg: rgba(46, 125, 50, 0.95);
+            --hover-color: #66BB6A;
+            --background-image: url("{% static 'images/monkey.png' %}");
+        }
+
+        .theme-doraemon {
+            --primary-bg: linear-gradient(135deg, #0288D1, #03A9F4);
+            --secondary-bg: #0277BD;
+            --accent-color: #FF5722;
+            --text-color: #ffffff;
+            --card-bg: rgba(2, 136, 209, 0.9);
+            --nav-bg: rgba(2, 119, 189, 0.95);
+            --hover-color: #29B6F6;
+            --background-image: url("{% static 'images/doraemon.png' %}");
+        }
+
+        .theme-disney {
+            --primary-bg: linear-gradient(135deg, #E91E63, #F06292);
+            --secondary-bg: #C2185B;
+            --accent-color: #FFD700;
+            --text-color: #ffffff;
+            --card-bg: rgba(233, 30, 99, 0.9);
+            --nav-bg: rgba(194, 24, 91, 0.95);
+            --hover-color: #F48FB1;
+            --background-image: url("{% static 'images/princess.jpg' %}");
+        }
+
+        .theme-shinchan {
+            --primary-bg: linear-gradient(135deg, #FF9800, #FFC107);
+            --secondary-bg: #F57C00;
+            --accent-color: hsl(120, 9%, 6%);
+            --text-color: #ffffff;
+            --card-bg: hsla(13, 86%, 28%, 0.9);
+            --nav-bg: hsla(8, 78%, 61%, 0.95);
+            --hover-color: #FFB74D;
+            --background-image: url("{% static 'images/sinchan.jpg' %}");
+        }
+
+        .theme-anime {
+            --primary-bg: linear-gradient(135deg, #9C27B0, #E91E63);
+            --secondary-bg: #7B1FA2;
+            --accent-color: #00BCD4;
+            --text-color: #ffffff;
+            --card-bg: rgba(156, 39, 176, 0.9);
+            --nav-bg: rgba(123, 31, 162, 0.95);
+            --hover-color: #BA68C8;
+            --background-image: url("{% static 'images/animen.jpg' %}");
+        }
+
+        .theme-marvel {
+            --primary-bg: linear-gradient(135deg, #D32F2F, #F44336);
+            --secondary-bg: #C62828;
+            --accent-color: #FFD700;
+            --text-color: #ffffff;
+            --card-bg: rgba(211, 47, 47, 0.9);
+            --nav-bg: rgba(198, 40, 40, 0.95);
+            --hover-color: #EF5350;
+            --background-image: url("{% static 'images/spider.jpg' %}");
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--nav-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-color);
+            font-family: 'Fredoka One', cursive;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 18px;
+            border-radius: 25px;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--nav-bg);
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 150px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            margin-top: 5px;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .user-option {
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .user-option:hover {
+            background: var(--hover-color);
+        }
+
+        .theme-selector {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 18px;
+            border-radius: 25px;
+            color: var(--text-color);
+            cursor: pointer;
+            position: relative;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--nav-bg);
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 150px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .theme-dropdown.show {
+            display: block;
+        }
+
+        .theme-option {
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            color: var(--text-color);
+        }
+
+        .theme-option:hover {
+            background: var(--hover-color);
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--nav-bg);
+            padding: 20px;
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            position: fixed;
+            left: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-section {
+            margin-bottom: 25px;
+        }
+
+        .nav-title {
+            color: var(--accent-color);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .nav-item {
+            background: var(--card-bg);
+            margin-bottom: 10px;
+            padding: 15px 18px;
+            border-radius: 15px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: var(--hover-color);
+            transform: translateX(8px) translateY(-2px);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 30px;
+        }
+
+        .faq-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            color: var(--text-color);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .faq-title {
+            font-size: 36px;
+            font-weight: 700;
+            font-family: 'Fredoka One', cursive;
+            color: var(--accent-color);
+        }
+
+        .accordion-item {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px !important;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+             border-radius: 15px !important;
+        }
+
+        .accordion-button {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 15px !important;
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: var(--accent-color);
+            color: #333;
+            box-shadow: none;
+        }
+
+        .accordion-button::after {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        }
+
+        .accordion-button:not(.collapsed)::after {
+             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        }
+
+        .accordion-body {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: var(--text-color);
+            padding: 20px;
+        }
+    </style>
+</head>
+<body class="theme-jungle">
+    <div class="header">
+        <div class="logo">
+            <img src="{% static 'images/main_logo.jpeg' %}" alt="Kidora Logo" style="height: 32px; width: 32px; vertical-align: middle; margin-right: 8px;">
+        <span style="font-weight: bold;"><span class="logo-text"><a href="{% url 'dashboard' %}" style="text-decoration: none; color: white;">  KIDORA</a></span></span>
+        </div>
+        <div class="header-right">
+            <div class="user-info" onclick="toggleUserDropdown()">
+                👋 Hi, {{first_name}} 💖
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="{% url 'edit' %}" class="user-option">✏️Edit Profile</a>
+                    <br><br>
+                    <a href="{% url 'logout' %}" class="user-option">🚪Logout</a>
+                </div>
+            </div>
+            <div class="theme-selector" onclick="toggleThemeDropdown()">
+                🎨 Theme 🌈
+                <div class="theme-dropdown" id="themeDropdown">
+                    <div class="theme-option" onclick="changeTheme('jungle')">🌿 Jungle Adventure</div>
+                    <div class="theme-option" onclick="changeTheme('doraemon')">🤖 Doraemon Magic</div>
+                    <div class="theme-option" onclick="changeTheme('disney')">🏰 Disney Dreams</div>
+                    <div class="theme-option" onclick="changeTheme('shinchan')">😄 Shinchan Fun</div>
+                    <div class="theme-option" onclick="changeTheme('anime')">⚡ Anime Power</div>
+                    <div class="theme-option" onclick="changeTheme('marvel')">🦸 Marvel Heroes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">🌳 My Jungle 🦋</div>
+                <div class="nav-item">
+                    <div class="nav-icon">🌟</div>
+                    <a href="{% url 'dashboard' %}" class="user-option"> Explore Today! ✨ </a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">❤️</div>
+                    My Favourite 💕
+                </div>
+            </div>
+            <div class="nav-section">
+                <div class="nav-title">📚 Learning Zone 🎓</div>
+                <div class="nav-item">
+                    <div class="nav-icon">🕳️</div>
+                    <a href="{% url 'story_generate' %}" class="user-option">Story Caves 📖</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">✒️</div>
+                    <a href="{% url 'rhyme_generator' %}" class="user-option">Rhymes World 📝</a>
+                </div>
+            </div>
+            <div class="nav-section">
+                <div class="nav-title">🎯 Quiz Challenge 🏆</div>
+                <div class="nav-item">
+                    <div class="nav-icon">💪</div>
+                    <a href="{% url 'quiz' %}" class="user-option" color:white>Strengthen Learning 🧠</a>
+                </div>
+            </div>
+            <div class="nav-section">
+                <div class="nav-title">📊 Progress Track 🚀</div>
+                <div class="nav-item">
+                    <div class="nav-icon">📈</div>
+                    <a href="{% url 'progress_level' %}" class="user-option">Progress Level 📊</a>
+                </div>
+            </div>
+            <div class="nav-section">
+                <div class="nav-title">💬 Help Desk 🆘</div>
+                <div class="nav-item">
+                    <div class="nav-icon">📝</div>
+                    <a href="{% url 'feedback' %}" class="user-option">Feedback 💭</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">👤</div>
+                    <a href="{% url 'user_profile' %}" class="user-option">My Profile 🌟</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="faq-container">
+                <div class="faq-header">
+                    <div class="faq-title">Frequently Asked Questions 🤔</div>
+                </div>
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                What is Kidora?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Kidora is an interactive learning platform for kids, designed to make education fun and engaging through stories, rhymes, quizzes, and more!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                How do I change the theme?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                You can change the theme by clicking on the "Theme" button in the top-right corner and selecting your favorite one from the dropdown menu.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                How can I track my progress?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Visit the "Progress Level" section from the sidebar to see your performance in different subjects and quizzes.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                What are coins for?
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                You earn coins by completing quizzes and other activities. These coins can be used to unlock new features and content in the future!
+                            </div>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                How are the stories and rhymes generated?
+                            </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                The stories and rhymes are generated by an advanced AI model. You can give it a topic, and it will create a unique story or rhyme for you!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingSix">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                Is Kidora free to use?
+                            </button>
+                        </h2>
+                        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, Kidora is currently free to use! We want to make learning accessible to everyone.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingSeven">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                Can I use Kidora on multiple devices?
+                            </button>
+                        </h2>
+                        <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, you can log in to your Kidora account from any device with a web browser, and your progress will be synced.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        function toggleUserDropdown() {
+            document.getElementById('userDropdown').classList.toggle('show');
+        }
+
+        function toggleThemeDropdown() {
+            document.getElementById('themeDropdown').classList.toggle('show');
+        }
+
+        function changeTheme(theme) {
+            document.body.className = `theme-${theme}`;
+            const logoIcon = document.querySelector('.logo-icon');
+            const themeIcons = {
+                jungle: '🌿',
+                doraemon: '🤖',
+                disney: '🏰',
+                shinchan: '😄',
+                anime: '⚡',
+                marvel: '🦸'
+            };
+            logoIcon.textContent = themeIcons[theme];
+            toggleThemeDropdown();
+        }
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.theme-selector')) {
+                document.getElementById('themeDropdown').classList.remove('show');
+            }
+            if (!event.target.closest('.user-info')) {
+                document.getElementById('userDropdown').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
