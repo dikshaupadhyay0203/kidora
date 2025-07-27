@@ -98,7 +98,8 @@ def user_profile(request):
 def story_generate(request):
      if request.method == "GET":
           context = {
-               'user_input': None
+               'user_input': None,
+               'first_name': request.user.first_name,
           }
           return render(request, 'dashboard/story_generator.html', context)
 
@@ -108,7 +109,8 @@ def story_generate(request):
           if user_input:
                main_generate(user_input, static_dir)
                context = {
-                'user_input': user_input
+                'user_input': user_input,
+                'first_name': request.user.first_name,
             }
                return render(request, 'dashboard/story_generator.html', context)
           else:
