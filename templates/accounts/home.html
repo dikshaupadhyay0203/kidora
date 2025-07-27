@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kidora - Jungle Learning Adventure</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
+        /* Import Google Fonts at the very top of your style block */
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fredoka+One&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -13,7 +17,7 @@
         }
 
         body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Quicksand', sans-serif; /* Apply Quicksand to the body */
             overflow-x: hidden;
             background: linear-gradient(135deg, #1a4a2e 0%, #2d6a42 50%, #0f2617 100%);
             min-height: 100vh;
@@ -27,18 +31,14 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: 
-                /* 🌟 REPLACE 'YOUR_IMAGE_URL_HERE' WITH YOUR JUNGLE BACKGROUND IMAGE URL 🌟 */
+            background:
                 url("{% static 'images/background.png' %}")
                 no-repeat center center / cover,
-                /* Dark overlay for better text readability */
                 linear-gradient(rgba(6, 68, 32, 0.4), rgba(15, 38, 23, 0.6)),
-                /* Fallback gradient in case image doesn't load */
                 linear-gradient(135deg, #1a4a2e 0%, #2d6a42 50%, #0f2617 100%);
-            background-attachment: fixed; /* Creates parallax effect */
+            background-attachment: fixed;
         }
 
-        /* Optional: Add a subtle overlay pattern on top of your image */
         .jungle-bg::after {
             content: '';
             position: absolute;
@@ -46,10 +46,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                /* Subtle leaf pattern overlay */
+            background:
                 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><ellipse cx="50" cy="50" rx="15" ry="30" fill="%23228B22" opacity="0.1" transform="rotate(45)"/><ellipse cx="150" cy="150" rx="20" ry="35" fill="%2332CD32" opacity="0.08" transform="rotate(-30)"/></svg>') repeat;
             pointer-events: none;
+            mix-blend-mode: overlay;
         }
 
         /* Floating Animals */
@@ -156,17 +156,23 @@
         .logo {
             display: flex;
             align-items: center;
+            gap: 10px;
             font-size: 2rem;
             font-weight: bold;
             color: white;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .logo::before {
-            content: '🦜';
-            margin-right: 10px;
-            font-size: 2.5rem;
-            animation: bounce 2s infinite;
+        .logo-icon {
+            width: 40px;
+            height: auto;
+        }
+
+        .logo-text {
+            font-family: 'Fredoka One', cursive;
+            font-size: 28px;
+            color: white;
+            font-weight: bold;
         }
 
         @keyframes bounce {
@@ -188,6 +194,7 @@
             border-radius: 25px;
             transition: all 0.3s ease;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
         }
 
         .nav-links a:hover {
@@ -209,6 +216,7 @@
             text-decoration: none;
             transition: all 0.3s ease;
             cursor: pointer;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
         }
 
         .btn-login {
@@ -247,6 +255,7 @@
             margin-bottom: 1rem;
             text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
             animation: slideInDown 1s ease-out;
+            font-family: 'Fredoka One', cursive; /* Applied Fredoka One */
         }
 
         .hero p {
@@ -254,6 +263,7 @@
             margin-bottom: 2rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             animation: slideInUp 1s ease-out 0.3s both;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
         }
 
         .cta-button {
@@ -270,6 +280,7 @@
             transition: all 0.3s ease;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
             text-decoration:none;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
         }
 
         .cta-button:hover {
@@ -301,6 +312,7 @@
             margin-bottom: 2rem;
             color: hwb(120 96% 3%);
             text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            font-family: 'Fredoka One', cursive; /* Applied Fredoka One */
         }
 
         .features {
@@ -330,7 +342,6 @@
         .feature-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
-            /* animation: rotate 3s linear infinite; */
         }
 
         @keyframes rotate {
@@ -342,14 +353,16 @@
             color: #064420;
             margin-bottom: 1rem;
             font-size: 1.5rem;
+            font-family: 'Fredoka One', cursive; /* Applied Fredoka One */
         }
 
         .feature-card p {
             color: #0a351a;
             line-height: 1.6;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
         }
 
-        /* Contact Section */
+        /* Contact Section (form styles are within this section) */
         .contact-form {
             background: rgba(240, 255, 240, 0.95);
             padding: 2rem;
@@ -370,6 +383,7 @@
             margin-bottom: 0.5rem;
             color: #064420;
             font-weight: bold;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
         }
 
         .form-group input,
@@ -378,7 +392,7 @@
             padding: 0.8rem;
             border: 2px solid #228B22;
             border-radius: 10px;
-            font-family: inherit;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
             transition: all 0.3s ease;
             background: rgba(255, 255, 255, 0.9);
         }
@@ -391,381 +405,341 @@
             background: rgba(255, 255, 255, 1);
         }
 
+        /* Kidora Specific Footer/Contact Section */
+        .footer-kidora-section {
+            background: rgba(6, 68, 32, 0.95);
+            color: #E0FFE0;
+            padding: 3rem 2rem;
+            border-top: 2px solid rgba(50, 205, 50, 0.3);
+        }
+
+        .kidora-footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1.5fr;
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: flex-start;
+        }
+
+        .kidora-footer-column {
+            text-align: left;
+        }
+
+        .kidora-footer-column h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: #90EE90;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-family: 'Fredoka One', cursive; /* Applied Fredoka One */
+        }
+
+        .footer-kidora-logo-section .logo {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-kidora-logo-section .logo::before {
+            font-size: 3rem;
+        }
+
+        .kidora-tagline {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #C0FFC0;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
+        }
+
+        .kidora-quote {
+            font-size: 0.9rem;
+            color: #A0FFA0;
+            line-height: 1.5;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
+        }
+
+        .kidora-quick-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .kidora-quick-links li {
+            margin-bottom: 12px;
+        }
+
+        .kidora-quick-links a {
+            color: #E0FFE0;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
+        }
+
+        .kidora-quick-links a:hover {
+            color: #90EE90;
+            transform: translateX(5px);
+        }
+
+        .kidora-contact-info p {
+            margin-bottom: 12px;
+            color: #E0FFE0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
+        }
+
+        .kidora-contact-info p .icon-mail,
+        .kidora-contact-info p .icon-phone,
+        .kidora-contact-info p .icon-location {
+            font-size: 1.3rem;
+        }
+
+        .kidora-contact-info a {
+            color: #E0FFE0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
+        }
+
+        .kidora-contact-info a:hover {
+            color: #90EE90;
+        }
+
+        /* How It Works Section */
+        .how-it-works-section {
+            color: #E0FFE0;
+            padding: 6rem 2rem;
+            text-align: center;
+            border-top: 3px solid rgba(144, 238, 144, 0.4);
+            border-bottom: 3px solid rgba(144, 238, 144, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .how-it-works-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%23228B22" opacity="0.05" d="M0 0h10v10H0zm20 0h10v10H20zm20 0h10v10H40zm20 0h10v10H60zm20 0h10v10H80zM0 20h10v10H0zm20 20h10v10H20zm40-20h10v10H60zm20 20h10v10H80zM0 40h10v10H0zm20 40h10v10H20zM40 40h10v10H40zm20 40h10v10H60zM80 40h10v10H80zM0 60h10v10H0zm20 60h10v10H20zm40-20h10v10H60zm20 20h10v10H80zM0 80h10v10H0zM40 80h10v10H40zm80-40h10v10H80z"/></svg>') repeat;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            z-index: 1;
+        }
+
+        .how-it-works-section .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .how-it-works-section h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: hsl(51, 64%, 2%);
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            animation: fadeInScale 1s ease-out;
+            font-family: 'Fredoka One', cursive; /* Applied Fredoka One */
+        }
+
+        .how-it-works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .step-card {
+            background: linear-gradient(135deg, rgba(66, 179, 110, 0.9), rgba(34, 139, 34, 0.9));
+            border-radius: 20px;
+            padding: 2.5rem 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 50, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid rgba(144, 238, 144, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #E0FFE0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            filter: blur(15px);
+            z-index: 0;
+        }
+
+        .step-card:hover {
+            transform: translateY(-8px) rotateZ(1deg);
+            box-shadow: 0 15px 35px rgba(0, 50, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: #FFD700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.6);
+            border: 3px solid white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-icon img {
+            max-width: 60%;
+            max-height: 60%;
+            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5));
+        }
+
+        .step-card h3 {
+            font-size: 1.8rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+            font-family: 'Fredoka One', cursive; /* Applied Fredoka One */
+        }
+
+        .step-card p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #C0FFC0;
+            padding: 0 0.5rem;
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
+        }
+
+        .how-it-works-section .btn-lg {
+            padding: 1rem 2.5rem;
+            font-size: 1.3rem;
+            margin-top: 3rem;
+        }
+
+        /* Keyframe for initial animation */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
         /* Footer */
-        /* footer {
+        footer {
             background: rgba(6, 68, 32, 0.95);
             color: #E0FFE0;
             text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-            border-top: 2px solid rgba(50, 205, 50, 0.3);
-        } */
-        footer {
-    background: rgba(6, 68, 32, 0.95);
-    /* Check for padding-top or border-top here */
-    padding: 1.5rem 2rem;
-    border-top: 1px solid rgba(50, 205, 50, 0.1); /* This one is thin, likely not the main issue */
-}
+            padding: 1.5rem 2rem;
+            border-top: 1px solid rgba(50, 205, 50, 0.1);
+            font-family: 'Quicksand', sans-serif; /* Applied Quicksand */
+        }
 
-        /* Kidora Specific Footer/Contact Section */
-/* Kidora Specific Footer/Contact Section */
-/* Kidora Specific Footer/Contact Section */
-.footer-kidora-section {
-    background: rgba(6, 68, 32, 0.95); /* Your existing nav background */
-    color: #E0FFE0; /* Your existing text color */
-    padding: 3rem 2rem;
-    /* REMOVED: margin-top: 4rem; */
-    border-top: 2px solid rgba(50, 205, 50, 0.3); /* Matches nav border */
-}
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            font-size: 0.9rem;
+            color: #A0FFA0;
+        }
 
-.kidora-footer-grid {
-    display: grid;
-    /* UPDATED: Adjusted grid-template-columns for 3 columns */
-    grid-template-columns: 1.5fr 1fr 1.5fr; /* Logo | Quick Links | Contact Info */
-    gap: 2.5rem; /* More space between columns */
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: flex-start;
-}
+        .footer-bottom .powered-by {
+            color: #90EE90;
+        }
 
-.kidora-footer-column {
-    text-align: left; /* Default text alignment */
-}
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: center;
+            }
+            .auth-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+            .section h2 {
+                font-size: 2rem;
+            }
+            .features {
+                grid-template-columns: 1fr;
+            }
+            .kidora-footer-grid {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+                text-align: center; /* Center content when stacked */
+            }
+            .footer-kidora-logo-section,
+            .kidora-quick-links,
+            .kidora-contact-info {
+                align-items: center; /* Center items in stacked columns */
+            }
+            .kidora-quick-links ul,
+            .kidora-contact-info p {
+                align-items: center;
+                justify-content: center;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
 
-.kidora-footer-column h3 {
-    font-size: 1.6rem;
-    margin-bottom: 1.5rem;
-    color: #90EE90; /* Light green for headings */
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-}
-
-/* Kidora Logo Section (first column) */
-.footer-kidora-logo-section .logo {
-    /* Reusing existing .logo styles for font, size, color, parrot icon */
-    font-size: 2.5rem; /* Make it a bit bigger for the footer */
-    margin-bottom: 10px;
-}
-
-.footer-kidora-logo-section .logo::before {
-    font-size: 3rem; /* Make parrot icon bigger too */
-}
-
-.kidora-tagline {
-    font-size: 1.1rem;
-    font-style: italic;
-    color: #C0FFC0;
-    margin-bottom: 15px;
-    line-height: 1.4;
-}
-
-.kidora-quote {
-    font-size: 0.9rem;
-    color: #A0FFA0;
-    line-height: 1.5;
-}
-
-/* REMOVED: Socials Column styles as the column is no longer in HTML
-.kidora-socials .social-icons { ... }
-.kidora-socials .social-icons img { ... }
-.kidora-socials .social-icons img:hover { ... }
-*/
-
-/* Quick Links Column */
-.kidora-quick-links ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.kidora-quick-links li {
-    margin-bottom: 12px;
-}
-
-.kidora-quick-links a {
-    color: #E0FFE0;
-    text-decoration: none;
-    transition: color 0.3s ease, transform 0.3s ease;
-    display: inline-block; /* For transform to work */
-}
-
-.kidora-quick-links a:hover {
-    color: #90EE90;
-    transform: translateX(5px); /* Little slide effect */
-}
-
-/* Contact Info Column */
-.kidora-contact-info p {
-    margin-bottom: 12px;
-    color: #E0FFE0;
-    display: flex; /* For icon alignment */
-    align-items: center;
-    gap: 8px; /* Space between icon and text */
-}
-
-.kidora-contact-info p .icon-mail,
-.kidora-contact-info p .icon-phone,
-.kidora-contact-info p .icon-location {
-    font-size: 1.3rem; /* Size for emoji icons */
-}
-
-.kidora-contact-info a {
-    color: #E0FFE0;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.kidora-contact-info a:hover {
-    color: #90EE90;
-}
-
-/* REMOVED: Button styles as the button is no longer in HTML
-.btn-contact-kidora { ... }
-.btn-contact-kidora:hover { ... }
-*/
-
-
-/* Footer (bottom copyright and powered by) - re-adjusted for Kidora */
-footer {
-    background: rgba(6, 68, 32, 0.95); /* Keep the same dark green background */
-    color: #E0FFE0;
-    text-align: center;
-    padding: 1.5rem 2rem;
-    border-top: 1px solid rgba(50, 205, 50, 0.1);
-}
-
-.footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    font-size: 0.9rem;
-    color: #A0FFA0; /* Slightly lighter green for copyright text */
-}
-
-.footer-bottom .powered-by {
-    color: #90EE90; /* Make "Powered By" stand out */
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-    .kidora-footer-grid {
-        grid-template-columns: 1fr; /* Stack columns on smaller screens */
-        text-align: center; /* Center content when stacked */
-    }
-
-    .footer-kidora-logo-section,
-    .kidora-quick-links,
-    .kidora-contact-info {
-        align-items: center; /* Center items in stacked columns */
-    }
-
-    /* .kidora-socials .social-icons { justify-content: center; } // REMOVED */
-
-    .kidora-quick-links ul,
-    .kidora-contact-info p {
-        align-items: center; /* Center bullet points and icons in stacked lists */
-        justify-content: center; /* Center contact info lines */
-    }
-
-    .footer-bottom {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-    .kidora-footer-grid {
-        grid-template-columns: 1fr; /* Stack columns on smaller screens */
-        text-align: center; /* Center content when stacked */
-    }
-
-    .footer-kidora-logo-section,
-    .kidora-socials,
-    .kidora-quick-links,
-    .kidora-contact-info {
-        align-items: center; /* Center items in stacked columns */
-    }
-
-    .kidora-socials .social-icons {
-        justify-content: center; /* Center social icons */
-    }
-
-    .kidora-quick-links ul,
-    .kidora-contact-info p {
-        align-items: center; /* Center bullet points and icons in stacked lists */
-        justify-content: center; /* Center contact info lines */
-    }
-
-    .footer-bottom {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-/* How It Works Section */
-.how-it-works-section {
-    /* background: #bac2bde6;  */
-    color: #E0FFE0; /* Light green text */
-    padding: 6rem 2rem; /* More vertical padding */
-    text-align: center;
-    border-top: 3px solid rgba(144, 238, 144, 0.4);
-    border-bottom: 3px solid rgba(144, 238, 144, 0.4);
-    position: relative;
-    overflow: hidden; /* For any internal elements that might overflow */
-}
-
-.how-it-works-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%23228B22" opacity="0.05" d="M0 0h10v10H0zm20 0h10v10H20zm20 0h10v10H40zm20 0h10v10H60zm20 0h10v10H80zM0 20h10v10H0zm20 20h10v10H20zm40-20h10v10H60zm20 20h10v10H80zM0 40h10v10H0zm20 40h10v10H20zM40 40h10v10H40zm20 40h10v10H60zM80 40h10v10H80zM0 60h10v10H0zm20 60h10v10H20zm40-20h10v10H60zm20 20h10v10H80zM0 80h10v10H0zM40 80h10v10H40zm80-40h10v10H80z"/></svg>') repeat;
-    pointer-events: none;
-    mix-blend-mode: overlay; /* Subtle texture overlay */
-    z-index: 1;
-}
-
-.how-it-works-section .section-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative; /* For z-index to work */
-    z-index: 2; /* Ensure content is above pseudo-element */
-}
-
-.how-it-works-section h2 {
-    font-size: 3rem;
-    margin-bottom: 3rem;
-    color: hsl(51, 64%, 2%); /* Gold/Yellow for heading */
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
-    animation: fadeInScale 1s ease-out;
-}
-
-.how-it-works-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2.5rem; /* Increased gap */
-    margin-top: 2rem;
-}
-
-.step-card {
-    background: linear-gradient(135deg, rgba(66, 179, 110, 0.9), rgba(34, 139, 34, 0.9)); 
-    border-radius: 20px; /* Rounded corners */
-    padding: 2.5rem 1.5rem; /* Ample padding */
-    box-shadow: 0 10px 25px rgba(0, 50, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 2px solid rgba(144, 238, 144, 0.5); /* Lighter border */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #E0FFE0;
-    position: relative;
-    overflow: hidden;
-}
-
-.step-card::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    right: -20px;
-    width: 80px;
-    height: 80px;
-    background: rgba(255, 255, 255, 0.05); /* Subtle white overlay */
-    border-radius: 50%;
-    filter: blur(15px);
-    z-index: 0;
-}
-
-.step-card:hover {
-    transform: translateY(-8px) rotateZ(1deg); /* Slight lift and rotation */
-    box-shadow: 0 15px 35px rgba(0, 50, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.3);
-}
-
-.step-icon {
-    width: 80px;
-    height: 80px;
-    background: #FFD700; /* Gold background for icons */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.6);
-    border: 3px solid white; /* White outline */
-    position: relative;
-    z-index: 1; /* Ensure icon is above pseudo-element */
-}
-
-.step-icon img {
-    max-width: 60%;
-    max-height: 60%;
-    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.5));
-}
-
-.step-card h3 {
-    font-size: 1.8rem;
-    color: #FFD700; /* Gold/Yellow for step titles */
-    margin-bottom: 1rem;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-}
-
-.step-card p {
-    font-size: 1.05rem;
-    line-height: 1.6;
-    color: #C0FFC0; /* Slightly lighter green for text */
-    padding: 0 0.5rem;
-}
-
-.how-it-works-section .btn-lg {
-    padding: 1rem 2.5rem; /* Larger button for call to action */
-    font-size: 1.3rem;
-    margin-top: 3rem; /* Space above button */
-}
-
-/* Keyframe for initial animation */
-@keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.8) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-    .how-it-works-section h2 {
-        font-size: 2.5rem;
-    }
-    .how-it-works-grid {
-        grid-template-columns: 1fr; /* Stack on small screens */
-    }
-    .step-card {
-        padding: 2rem 1rem;
-    }
-    .step-icon {
-        width: 70px;
-        height: 70px;
-    }
-    .step-card h3 {
-        font-size: 1.6rem;
-    }
-    .how-it-works-section .btn-lg {
-        padding: 0.8rem 2rem;
-        font-size: 1.1rem;
-    }
-}
+            .how-it-works-section h2 {
+                font-size: 2.5rem;
+            }
+            .how-it-works-grid {
+                grid-template-columns: 1fr; /* Stack on small screens */
+            }
+            .step-card {
+                padding: 2rem 1rem;
+            }
+            .step-icon {
+                width: 70px;
+                height: 70px;
+            }
+            .step-card h3 {
+                font-size: 1.6rem;
+            }
+            .how-it-works-section .btn-lg {
+                padding: 0.8rem 2rem;
+                font-size: 1.1rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Animated Background Animals -->
     <div class="floating-animal butterfly" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
     <div class="floating-animal butterfly" style="top: 60%; left: 80%; animation-delay: 2s;"></div>
     <div class="floating-animal bird" style="top: 15%; animation-delay: 1s;"></div>
@@ -777,7 +751,10 @@ footer {
 
     <nav>
         <div class="nav-container">
-            <div class="logo">KIDORA</div>
+            <div class="logo">
+                <img src="{% static 'images/main_logo.jpeg' %}" alt="Kidora Logo" class="logo-icon">
+                <span class="logo-text"><a href="{% url 'home' %}" style="text-decoration: none; color: white;">  KIDORA</a></span>
+            </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About Us</a></li>
@@ -795,7 +772,7 @@ footer {
         <section id="home" class="hero">
             <h1>Welcome to Kidora! 🌿</h1>
             <p>Your magical jungle learning companion for stories, poems, and rhymes!</p>
-             <a href="{% url 'login' %}" class="cta-button">Start Your Adventure!</a>
+            <a href="{% url 'login' %}" class="cta-button">Start Your Adventure!</a>
         </section>
 
         <section id="about" class="section">
@@ -818,67 +795,68 @@ footer {
                 </div>
             </div>
         </section>
-<main>
-   <section id="works" class="section how-it-works-section">
-    <div class="section-container">
-        <h2>How Kidora Works</h2>
-        <div class="how-it-works-grid">
-            <div class="step-card">
-                <div class="step-icon">
-                    <span role="img" aria-label="Join Adventure">🚀📝</span>
-                </div>
-                <h3>1. Join the Adventure</h3>
-                <p>Register for free and create your child's profile to begin their learning journey.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-icon">
-                    <span role="img" aria-label="Explore Jungle">🌴🔍</span>
-                </div>
-                <h3>2. Explore & Learn</h3>
-                <p>Dive into interactive games, engaging lessons, and exciting quizzes across various subjects.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-icon">
-                    <span role="img" aria-label="Track Progress">📊📈</span>
-                </div>
-                <h3>3. Track Progress</h3>
-                <p>Monitor your child's achievements and see their skills grow with detailed progress reports.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-icon">
-                    <span role="img" aria-label="Achieve and Grow">🌟🏆</span>
-                </div>
-                <h3>4. Achieve & Grow</h3>
-                <p>Celebrate milestones, earn badges, and watch your child's confidence soar!</p>
-            </div>
-        </div>
-    </div>
-</section>
 
-    </main>
-
-    <section id="contact" class="footer-kidora-section">
-            <div class="kidora-footer-grid">
-                <div class="kidora-footer-column footer-kidora-logo-section">
-                    <div class="logo">KIDORA</div> <p class="kidora-tagline">"Where every story is an exciting journey and learning is an adventure!"</p>
-                    <p class="kidora-quote">"Ignite curiosity, explore the jungle of knowledge!"</p>
-                </div>
-
-               
-                <div class="kidora-footer-column kidora-quick-links">
-                    <h3>Quick Links</h3> <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                    </ul>
-                </div>
-
-                <div class="kidora-footer-column kidora-contact-info">
-                    <h3>Contact Us!</h3> <p><i class="icon-mail">📧</i> Email: <a href="mailto:hello@kidora.com">kidoraexplorer@gmail.com</a></p>
-                    <p><i class="icon-phone">📞</i> Phone: <a href="tel:+1234567890">+91 9876543210</a></p>
-            
+        <section id="works" class="section how-it-works-section">
+            <div class="section-container">
+                <h2>How Kidora Works</h2>
+                <div class="how-it-works-grid">
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <span role="img" aria-label="Join Adventure">🚀📝</span>
+                        </div>
+                        <h3>1. Join the Adventure</h3>
+                        <p>Register for free and create your child's profile to begin their learning journey.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <span role="img" aria-label="Explore Jungle">🌴🔍</span>
+                        </div>
+                        <h3>2. Explore & Learn</h3>
+                        <p>Dive into interactive games, engaging lessons, and exciting quizzes across various subjects.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <span role="img" aria-label="Track Progress">📊📈</span>
+                        </div>
+                        <h3>3. Track Progress</h3>
+                        <p>Monitor your child's achievements and see their skills grow with detailed progress reports.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <span role="img" aria-label="Achieve and Grow">🌟🏆</span>
+                        </div>
+                        <h3>4. Achieve & Grow</h3>
+                        <p>Celebrate milestones, earn badges, and watch your child's confidence soar!</p>
+                    </div>
                 </div>
             </div>
         </section>
+    </main>
+
+    <section id="contact" class="footer-kidora-section">
+        <div class="kidora-footer-grid">
+            <div class="kidora-footer-column footer-kidora-logo-section">
+                <div class="logo">KIDORA</div>
+                <p class="kidora-tagline">"Where every story is an exciting journey and learning is an adventure!"</p>
+                <p class="kidora-quote">"Ignite curiosity, explore the jungle of knowledge!"</p>
+            </div>
+
+            <div class="kidora-footer-column kidora-quick-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#works">How it Works</a></li>
+                </ul>
+            </div>
+
+            <div class="kidora-footer-column kidora-contact-info">
+                <h3>Contact Us!</h3>
+                <p><i class="icon-mail">📧</i> Email: <a href="mailto:hello@kidora.com">kidoraexplorer@gmail.com</a></p>
+                <p><i class="icon-phone">📞</i> Phone: <a href="tel:+1234567890">+91 9876543210</a></p>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <p>&copy; 2025 Kidora. All rights reserved. Made with 💚 for curious young minds!</p>
@@ -897,9 +875,9 @@ footer {
             element.style.zIndex = '1';
             element.style.pointerEvents = 'none';
             element.style.animation = `flutter ${3 + Math.random() * 4}s ease-in-out infinite`;
-            
+
             document.body.appendChild(element);
-            
+
             setTimeout(() => {
                 element.remove();
             }, 8000);
@@ -926,19 +904,23 @@ footer {
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const parallax = document.querySelectorAll('.floating-animal');
-            
+
             parallax.forEach((element, index) => {
                 const speed = 0.5 + (index * 0.1);
                 element.style.transform = `translateY(${scrolled * speed}px)`;
             });
         });
 
-        // Form submission
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We\'ll get back to you soon! 🌟');
-            this.reset();
-        });
+        // Form submission (for the contact form if you decide to re-add it)
+        // Ensure you have a contact form with class 'contact-form' in your HTML
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! We\'ll get back to you soon! 🌟');
+                this.reset();
+            });
+        }
     </script>
 </body>
 </html>
