@@ -206,3 +206,29 @@ def ask_buddy(request):
                messages.error(request, "Please enter a valid input.")
      
      return render(request, 'dashboard/ask_buddy.html')
+
+@login_required
+def dashboard(request):
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    user = request.user
+    
+    # Calculate overall quiz performance
+    overall_average = Quiz.objects.filter(user=user).aggregate(Avg('score'))['score__avg'] or 0
+    
+    # For the progress ring animation
+    circumference = 2 * 3.14159 * 32  # Corresponds to the radius in the SVG
+    stroke_dasharray_value = (overall_average / 100) * circumference
+    
+    context = {
+        'coins': profile.coins,
+        'first_name': request.user.first_name,
+        'overall_average': overall_average,
+        'circumference': circumference,
+        'stroke_dasharray_value': stroke_dasharray_value,
+    }
+    return render(request, 'dashboard/dashboard.html', context)
+
+@login_required
+def faq(request):
+    return render(request, 'dashboard/faq.html')
+
