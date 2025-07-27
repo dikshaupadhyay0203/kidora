@@ -588,11 +588,10 @@
 </head>
 <body class="theme-jungle">
     <div class="header">
-        <div class="menu-toggle" onclick="toggleSidebar()">☰</div>
-        <a href="{% url 'dashboard' %}" class="logo">
-            <img src="{% static 'images/main_logo.jpeg' %}" alt="Kidora Logo" style="height: 32px; width: 32px; vertical-align: middle; margin-right: 8px;">
-            <span class="logo-icon">🌿</span> <span style="font-weight: bold;"><span class="logo-text">KIDORA</span></span>
-        </a>
+         <div class="logo">
+        <img src="{% static 'images/main_logo.jpeg' %}" alt="Kidora Logo" style="height: 32px; width: 32px; vertical-align: middle; margin-right: 8px;">
+        <span style="font-weight: bold;"><span class="logo-text"><a href="{% url 'dashboard' %}" style="text-decoration: none; color: white;">  KIDORA</a></span></span>
+    </div>
         <div class="header-right">
             <div class="user-info" onclick="toggleUserDropdown()">
                 👋 Hi, {{first_name}} 💖
