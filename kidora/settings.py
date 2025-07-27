@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     "accounts.apps.AccountsConfig",
     "dashboard.apps.DashboardConfig",
+    "homework.apps.HomeworkConfig",
 ]
 
 MIDDLEWARE = [
