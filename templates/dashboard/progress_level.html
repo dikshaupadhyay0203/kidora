@@ -19,7 +19,6 @@
             font-family: 'Quicksand', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
-            /* Apply the background image and properties here */
             background-image: var(--background-image);
             background-size: cover;
             background-position: center;
@@ -103,22 +102,16 @@
         .container {
             display: flex;
             min-height: 100vh;
-            /* Removed primary-bg here as body handles the full background */
             position: relative;
         }
 
         .container::before {
-            /* This pseudo-element was for a subtle pattern overlay.
-               If you just want the image, you can remove or comment this out.
-               If you want a subtle overlay *on top* of your image, adjust opacity. */
             content: '';
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            /* Removed fixed pattern, now the image handles background */
-            /* background-image: url('data:image/svg+xml,...'); */
             opacity: 0; /* Set to 0 if you don't want any overlay */
             z-index: -1;
         }
@@ -215,16 +208,9 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            margin-right: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
+        .logo-text a {
+            text-decoration: none;
+            color: inherit; /* Inherit color from parent .logo */
         }
 
         .header-right {
@@ -287,8 +273,9 @@
             cursor: pointer;
             transition: background 0.3s;
             font-weight: 600;
-            color: var(--text-color); /* Ensure dropdown text color is consistent */
+            color: var(--text-color);
             text-decoration: none;
+            display: block; /* Make links take up full width of dropdown item */
         }
 
         .user-option:hover {
@@ -352,12 +339,10 @@
             position: fixed;
             left: 0;
             backdrop-filter: blur(10px);
-            text-decoration: none;
         }
 
         .nav-section {
             margin-bottom: 25px;
-            text-decoration: none;
         }
 
         .nav-title {
@@ -368,7 +353,6 @@
             text-transform: uppercase;
             letter-spacing: 1.2px;
             font-family: 'Fredoka One', cursive;
-            text-decoration: none;
         }
 
         .nav-item {
@@ -385,7 +369,6 @@
             font-weight: 600;
             font-size: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-decoration: none;
         }
 
         .nav-item:hover {
@@ -394,14 +377,18 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
 
+        .nav-item a { /* Style the anchor inside nav-item */
+            text-decoration: none;
+            color: inherit; /* Inherit color from parent .nav-item */
+            flex-grow: 1; /* Allow the link to take up available space */
+        }
+
         .nav-icon {
             width: 20px;
             height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
-
         }
 
         /* Main Content */
@@ -425,6 +412,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2);
             transition: transform 0.3s ease;
+            cursor: pointer; /* Indicate it's clickable for the modal */
         }
 
         .card:hover {
@@ -455,132 +443,6 @@
             font-family: 'Fredoka One', cursive;
         }
 
-        .progress-ring {
-            width: 80px;
-            height: 80px;
-            margin: 20px auto;
-            position: relative;
-        }
-
-        .progress-circle {
-            fill: none;
-            stroke: rgba(255,255,255,0.3);
-            stroke-width: 8;
-        }
-
-        .progress-fill {
-            fill: none;
-            stroke: var(--accent-color);
-            stroke-width: 8;
-            stroke-linecap: round;
-            transition: stroke-dasharray 0.5s ease;
-        }
-
-        .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 18px;
-            font-weight: 700;
-            font-family: 'Fredoka One', cursive;
-        }
-
-        .stats-number {
-            font-size: 42px;
-            font-weight: 700;
-            color: var(--accent-color);
-            text-align: center;
-            margin: 15px 0;
-            font-family: 'Fredoka One', cursive;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .stats-label {
-            text-align: center;
-            opacity: 0.9;
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .ask-buddy {
-            grid-column: 1 / -1;
-            padding: 40px;
-            text-align: center;
-            background: var(--card-bg);
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 2px solid var(--accent-color);
-        }
-
-        .buddy-input {
-            width: 100%;
-            max-width: 600px;
-            padding: 20px 25px;
-            border: none;
-            border-radius: 30px;
-            background: rgba(255,255,255,0.2);
-            color: var(--text-color);
-            font-size: 18px;
-            margin: 25px 0;
-            backdrop-filter: blur(10px);
-            font-weight: 600;
-            box-shadow: inset 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .buddy-input::placeholder {
-            color: rgba(255,255,255,0.7);
-        }
-
-        .ask-button {
-            background: var(--accent-color);
-            color: #333;
-            border: none;
-            padding: 18px 40px;
-            border-radius: 35px;
-            font-size: 20px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Fredoka One', cursive;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .ask-button:hover {
-            transform: scale(1.15) translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
-        }
-
-        .fact-content {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .sidebar {
-                width: 250px;
-            }
-            .main-content {
-                margin-left: 250px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-            }
-            .main-content {
-                margin-left: 0;
-            }
-        }
-
         .progress-container {
             margin-bottom: 20px;
         }
@@ -597,11 +459,24 @@
             height: 20px;
             border-radius: 10px;
             background-color: rgba(0,0,0,0.2);
+            position: relative; /* Needed for text positioning inside progress bar */
         }
 
         .progress-bar {
             background-color: var(--accent-color);
+            display: flex; /* For centering the text */
+            align-items: center;
+            justify-content: center;
+            color: #333; /* Darker text color for contrast on accent color */
+            font-weight: 700;
+            font-size: 0.9em;
+            overflow: hidden; /* Hide text if bar is too small */
+            white-space: nowrap; /* Prevent text wrapping */
         }
+        .progress-bar span { /* To control text style inside progress bar more precisely */
+            padding: 0 5px;
+        }
+
 
         .last-score {
             font-weight: 600;
@@ -633,49 +508,66 @@
             height: 40vh;
             width: 100%;
         }
+
         /* Custom Scrollbar Styles - Gold/Yellow Theme */
 
-/* For WebKit-based browsers (Chrome, Safari, Edge, Opera) */
-::-webkit-scrollbar {
-    width: 12px; /* Width of the vertical scrollbar */
-    height: 12px; /* Height of the horizontal scrollbar */
-}
+        /* For WebKit-based browsers (Chrome, Safari, Edge, Opera) */
+        ::-webkit-scrollbar {
+            width: 12px; /* Width of the vertical scrollbar */
+            height: 12px; /* Height of the horizontal scrollbar */
+        }
 
-/* Track (the background of the scrollbar) */
-::-webkit-scrollbar-track {
-    background: #064420; /* Keeping a dark green for the track, as it complements the jungle theme and the new thumb color */
-    border-radius: 10px; /* Optional: adds rounded corners to the track */
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); /* Optional: adds a subtle inner shadow */
-}
+        /* Track (the background of the scrollbar) */
+        ::-webkit-scrollbar-track {
+            background: #064420; /* Keeping a dark green for the track, as it complements the jungle theme and the new thumb color */
+            border-radius: 10px; /* Optional: adds rounded corners to the track */
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); /* Optional: adds a subtle inner shadow */
+        }
 
-/* Thumb (the draggable part of the scrollbar) */
-::-webkit-scrollbar-thumb {
-    background-color: rgb(240, 230, 140); /* The specified gold/yellow color */
-    border-radius: 10px; /* Optional: adds rounded corners to the thumb */
-    border: 3px solid #0f2617; /* A very dark green/black border to make the thumb stand out */
-}
+        /* Thumb (the draggable part of the scrollbar) */
+        ::-webkit-scrollbar-thumb {
+            background-color: rgb(240, 230, 140); /* The specified gold/yellow color */
+            border-radius: 10px; /* Optional: adds rounded corners to the thumb */
+            border: 3px solid #0f2617; /* A very dark green/black border to make the thumb stand out */
+        }
 
-/* On hover (optional, for when you hover over the thumb) */
-::-webkit-scrollbar-thumb:hover {
-    background-color: rgb(255, 240, 160); /* Slightly lighter yellow/gold on hover */
-}
+        /* On hover (optional, for when you hover over the thumb) */
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgb(255, 240, 160); /* Slightly lighter yellow/gold on hover */
+        }
 
-/* For Firefox */
-/* The first color is the thumb, the second is the track */
-body {
-    scrollbar-width: thin; /* "auto" or "thin" */
-    scrollbar-color: rgb(240, 230, 140) #064420; /* Thumb color then Track color */
-}
+        /* For Firefox */
+        body {
+            scrollbar-width: thin; /* "auto" or "thin" */
+            scrollbar-color: rgb(240, 230, 140) #064420; /* Thumb color then Track color */
+        }
 
-/* You would place this CSS within your <style> tags in your HTML file's <head> section,
-   or in your external CSS file. */
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 250px;
+            }
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
     </style>
 </head>
 <body class="theme-jungle">
     <div class="header">
         <div class="logo">
-             <img src="{% static 'images/main_logo.jpeg' %}" alt="Kidora Logo" style="height: 32px; width: 32px; vertical-align: middle; margin-right: 8px;">
-     <span style="font-weight: bold;"><span class="logo-text"><a href="{% url 'dashboard' %}" style="text-decoration: none; color: white;">  KIDORA</a></span></span>
+            <img src="{% static 'images/main_logo.jpeg' %}" alt="Kidora Logo" style="height: 32px; width: 32px; vertical-align: middle; margin-right: 8px;">
+            <span style="font-weight: bold;"><span class="logo-text"><a href="{% url 'dashboard' %}"> KIDORA</a></span></span>
         </div>
         <div class="header-right">
             
@@ -683,7 +575,6 @@ body {
                 👋 Hi, {{first_name}} 💖
                 <div class="user-dropdown" id="userDropdown">
                     <a href="{% url 'edit' %}" class="user-option">✏️Edit Profile</a>
-                    <br><br>
                     <a href="{% url 'logout' %}" class="user-option">🚪Logout</a>
                 </div>
             </div>
@@ -722,16 +613,15 @@ body {
                 <div class="nav-title">🌳 My Jungle 🦋</div>
                 <div class="nav-item">
                     <div class="nav-icon">🌟</div>
-                    <a href="{% url 'dashboard' %}" class="user-option"> Explore Today! ✨ </a>
+                    <a href="{% url 'dashboard' %}"> Explore Today! ✨ </a>
                 </div>
                 <div class="nav-item">
                     <div class="nav-icon">❤️</div>
-               <a href="{% url 'homework_list' %}" class="user-option"> Task Treehouse🌲</a>
+                    <a href="{% url 'homework_list' %}"> Task Treehouse🌲</a>
                 </div>
-                 <div class="nav-item">
+                <div class="nav-item">
                     <div class="nav-icon">🐿️</div>
-                    <a href="{% url 'forest' %}" class="user-option"> Topic Forest 🌿</a>
-
+                    <a href="{% url 'forest' %}"> Topic Forest 🌿</a>
                 </div>
             </div>
 
@@ -740,11 +630,11 @@ body {
                 
                 <div class="nav-item">
                     <div class="nav-icon">🕳️</div>
-                    <a href="{% url 'story_generate' %}" class="user-option">Story Caves 📖</a>
+                    <a href="{% url 'story_generate' %}">Story Caves 📖</a>
                 </div>
                 <div class="nav-item">
                     <div class="nav-icon">✒️</div>
-                    <a href="{% url 'rhyme_generator' %}" class="user-option">Rhymes World 📝</a>
+                    <a href="{% url 'rhyme_generator' %}">Rhymes World 📝</a>
                 </div>
             </div>
 
@@ -752,7 +642,7 @@ body {
                 <div class="nav-title">🎯 Quiz Challenge 🏆</div>
                 <div class="nav-item">
                     <div class="nav-icon">💪</div>
-                    <a href="{% url 'quiz' %}" class="user-option" color:white>Strengthen Learning 🧠</a>
+                    <a href="{% url 'quiz' %}">Strengthen Learning 🧠</a>
                 </div>
             </div>
 
@@ -760,7 +650,7 @@ body {
                 <div class="nav-title"> Progress Track 🚀</div>
                 <div class="nav-item">
                     <div class="nav-icon">📈</div>
-                    <a href="{% url 'progress_level' %}" class="user-option">Progress Level 📊</a>
+                    <a href="{% url 'progress_level' %}">Progress Level 📊</a>
                 </div>
             </div>
 
@@ -768,11 +658,11 @@ body {
                 <div class="nav-title">💬 Help Desk 🆘</div>
                 <div class="nav-item">
                     <div class="nav-icon">📝</div>
-                    <a href="{% url 'feedback' %}" class="user-option">Feedback 💭</a>
+                    <a href="{% url 'feedback' %}">Feedback 💭</a>
                 </div>
                 <div class="nav-item">
                     <div class="nav-icon">👤</div>
-                    <a href="{% url 'user_profile' %}" class="user-option">My Profile 🌟</a>
+                    <a href="{% url 'user_profile' %}">My Profile 🌟</a>
                 </div>
             </div>
         </div>
@@ -788,18 +678,15 @@ body {
                             <span>{{ subject.progress.average_percentage|floatformat:2 }}%</span>
                         </div>
                        <div class="progress">
-<!-- <div class="progress-bar"
-     role="progressbar"
-     style="width: {{ subject.progress.average_percentage }}%;"
-     aria-valuenow="{{ subject.progress.average_percentage }}"
-     aria-valuemin="0"
-     aria-valuemax="100">
-  {{ subject.progress.average_percentage }}%
-</div> -->
-
-
-
-</div>
+                            <div class="progress-bar"
+                                role="progressbar"
+                                style="width: {{ subject.progress.average_percentage }}%;"
+                                aria-valuenow="{{ subject.progress.average_percentage }}"
+                                aria-valuemin="0"
+                                aria-valuemax="100">
+                                <span>{{ subject.progress.average_percentage|floatformat:0 }}%</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="last-score">
                         Last Score: {{ subject.progress.last_score|default:"N/A" }}%
@@ -807,7 +694,6 @@ body {
                 </div>
             </div>
 
-            <!-- Modal -->
             <div class="modal fade" id="subjectModal-{{ subject.id }}" tabindex="-1" aria-labelledby="subjectModalLabel-{{ subject.id }}" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
@@ -819,8 +705,8 @@ body {
                             {% if subject.quiz_set.all %}
                                 <div class="chart-container">
                                     <canvas class="quiz-chart" 
-                                            data-labels='[{% for quiz in subject.quiz_set.all %}"{{ quiz.topic.name|default:"General" }}"{% if not forloop.last %},{% endif %}{% endfor %}]'
-                                            data-scores='[{% for quiz in subject.quiz_set.all %}{{ quiz.score }}{% if not forloop.last %},{% endif %}{% endfor %}]'>
+                                        data-labels='[{% for quiz in subject.quiz_set.all %}"{{ quiz.topic.name|default:"General" }}"{% if not forloop.last %},{% endif %}{% endfor %}]'
+                                        data-scores='[{% for quiz in subject.quiz_set.all %}{{ quiz.score }}{% if not forloop.last %},{% endif %}{% endfor %}]'>
                                     </canvas>
                                 </div>
                                 {% if subject.progress.suggestion %}
@@ -840,49 +726,47 @@ body {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'js/progress_level.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="{% static 'js/progress_level.js' %}" defer></script>
     <script>
         function toggleUserDropdown() {
             const dropdown = document.getElementById('userDropdown');
             dropdown.classList.toggle('show');
         }
 
-        function editProfile() {
-            alert('✏️ Edit Profile clicked! 🌟');
-            toggleUserDropdown();
-        }
-
+        // The logout function here is just for client-side alert.
+        // The actual logout needs to be handled by Django's logout URL.
         function logout() {
             if(confirm('🚪 Are you sure you want to logout? 😊')) {
-                alert('👋 Goodbye Dikshaa! See you soon! 🌟');
+                // If you want a specific message before redirect, you can keep this.
+                // Otherwise, the Django logout view will handle the redirect.
+                alert('👋 Goodbye Dikshaa! See you soon! 🌟'); 
+                // The actual logout is handled by the link: <a href="{% url 'logout' %}" class="user-option">
             }
-            toggleUserDropdown();
+            toggleUserDropdown(); // Close dropdown regardless
         }
+
+        // --- MODIFIED CODE START ---
+        let isThemeDropdownOpen = false; // Keep track of the dropdown state
 
         function toggleThemeDropdown() {
             const dropdown = document.getElementById('themeDropdown');
             dropdown.classList.toggle('show');
+            isThemeDropdownOpen = dropdown.classList.contains('show'); // Update state
         }
 
         function changeTheme(theme) {
             const body = document.body;
-            body.className = `theme-${theme}`;
+            // Remove all existing theme classes
+            body.className = body.className.split(' ').filter(c => !c.startsWith('theme-')).join(' ');
+            // Add the new theme class
+            body.classList.add(`theme-${theme}`);
 
-            // Update logo icon based on theme
-            const logoIcon = document.querySelector('.logo-icon');
-            const themeIcons = {
-                jungle: '🌿',
-                doraemon: '🤖',
-                disney: '🏰',
-                shinchan: '😄',
-                anime: '⚡',
-                marvel: '🦸'
-            };
-            logoIcon.textContent = themeIcons[theme];
+            // Store the chosen theme in local storage
+            localStorage.setItem('selectedTheme', theme);
 
-            // Close dropdown after selection
-            toggleThemeDropdown();
+            // Only close dropdown if it was opened by a click, not on initial load
+            // This is handled by the event listener now, but leaving this note here.
         }
 
         // Close dropdowns when clicking outside
@@ -895,6 +779,7 @@ body {
             // Check if the click is outside the theme selector or its dropdown
             if (themeSelector && !themeSelector.contains(event.target)) {
                 themeDropdown.classList.remove('show');
+                isThemeDropdownOpen = false; // Update state
             }
 
             // Check if the click is outside the user info or its dropdown
@@ -914,13 +799,79 @@ body {
             });
         });
 
-        // Initialize theme on load (optional, you might load from user settings)
+        // Initialize theme on load
         document.addEventListener('DOMContentLoaded', () => {
-            // You can load the initial theme from a user setting or a cookie here
-            // For now, it defaults to 'jungle' from the body class
-            // changeTheme('jungle'); // Uncomment if you want to explicitly run this on load
+            const savedTheme = localStorage.getItem('selectedTheme');
+            if (savedTheme) {
+                changeTheme(savedTheme); // Apply the saved theme without toggling dropdown
+            } else {
+                // Apply default theme if no theme is saved (which is 'jungle' by default in HTML)
+                changeTheme('jungle'); 
+            }
+
+            // Initialize Chart.js for each modal when it's shown
+            document.querySelectorAll('.modal').forEach(modalEl => {
+                modalEl.addEventListener('shown.bs.modal', function () {
+                    const canvas = this.querySelector('.quiz-chart');
+                    if (canvas) {
+                        const labels = JSON.parse(canvas.dataset.labels);
+                        const scores = JSON.parse(canvas.dataset.scores);
+
+                        // Destroy existing chart instance if any to prevent issues on re-opening
+                        if (canvas.chartInstance) {
+                            canvas.chartInstance.destroy();
+                        }
+
+                        canvas.chartInstance = new Chart(canvas, {
+                            type: 'bar', // Or 'line', 'pie' depending on preferred visualization
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Quiz Score (%)',
+                                    data: scores,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.6)',
+                                        'rgba(54, 162, 235, 0.6)',
+                                        'rgba(255, 206, 86, 0.6)',
+                                        'rgba(75, 192, 192, 0.6)',
+                                        'rgba(153, 102, 255, 0.6)',
+                                        'rgba(255, 159, 64, 0.6)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        max: 100, // Assuming scores are percentages
+                                        title: {
+                                            display: true,
+                                            text: 'Score (%)',
+                                            color: 'var(--text-color)'
+                                        },
+                                        ticks: {
+                                            color: 'var(--text-color)'
+                                        },
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+            });
         });
-        
+        // --- MODIFIED CODE END ---
     </script>
 </body>
 </html>
