@@ -1,0 +1,1332 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduFinder - Forest Learning Adventure</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fredoka+One:wght@400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-image: var(--background-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* Theme Variables */
+        :root {
+            /* Forest Theme (Default) */
+            --primary-bg: linear-gradient(135deg, #4CAF50, #8BC34A);
+            --secondary-bg: #2E7D32;
+            --accent-color: #FFC107;
+            --text-color: #ffffff;
+            --card-bg: rgba(76, 175, 80, 0.9);
+            --nav-bg: rgba(46, 125, 50, 0.95);
+            --hover-color: #66BB6A;
+            --background-image: linear-gradient(135deg, rgba(46, 125, 50, 0.8), rgba(76, 175, 80, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="trees" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="15" r="2" fill="%23ffffff" opacity="0.1"/><path d="M8 10 L10 5 L12 10 Z" fill="%23ffffff" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23trees)"/></svg>');
+        }
+
+        /* Disney Theme */
+        .theme-disney {
+            --primary-bg: linear-gradient(135deg, #E91E63, #F06292);
+            --secondary-bg: #C2185B;
+            --accent-color: #FFD700;
+            --text-color: #ffffff;
+            --card-bg: rgba(233, 30, 99, 0.9);
+            --nav-bg: rgba(194, 24, 91, 0.95);
+            --hover-color: #F48FB1;
+            --background-image: linear-gradient(135deg, rgba(194, 24, 91, 0.8), rgba(233, 30, 99, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="castle" x="0" y="0" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M12.5 5 L15 10 L20 8 L18 15 L12.5 12 L7 15 L5 8 L10 10 Z" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23castle)"/></svg>');
+        }
+
+        /* Shinchan Theme */
+        .theme-shinchan {
+            --primary-bg: linear-gradient(135deg, #FF9800, #FFC107);
+            --secondary-bg: #F57C00;
+            --accent-color: hsl(120, 9%, 6%);
+            --text-color: #ffffff;
+            --card-bg: hsla(13, 86%, 28%, 0.9);
+            --nav-bg: hsla(8, 78%, 61%, 0.95);
+            --hover-color: #FFB74D;
+            --background-image: linear-gradient(135deg, rgba(245, 124, 0, 0.8), rgba(255, 152, 0, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="fun" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="15" cy="15" r="8" fill="%23ffffff" opacity="0.1"/><circle cx="12" cy="12" r="2" fill="%23ffffff" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23fun)"/></svg>');
+        }
+
+        /* Anime Theme */
+        .theme-anime {
+            --primary-bg: linear-gradient(135deg, #9C27B0, #E91E63);
+            --secondary-bg: #7B1FA2;
+            --accent-color: #00BCD4;
+            --text-color: #ffffff;
+            --card-bg: rgba(156, 39, 176, 0.9);
+            --nav-bg: rgba(123, 31, 162, 0.95);
+            --hover-color: #BA68C8;
+            --background-image: linear-gradient(135deg, rgba(123, 31, 162, 0.8), rgba(156, 39, 176, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="power" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M10 2 L15 8 L10 14 L5 8 Z" fill="%23ffffff" opacity="0.15"/></pattern></defs><rect width="100" height="100" fill="url(%23power)"/></svg>');
+        }
+
+        /* Marvel Theme */
+        .theme-marvel {
+            --primary-bg: linear-gradient(135deg, #D32F2F, #F44336);
+            --secondary-bg: #C62828;
+            --accent-color: #FFD700;
+            --text-color: #ffffff;
+            --card-bg: rgba(211, 47, 47, 0.9);
+            --nav-bg: rgba(198, 40, 40, 0.95);
+            --hover-color: #EF5350;
+            --background-image: linear-gradient(135deg, rgba(198, 40, 40, 0.8), rgba(211, 47, 47, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hero" x="0" y="0" width="25" height="25" patternUnits="userSpaceOnUse"><polygon points="12.5,5 20,12.5 12.5,20 5,12.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23hero)"/></svg>');
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Animated Background Elements */
+        .forest-animals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .butterfly, .bird, .squirrel {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.4;
+            animation-duration: 8s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+
+        .butterfly {
+            animation-name: flutter;
+        }
+
+        .bird {
+            animation-name: fly;
+            font-size: 18px;
+        }
+
+        .squirrel {
+            animation-name: hop;
+            font-size: 22px;
+        }
+
+        @keyframes flutter {
+            0%, 100% { transform: translateX(-50px) translateY(0px) rotate(0deg); }
+            25% { transform: translateX(150px) translateY(-30px) rotate(5deg); }
+            50% { transform: translateX(350px) translateY(20px) rotate(-3deg); }
+            75% { transform: translateX(200px) translateY(-20px) rotate(8deg); }
+        }
+
+        @keyframes fly {
+            0% { transform: translateX(-100px) translateY(0px); }
+            50% { transform: translateX(calc(100vw + 50px)) translateY(-50px); }
+            100% { transform: translateX(-100px) translateY(0px); }
+        }
+
+        @keyframes hop {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-40px) rotate(10deg); }
+        }
+
+        .butterfly:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+        .butterfly:nth-child(2) { top: 60%; left: 70%; animation-delay: 2s; }
+        .butterfly:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
+        .butterfly:nth-child(4) { top: 30%; left: 80%; animation-delay: 6s; }
+
+        .bird:nth-child(5) { top: 25%; left: -50px; animation-delay: 1s; }
+        .bird:nth-child(6) { top: 45%; left: -50px; animation-delay: 5s; }
+        .bird:nth-child(7) { top: 70%; left: -50px; animation-delay: 8s; }
+
+        .squirrel:nth-child(8) { top: 20%; right: 15%; animation-delay: 0s; }
+        .squirrel:nth-child(9) { top: 50%; right: 25%; animation-delay: 3s; }
+        .squirrel:nth-child(10) { top: 75%; right: 5%; animation-delay: 6s; }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--nav-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-color);
+            font-family: 'Fredoka One', cursive;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .coins {
+            background: var(--accent-color);
+            color: #333;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .user-info {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 18px;
+            border-radius: 25px;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .user-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .theme-selector {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 18px;
+            border-radius: 25px;
+            color: var(--text-color);
+            cursor: pointer;
+            position: relative;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-selector:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--nav-bg);
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 150px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            margin-top: 5px;
+        }
+
+        .theme-dropdown.show {
+            display: block;
+        }
+
+        .theme-option {
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            color: var(--text-color);
+        }
+
+        .theme-option:hover {
+            background: var(--hover-color);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--nav-bg);
+            padding: 20px;
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            position: fixed;
+            left: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-section {
+            margin-bottom: 25px;
+        }
+
+        .nav-title {
+            color: var(--accent-color);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .nav-item {
+            background: var(--card-bg);
+            margin-bottom: 10px;
+            padding: 15px 18px;
+            border-radius: 15px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: var(--hover-color);
+            transform: translateX(8px) translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 30px;
+        }
+
+        /* EduFinder Specific Styles */
+        .edufinder-container {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .edufinder-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .edufinder-header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            color: var(--text-color);
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .edufinder-header p {
+            font-size: 18px;
+            opacity: 0.9;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .form-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr;
+            gap: 25px;
+            margin-bottom: 40px;
+            align-items: end;
+        }
+
+        .input-group {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .input-group:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--accent-color);
+        }
+
+        .input-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-color);
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 14px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        select option {
+            background: var(--secondary-bg);
+            color: var(--text-color);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .voice-input-container {
+            position: relative;
+        }
+
+        .voice-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #topicInput {
+            flex: 1;
+        }
+
+        .voice-btn {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .voice-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .voice-btn.listening {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .voice-status {
+            position: absolute;
+            top: -30px;
+            right: 0;
+            background: #4ecdc4;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .voice-status.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .search-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .search-btn {
+            padding: 18px 40px;
+            background: var(--accent-color);
+            color: #333;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Fredoka One', cursive;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .search-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 193, 7, 0.4);
+        }
+
+        .results-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .results-header h3 {
+            color: var(--text-color);
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .video-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .video-thumbnail {
+            width: 80px;
+            height: 60px;
+            background: var(--accent-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-weight: bold;
+            margin-right: 20px;
+            font-size: 24px;
+            position: relative;
+        }
+
+        .video-thumbnail::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-left: 12px solid #333;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            margin-left: 2px;
+        }
+
+        .video-info {
+            flex: 1;
+        }
+
+        .video-info h4 {
+            color: var(--text-color);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .video-info p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--accent-color);
+            font-weight: 600;
+            padding: 40px;
+            font-size: 18px;
+        }
+
+        .loading::before {
+            content: '🔍';
+            display: block;
+            font-size: 48px;
+            margin-bottom: 15px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .no-results {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            font-size: 16px;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 60px 40px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .welcome-message h2 {
+            color: var(--accent-color);
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-family: 'Fredoka One', cursive;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .welcome-message p {
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 500px;
+            margin: 0 auto;
+            font-weight: 600;
+        }
+
+        .error-message {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ffcccb;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #ff6b6b;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--secondary-bg);
+            border-radius: 10px;
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 10px;
+            border: 3px solid var(--secondary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #ffeb3b;
+        }
+
+        body {
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--secondary-bg);
+        }
+
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 250px;
+            }
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .form-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .video-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 25px;
+            }
+            
+            .video-thumbnail {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+        .user-option {
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+            color: var(--text-color); /* Ensure dropdown text color is consistent */
+            text-decoration: none;
+        }
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--nav-bg);
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 150px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            margin-top: 5px;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+    </style>
+</head>
+<body class="theme-forest">
+    <div class="header"> 
+        <div class="logo">
+            <img src="{% static 'images/main_logo.jpeg' %}" alt="Kidora Logo" style="height: 32px; width: 32px; vertical-align: middle; margin-right: 8px;">
+        <span style="font-weight: bold;"><span class="logo-text"><a href="{% url 'dashboard' %}" style="text-decoration: none; color: white;">  KIDORA</a></span></span>
+    </div>
+    <div class="header-right">
+    
+            
+            <div class="user-info" onclick="toggleUserDropdown()">
+                👋 Hi, {{first_name}} 💖
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="{% url 'edit' %}" class="user-option">✏️Edit Profile</a>
+                    <br><br>
+                    <a href="{% url 'logout' %}" class="user-option">🚪Logout</a>
+                </div>
+            </div>
+             <div class="theme-selector" onclick="toggleThemeDropdown()">
+                🎨 Theme 🌈
+                <div class="theme-dropdown" id="themeDropdown">
+                    <div class="theme-option" onclick="changeTheme('jungle')">🌿 Jungle Adventure</div>
+                    <div class="theme-option" onclick="changeTheme('doraemon')">🤖 Doraemon Magic</div>
+                    <div class="theme-option" onclick="changeTheme('disney')">🏰 Disney Dreams</div>
+                    <div class="theme-option" onclick="changeTheme('shinchan')">😄 Shinchan Fun</div>
+                    <div class="theme-option" onclick="changeTheme('anime')">⚡ Anime Power</div>
+                    <div class="theme-option" onclick="changeTheme('marvel')">🦸 Marvel Heroes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="forest-animals">
+            <div class="butterfly">🦋</div>
+            <div class="butterfly">🦋</div>
+            <div class="butterfly">🦋</div>
+            <div class="butterfly">🦋</div>
+
+            <div class="bird">🐦</div>
+            <div class="bird">🐦</div>
+            <div class="bird">🐦</div>
+
+            <div class="squirrel">🐿️</div>
+            <div class="squirrel">🐿️</div>
+            <div class="squirrel">🐿️</div>
+        </div>
+
+       <div class="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">🌳 My Jungle 🦋</div>
+                <div class="nav-item">
+                    <div class="nav-icon">🌟</div>
+                    <a href="{% url 'dashboard' %}" class="user-option"> Explore Today! ✨ </a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">❤️</div>
+                    <a href="{% url 'homework_list' %}" class="user-option"> Task Treehouse🌲</a>
+
+                </div>
+                 <div class="nav-item">
+                    <div class="nav-icon">🐿️</div>
+                    <a href="{% url 'forest' %}" class="user-option"> Topic Forest 🌿</a>
+
+                </div>
+            </div>
+
+          
+            <div class="nav-section">
+                <div class="nav-title">📚 Learning Zone 🎓</div>
+                
+                <div class="nav-item">
+                    <div class="nav-icon">🕳️</div>
+                    <a href="{% url 'story_generate' %}" class="user-option">Story Caves 📖</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">✒️</div>
+                    <a href="{% url 'rhyme_generator' %}" class="user-option">Rhymes World 📝</a>
+                </div>
+            </div>
+           
+   <div class="nav-section">
+                <div class="nav-title">🎯 Quiz Challenge 🏆</div>
+                <div class="nav-item">
+                    <div class="nav-icon">💪</div>
+                    <a href="{% url 'quiz' %}" class="user-option" color:white>Strengthen Learning 🧠</a>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">📊 Progress Track 🚀</div>
+                <div class="nav-item">
+                    <div class="nav-icon">📈</div>
+                    <a href="{% url 'progress_level' %}" class="user-option">Progress Level 📊</a>
+                </div>
+            </div>
+
+
+           <div class="nav-section">
+                <div class="nav-title">💬 Help Desk 🆘</div>
+                <div class="nav-item">
+                    <div class="nav-icon">📝</div>
+                    <a href="{% url 'feedback' %}" class="user-option">Feedback 💭</a>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">👤</div>
+                    <a href="{% url 'user_profile' %}" class="user-option">My Profile 🌟</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="main-content">
+            <div class="edufinder-container">
+                <div class="edufinder-header">
+                    <h1>📚 Topic Forest</h1>
+                    <p>AI-Powered Educational Video Search with Voice Magic 🎤✨</p>
+                </div>
+
+                <div class="form-section">
+                    <div class="input-group">
+                        <label><span class="icon">🎓</span>Select Class</label>
+                        <select id="classSelect">
+                            <option value="">Choose your class...</option>
+                            <option value="1">Class 1</option>
+                            <option value="2">Class 2</option>
+                            <option value="3">Class 3</option>
+                            <option value="4">Class 4</option>
+                            <option value="5">Class 5</option>
+                            <option value="6">Class 6</option>
+                            <option value="7">Class 7</option>
+                            <option value="8">Class 8</option>
+                            <option value="9">Class 9</option>
+                            <option value="10">Class 10</option>
+                            <option value="11">Class 11</option>
+                            <option value="12">Class 12</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label><span class="icon">📖</span>Select Subject</label>
+                        <select id="subjectSelect">
+                            <option value="">Choose subject...</option>
+                            <option value="mathematics">Mathematics</option>
+                            <option value="science">Science</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="biology">Biology</option>
+                            <option value="english">English</option>
+                            <option value="hindi">Hindi</option>
+                            <option value="history">History</option>
+                            <option value="geography">Geography</option>
+                            <option value="evs">Environmental Studies (EVS)</option>
+                            <option value="computer">Computer Science</option>
+                            <option value="economics">Economics</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Enter Topic/Chapter (Text or Voice)</label>
+                        <div class="voice-input-container">
+                            <div class="voice-input-wrapper">
+                                <input type="text" id="topicInput" placeholder="Type or speak your topic (e.g., Human Body, Photosynthesis...)">
+                                <button class="voice-btn" id="voiceBtn" onclick="toggleVoiceInput()">🎤</button>
+                            </div>
+                            <div class="voice-status" id="voiceStatus">Listening...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-section">
+                    <button class="search-btn" onclick="searchVideos()">
+                        🔍 Find Forest Learning Videos
+                    </button>
+                </div>
+
+                <div id="resultsSection" style="display: none;">
+                    <div class="results-section">
+                        <div class="results-header">
+                            <span style="font-size: 32px;">📺</span>
+                            <h3>AI Forest Recommendations</h3>
+                        </div>
+                        <div class="video-grid" id="videoResults"></div>
+                    </div>
+                </div>
+
+                <div id="welcomeSection">
+                    <div class="welcome-message">
+                        <h2>Welcome to Forest Learning! 🌿</h2>
+                        <p>Select your class and subject, then type your topic or use voice input by clicking the microphone button. Our AI Forest Guide will find the perfect educational videos for you from the vast knowledge forest! 🌳📚✨</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Voice recognition setup
+        let recognition;
+        let isListening = false;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = function() {
+                isListening = true;
+                document.getElementById('voiceBtn').classList.add('listening');
+                document.getElementById('voiceStatus').classList.add('show');
+                document.getElementById('voiceStatus').textContent = 'Listening... Speak now!';
+            };
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('topicInput').value = transcript;
+                document.getElementById('voiceStatus').textContent = 'Voice input captured!';
+                
+                setTimeout(() => {
+                    document.getElementById('voiceStatus').classList.remove('show');
+                }, 2000);
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+                document.getElementById('voiceStatus').textContent = 'Error: Could not capture voice';
+                document.getElementById('voiceStatus').style.background = '#ff6b6b';
+                
+                setTimeout(() => {
+                    document.getElementById('voiceStatus').classList.remove('show');
+                    document.getElementById('voiceStatus').style.background = '#4ecdc4';
+                }, 3000);
+            };
+
+            recognition.onend = function() {
+                isListening = false;
+                document.getElementById('voiceBtn').classList.remove('listening');
+            };
+        }
+
+        function toggleVoiceInput() {
+            if (!recognition) {
+                alert('Voice recognition is not supported in your browser. Please use Chrome or Edge.');
+                return;
+            }
+
+            if (isListening) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        }
+
+        // Sample educational video data
+        const sampleVideos = {
+            'evs-6-human body': [
+                {
+                    title: 'Human Body Systems - Class 6 EVS Complete Chapter',
+                    channel: 'Forest Learning Hub',
+                    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    duration: '25:30',
+                    views: '45K views'
+                },
+                {
+                    title: 'Digestive System Explained for Kids - Class 6',
+                    channel: 'Science Forest',
+                    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    duration: '18:45',
+                    views: '32K views'
+                },
+                {
+                    title: 'Respiratory System - Human Body Parts Class 6',
+                    channel: 'Learning Tree Academy',
+                    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    duration: '22:15',
+                    views: '28K views'
+                },
+                {
+                    title: 'Circulatory System for Class 6 Students',
+                    channel: 'Smart Forest Study',
+                    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    duration: '20:30',
+                    views: '55K views'
+                }
+            ],
+            'mathematics-7-algebra': [
+                {
+                    title: 'Introduction to Algebra - Class 7 Complete Chapter',
+                    channel: 'Math Forest',
+                    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    duration: '35:20',
+                    views: '125K views'
+                },
+                {
+                    title: 'Linear Equations Class 7 - Step by Step',
+                    channel: 'Number Tree Theory',
+                    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    duration: '28:45',
+                    views: '89K views'
+                }
+            ],
+            'science-8-photosynthesis': [
+                {
+                    title: 'Photosynthesis Process Explained - Class 8 Science',
+                    channel: 'Forest Science Academy',
+                    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    duration: '30:15',
+                    views: '78K views'
+                },
+                {
+                    title: 'Light and Dark Reactions in Photosynthesis',
+                    channel: 'Bio Forest Concepts',
+                    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    duration: '25:40',
+                    views: '92K views'
+                }
+            ]
+        };
+
+        function searchVideos() {
+            const classValue = document.getElementById('classSelect').value;
+            const subject = document.getElementById('subjectSelect').value;
+            const topic = document.getElementById('topicInput').value.toLowerCase().trim();
+
+            if (!classValue || !subject || !topic) {
+                alert('🌿 Please fill in all fields to search for forest learning videos! 🦋');
+                return;
+            }
+
+            // Hide welcome section and show results
+            document.getElementById('welcomeSection').style.display = 'none';
+            const resultsSection = document.getElementById('resultsSection');
+            const videoResults = document.getElementById('videoResults');
+            
+            resultsSection.style.display = 'block';
+            videoResults.innerHTML = '<div class="loading">🌳 Forest AI is finding the best educational videos for you... 🦋</div>';
+
+            // Simulate AI search delay
+            setTimeout(() => {
+                const searchKey = `${subject}-${classValue}-${topic}`;
+                let videos = sampleVideos[searchKey] || [];
+
+                // If no exact match, provide generic videos based on subject and class
+                if (videos.length === 0) {
+                    videos = [
+                        {
+                            title: `${topic.charAt(0).toUpperCase() + topic.slice(1)} - Class ${classValue} ${subject.charAt(0).toUpperCase() + subject.slice(1)}`,
+                            channel: 'Forest Educational Hub',
+                            url: `https://www.youtube.com/results?search_query=${encodeURIComponent(`${topic} class ${classValue} ${subject}`)}`,
+                            duration: '25:00',
+                            views: '15K views'
+                        },
+                        {
+                            title: `Complete Guide to ${topic} for Class ${classValue}`,
+                            channel: 'Learning Forest Pro',
+                            url: `https://www.youtube.com/results?search_query=${encodeURIComponent(`${topic} explained class ${classValue}`)}`,
+                            duration: '30:00',
+                            views: '22K views'
+                        },
+                        {
+                            title: `${topic} Made Easy - Class ${classValue} Tutorial`,
+                            channel: 'Study Forest Smart',
+                            url: `https://www.youtube.com/results?search_query=${encodeURIComponent(`${topic} tutorial class ${classValue} ${subject}`)}`,
+                            duration: '22:30',
+                            views: '18K views'
+                        },
+                        {
+                            title: `${topic} Practice Questions - Class ${classValue}`,
+                            channel: 'Forest Exam Ready',
+                            url: `https://www.youtube.com/results?search_query=${encodeURIComponent(`${topic} questions class ${classValue} ${subject}`)}`,
+                            duration: '35:15',
+                            views: '12K views'
+                        }
+                    ];
+                }
+
+                displayVideos(videos);
+            }, 3000);
+        }
+
+        function displayVideos(videos) {
+            const videoResults = document.getElementById('videoResults');
+            
+            if (videos.length === 0) {
+                videoResults.innerHTML = '<div class="no-results">🍃 No videos found in our forest. Try different keywords! 🌿</div>';
+                return;
+            }
+
+            const videosHTML = videos.map(video => `
+                <div class="video-item" onclick="openVideo('${video.url}')">
+                    <div class="video-thumbnail"></div>
+                    <div class="video-info">
+                        <h4>${video.title}</h4>
+                        <p>
+                            <span>📺 ${video.channel}</span>
+                            <span>⏱️ ${video.duration}</span>
+                            <span>👁️ ${video.views}</span>
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+
+            videoResults.innerHTML = videosHTML;
+        }
+
+        function openVideo(url) {
+            window.open(url, '_blank');
+        }
+
+        // Theme functions
+        function toggleThemeDropdown() {
+            const dropdown = document.getElementById('themeDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function changeTheme(theme) {
+            const body = document.body;
+            body.className = `theme-${theme}`;
+
+            // Update logo icon based on theme
+            const logoIcon = document.querySelector('.logo-icon');
+            const themeIcons = {
+                forest: '🌿',
+                disney: '🏰',
+                shinchan: '😄',
+                anime: '⚡',
+                marvel: '🦸'
+            };
+            logoIcon.textContent = themeIcons[theme];
+
+            // Close dropdown after selection
+            toggleThemeDropdown();
+        }
+
+        // Auto-update subject options based on class selection
+        document.getElementById('classSelect').addEventListener('change', function() {
+            const classValue = this.value;
+            const subjectSelect = document.getElementById('subjectSelect');
+            
+            if (classValue && parseInt(classValue) <= 5) {
+                subjectSelect.innerHTML = `
+                    <option value="">Choose subject...</option>
+                    <option value="mathematics">Mathematics</option>
+                    <option value="english">English</option>
+                    <option value="hindi">Hindi</option>
+                    <option value="evs">Environmental Studies (EVS)</option>
+                    <option value="science">General Science</option>
+                `;
+            } else if (classValue && parseInt(classValue) <= 10) {
+                subjectSelect.innerHTML = `
+                    <option value="">Choose subject...</option>
+                    <option value="mathematics">Mathematics</option>
+                    <option value="science">Science</option>
+                    <option value="english">English</option>
+                    <option value="hindi">Hindi</option>
+                    <option value="history">History</option>
+                    <option value="geography">Geography</option>
+                    <option value="computer">Computer Science</option>
+                `;
+            } else if (classValue && parseInt(classValue) > 10) {
+                subjectSelect.innerHTML = `
+                    <option value="">Choose subject...</option>
+                    <option value="mathematics">Mathematics</option>
+                    <option value="physics">Physics</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="biology">Biology</option>
+                    <option value="english">English</option>
+                    <option value="computer">Computer Science</option>
+                    <option value="economics">Economics</option>
+                `;
+            }
+        });
+
+        // Enter key support for topic input
+        document.getElementById('topicInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchVideos();
+            }
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const themeSelector = document.querySelector('.theme-selector');
+            const themeDropdown = document.getElementById('themeDropdown');
+
+            if (!themeSelector.contains(event.target)) {
+                themeDropdown.classList.remove('show');
+            }
+        });
+
+        // Add visual feedback for form interactions
+        document.querySelectorAll('select, input').forEach(element => {
+            element.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+            });
+            
+            element.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add hover effects to cards
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(8px) translateY(-2px) scale(1.02)';
+            });
+
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0) translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
