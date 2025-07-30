@@ -232,3 +232,6 @@ def dashboard(request):
 def faq(request):
     return render(request, 'dashboard/faq.html')
 
+@login_required
+def forest(request):
+    return render(request,'dashboard/forest.html')
