@@ -26,8 +26,8 @@
         }
 
         /* Theme Variables */
-        :root {
-            /* Forest Theme (Default) */
+       :root {
+            /* Jungle Theme (Default) */
             --primary-bg: linear-gradient(135deg, #4CAF50, #8BC34A);
             --secondary-bg: #2E7D32;
             --accent-color: #FFC107;
@@ -35,10 +35,22 @@
             --card-bg: rgba(76, 175, 80, 0.9);
             --nav-bg: rgba(46, 125, 50, 0.95);
             --hover-color: #66BB6A;
-            --background-image: linear-gradient(135deg, rgba(46, 125, 50, 0.8), rgba(76, 175, 80, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="trees" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="15" r="2" fill="%23ffffff" opacity="0.1"/><path d="M8 10 L10 5 L12 10 Z" fill="%23ffffff" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23trees)"/></svg>');
+            --background-image: url("{% static 'images/monkey.png' %}"); /* Default Jungle background image */
         }
 
         /* Disney Theme */
+        .theme-doraemon {
+            --primary-bg: linear-gradient(135deg, #0288D1, #03A9F4);
+            --secondary-bg: #0277BD;
+            --accent-color: #FF5722;
+            --text-color: #ffffff;
+            --card-bg: rgba(2, 136, 209, 0.9);
+            --nav-bg: rgba(2, 119, 189, 0.95);
+            --hover-color: #29B6F6;
+            --background-image: url("{% static 'images/doraemon.png' %}"); /* Doraemon background image */
+        }
+
+         /* Disney Theme */
         .theme-disney {
             --primary-bg: linear-gradient(135deg, #E91E63, #F06292);
             --secondary-bg: #C2185B;
@@ -47,7 +59,7 @@
             --card-bg: rgba(233, 30, 99, 0.9);
             --nav-bg: rgba(194, 24, 91, 0.95);
             --hover-color: #F48FB1;
-            --background-image: linear-gradient(135deg, rgba(194, 24, 91, 0.8), rgba(233, 30, 99, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="castle" x="0" y="0" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M12.5 5 L15 10 L20 8 L18 15 L12.5 12 L7 15 L5 8 L10 10 Z" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23castle)"/></svg>');
+            --background-image: url("{% static 'images/princess.jpg' %}"); /* Disney background image */
         }
 
         /* Shinchan Theme */
@@ -59,7 +71,7 @@
             --card-bg: hsla(13, 86%, 28%, 0.9);
             --nav-bg: hsla(8, 78%, 61%, 0.95);
             --hover-color: #FFB74D;
-            --background-image: linear-gradient(135deg, rgba(245, 124, 0, 0.8), rgba(255, 152, 0, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="fun" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="15" cy="15" r="8" fill="%23ffffff" opacity="0.1"/><circle cx="12" cy="12" r="2" fill="%23ffffff" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23fun)"/></svg>');
+            --background-image: url("{% static 'images/sinchan.jpg' %}"); /* Shinchan background image */
         }
 
         /* Anime Theme */
@@ -71,7 +83,7 @@
             --card-bg: rgba(156, 39, 176, 0.9);
             --nav-bg: rgba(123, 31, 162, 0.95);
             --hover-color: #BA68C8;
-            --background-image: linear-gradient(135deg, rgba(123, 31, 162, 0.8), rgba(156, 39, 176, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="power" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M10 2 L15 8 L10 14 L5 8 Z" fill="%23ffffff" opacity="0.15"/></pattern></defs><rect width="100" height="100" fill="url(%23power)"/></svg>');
+            --background-image: url("{% static 'images/animen.jpg' %}"); /* Anime background image */
         }
 
         /* Marvel Theme */
@@ -83,7 +95,7 @@
             --card-bg: rgba(211, 47, 47, 0.9);
             --nav-bg: rgba(198, 40, 40, 0.95);
             --hover-color: #EF5350;
-            --background-image: linear-gradient(135deg, rgba(198, 40, 40, 0.8), rgba(211, 47, 47, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hero" x="0" y="0" width="25" height="25" patternUnits="userSpaceOnUse"><polygon points="12.5,5 20,12.5 12.5,20 5,12.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23hero)"/></svg>');
+            --background-image: url("{% static 'images/spider.jpg' %}"); /* Marvel background image */
         }
 
         .container {
@@ -811,6 +823,24 @@
         .user-dropdown.show {
             display: block;
         }
+          .user-info {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  
+
+  .user-option {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 8px;
+  }
+
+  .user-option:hover {
+    background-color: hsl(115, 89%, 14%);
+  }
 
     </style>
 </head>
@@ -824,13 +854,12 @@
     
             
             <div class="user-info" onclick="toggleUserDropdown()">
-                👋 Hi, {{first_name}} 💖
-                <div class="user-dropdown" id="userDropdown">
-                    <a href="{% url 'edit' %}" class="user-option">✏️Edit Profile</a>
-                    <br><br>
-                    <a href="{% url 'logout' %}" class="user-option">🚪Logout</a>
-                </div>
-            </div>
+  👋 Hi, {{ first_name }} 💖
+  <div class="user-dropdown" id="userDropdown">
+    <a href="{% url 'edit' %}" class="user-option">✏️ Edit Profile</a>
+    <a href="{% url 'logout' %}" class="user-option">🚪 Logout</a>
+  </div>
+</div>
              <div class="theme-selector" onclick="toggleThemeDropdown()">
                 🎨 Theme 🌈
                 <div class="theme-dropdown" id="themeDropdown">
@@ -1010,6 +1039,19 @@
     </div>
 
     <script>
+          function toggleUserDropdown() {
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.classList.toggle('show');
+  }
+
+  // Optional: Hide dropdown when clicking outside
+  document.addEventListener('click', function (e) {
+    const dropdown = document.getElementById('userDropdown');
+    const userInfo = document.querySelector('.user-info');
+    if (!userInfo.contains(e.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
         // Voice recognition setup
         let recognition;
         let isListening = false;
