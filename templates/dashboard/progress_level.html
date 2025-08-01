@@ -741,7 +741,7 @@
             if(confirm('🚪 Are you sure you want to logout? 😊')) {
                 // If you want a specific message before redirect, you can keep this.
                 // Otherwise, the Django logout view will handle the redirect.
-                alert('👋 Goodbye Dikshaa! See you soon! 🌟'); 
+                alert('👋 Goodbye {{ first_name }}! See you soon! 🌟'); 
                 // The actual logout is handled by the link: <a href="{% url 'logout' %}" class="user-option">
             }
             toggleUserDropdown(); // Close dropdown regardless
