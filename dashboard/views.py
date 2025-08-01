@@ -165,7 +165,8 @@ def rhyme_generator(request):
     if request.method == "GET":
         context = {
             'user_input': None,
-            'rhyme': None
+            'rhyme': None,
+             'first_name': request.user.first_name
         }
         return render(request, 'dashboard/rhyme_generator.html', context)
 
@@ -234,4 +235,4 @@ def faq(request):
 
 @login_required
 def forest(request):
-    return render(request,'dashboard/forest.html')
+    return render(request,'dashboard/forest.html',context={ 'first_name': request.user.first_name})
