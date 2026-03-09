@@ -158,14 +158,12 @@ def story_generate(request):
             except Exception as error:
                 error_text = str(error)
                 if 'ResourceExhausted' in error_text or '429' in error_text or 'quota' in error_text.lower():
-                    messages.warning(request, "AI quota reached. Showing local longer paragraph story.")
                     return render(request, 'dashboard/story_generator.html', {
                         'user_input': user_input,
                         'first_name': request.user.first_name,
                         'story_text': build_local_story_paragraphs(user_input),
                     })
                 else:
-                    messages.warning(request, f"Story AI unavailable ({error}). Showing local longer paragraph story.")
                     return render(request, 'dashboard/story_generator.html', {
                         'user_input': user_input,
                         'first_name': request.user.first_name,
