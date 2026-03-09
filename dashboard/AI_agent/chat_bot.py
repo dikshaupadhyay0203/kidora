@@ -7,7 +7,7 @@ load_dotenv()
 
 def generate_rhyme(query: str):
     """Generates a rhyme using a language model and returns the response."""
-    llm = GoogleGenerativeAI(model="gemini-2.5-pro", 
+    llm = GoogleGenerativeAI(model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"), 
                              api_key=os.getenv("GOOGLE_API_KEY"))
 
     prompt = ChatPromptTemplate.from_messages([
@@ -29,7 +29,7 @@ def ask_your_buddy(question: str) -> str:
     """
     Function to ask your AI buddy a question and get a response.
     """
-    llm = GoogleGenerativeAI(model="gemini-2.5-pro")
+    llm = GoogleGenerativeAI(model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"), api_key=os.getenv("GOOGLE_API_KEY"))
 
     prompt = ChatPromptTemplate.from_messages([
         ("system", "You are a helpful AI learning buddy and a companion for kids. Be creative and joyful. Make sure your responses are age-appropriate for kids.Try to be more engaging and make him feel like you are a friend"),

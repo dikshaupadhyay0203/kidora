@@ -515,12 +515,18 @@ body {
         <div class="main-content">
             <div class="row justify-content-center">
                 <div class="col-md-10">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+
                     <div class="card shadow-sm mb-4">
                         <div class="card-header">
                             <h3 class="text-center">Create Your Story</h3>
                         </div>
                         <div class="card-body">
-                            <p class="text-center">Tell me what you want to see in a story, and I'll bring it to life with pictures!</p>
+                            <p class="text-center">Tell me what you want to see in a story, and I'll generate a longer magical story in paragraphs!</p>
                             <form action="{% url 'story_generate' %}" method="post">
                                 {% csrf_token %}
                                 <div class="form-group">
@@ -540,33 +546,16 @@ body {
                              <p class="text-center">Based on your prompt: "<em>{{ user_input }}</em>"</p>
                         </div>
                         <div class="card-body">
-                            <div id="storyCarousel" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="{% static 'generated_images/1.png' %}" class="d-block w-100" alt="Story image 1">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="{% static 'generated_images/2.png' %}" class="d-block w-100" alt="Story image 2">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="{% static 'generated_images/3.png' %}" class="d-block w-100" alt="Story image 3">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="{% static 'generated_images/4.png' %}" class="d-block w-100" alt="Story image 4">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="{% static 'generated_images/5.png' %}" class="d-block w-100" alt="Story image 5">
+                            {% if story_text %}
+                                <div class="text-start">
+                                    <h5 class="mb-3">Your Story</h5>
+                                    <div class="mb-3 p-3" style="background: rgba(255,255,255,0.1); border-radius: 10px; white-space: pre-line; line-height: 1.8;">
+                                        {{ story_text }}
                                     </div>
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#storyCarousel" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#storyCarousel" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
+                            {% else %}
+                                <p class="text-center">No story was generated this time. Please try a different prompt.</p>
+                            {% endif %}
                         </div>
                     </div>
                     {% endif %}
@@ -623,5 +612,6 @@ body {
             }
         });
     </script>
+    <script src="{% static 'js/theme_persistence.js' %}"></script>
 </body>
 </html>

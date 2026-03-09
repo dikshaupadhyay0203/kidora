@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
 from .forms import UserRegistrationForm, LoginForm
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 def home_view(request):
     return render(request, 'accounts/home.html')
 

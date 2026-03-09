@@ -56,4 +56,13 @@ class Progress(models.Model):
     def __str__(self):
         return f"{self.user.username}'s progress in {self.subject.name}"
 
+
+class FrequentQuestion(models.Model):
+    question_text = models.CharField(max_length=300, db_index=True)
+    search_count = models.PositiveIntegerField(default=1)
+    last_searched = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.question_text} ({self.search_count})"
+
     

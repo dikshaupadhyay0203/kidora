@@ -485,6 +485,22 @@ body {
                     <div class="faq-title">Frequently Asked Questions 🤔</div>
                 </div>
                 <div class="accordion" id="faqAccordion">
+                    {% if frequent_questions %}
+                        {% for question in frequent_questions %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingDynamic{{ forloop.counter }}">
+                                    <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDynamic{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="collapseDynamic{{ forloop.counter }}">
+                                        {{ question.question_text }}
+                                    </button>
+                                </h2>
+                                <div id="collapseDynamic{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="headingDynamic{{ forloop.counter }}" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        This has been searched {{ question.search_count }} time{{ question.search_count|pluralize }} by learners. You can ask this in Ask Buddy for a personalized answer.
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -569,6 +585,7 @@ body {
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -608,5 +625,6 @@ body {
             }
         });
     </script>
+    <script src="{% static 'js/theme_persistence.js' %}"></script>
 </body>
 </html>

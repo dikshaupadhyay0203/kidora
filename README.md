@@ -4,26 +4,26 @@ Kidora is a web application designed for kids to learn and have fun with AI-powe
 
 ## Features
 
-*   **AI Story Generation**: Creates engaging and educational stories for kids.
-*   **Interactive Quizzes**: Tests knowledge with fun quizzes related to the stories.
-*   **Personalized Learning**: Tracks progress and adapts to the user's learning pace.
-*   **Homework Assistance**: Provides help with homework assignments.
+- **AI Story Generation**: Creates engaging and educational stories for kids.
+- **Interactive Quizzes**: Tests knowledge with fun quizzes related to the stories.
+- **Personalized Learning**: Tracks progress and adapts to the user's learning pace.
+- **Homework Assistance**: Provides help with homework assignments.
 
 ## Directory Structure
 
 Here's a breakdown of the key files and directories in the project:
 
-*   `manage.py`: The command-line utility for interacting with the Django project.
-*   `requirements.txt`: A list of the Python packages required to run the project.
-*   `db.sqlite3`: The SQLite database file.
-*   `kidora/`: The main project directory.
-    *   `settings.py`: The settings for the Django project.
-    *   `urls.py`: The URL declarations for the project.
-*   `accounts/`: The Django app for managing user accounts.
-*   `dashboard/`: The Django app for the user's dashboard, including AI story generation.
-*   `homework/`: The Django app for the homework assistance feature.
-*   `static/`: The directory for static files like images, CSS, and JavaScript.
-*   `templates/`: The directory for the HTML templates.
+- `manage.py`: The command-line utility for interacting with the Django project.
+- `requirements.txt`: A list of the Python packages required to run the project.
+- `db.sqlite3`: The SQLite database file.
+- `kidora/`: The main project directory.
+  - `settings.py`: The settings for the Django project.
+  - `urls.py`: The URL declarations for the project.
+- `accounts/`: The Django app for managing user accounts.
+- `dashboard/`: The Django app for the user's dashboard, including AI story generation.
+- `homework/`: The Django app for the homework assistance feature.
+- `static/`: The directory for static files like images, CSS, and JavaScript.
+- `templates/`: The directory for the HTML templates.
 
 ## Getting Started
 
@@ -31,8 +31,8 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 ### Prerequisites
 
-*   Python 3.12 or higher
-*   pip (Python package installer)
+- Python 3.12 or higher
+- pip (Python package installer)
 
 ### Installation
 
@@ -61,9 +61,10 @@ Create a `.env` file in the root of the project and add the following environmen
 ```
 GOOGLE_API_KEY=your_google_api_key
 TOGETHER_API_KEY=your_together_api_key
+GEMINI_MODEL=gemini-2.5-flash
 ```
 
-**Note:** You need to replace `your_google_api_key` and `your_together_api_key` with your actual API keys.
+**Note:** You need to replace `your_google_api_key` and `your_together_api_key` with your actual API keys. If `gemini-2.5-pro` quota is exhausted, keep `GEMINI_MODEL=gemini-2.5-flash`.
 
 ### Running the Application
 
@@ -83,11 +84,11 @@ The application will be available at `http://127.0.0.1:8000/`.
 
 ## Usage
 
-*   **Register and Login**: Create a new account or log in with an existing account.
-*   **Explore the Dashboard**: Access the AI story generator and other features from the dashboard.
-*   **Generate Stories**: Enter a topic or a prompt to generate a new story.
-*   **Take Quizzes**: Test your understanding of the stories by taking quizzes.
-*   **Get Homework Help**: Use the homework assistance feature to get help with your assignments.
+- **Register and Login**: Create a new account or log in with an existing account.
+- **Explore the Dashboard**: Access the AI story generator and other features from the dashboard.
+- **Generate Stories**: Enter a topic or a prompt to generate a new story.
+- **Take Quizzes**: Test your understanding of the stories by taking quizzes.
+- **Get Homework Help**: Use the homework assistance feature to get help with your assignments.
 
 ## Contributing
 

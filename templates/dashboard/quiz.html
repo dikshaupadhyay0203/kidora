@@ -1066,7 +1066,7 @@ body {
             let currentQuestionIndex = 0;
             let questions = [];
             let userAnswers = [];
-            let totalCoins = parseInt(localStorage.getItem('totalCoins')) || 237;
+            let totalCoins = parseInt('{{ coins|default:250 }}', 10) || 250;
             let quizCoins = 0;
 
             // Update coin display
@@ -1105,56 +1105,24 @@ body {
                 ]
             };
 
-            // Gemini AI Configuration
-            const GEMINI_API_KEY = 'REDACTED_GOOGLE_API_KEY';
-            const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+            // Backend Quiz API endpoint
+            const QUIZ_API_URL = '{% url "generate_quiz_questions" %}';
 
             // Generate questions using Gemini AI
             async function generateQuestionsWithGemini(subject, topic) {
-                if (GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE' || !GEMINI_API_KEY) {
-                    console.error('❌ API Key not set! Please add your Gemini API key.');
-                    showErrorMessage('⚠️ API Key missing! Please add your Gemini API key in the code.');
-                    return generateFallbackQuestions(subject, topic);
-                }
-
-                const prompt = `Generate 15 multiple choice questions for ${subject} - ${topic} for primary school students (Class 3-8). 
-
-    Requirements:
-    - 4 Easy questions (basic level)
-    - 5 Medium questions (intermediate level) 
-    - 6 Hard questions (advanced level)
-    - Each question should have 4 options (A, B, C, D)
-    - Only one correct answer per question
-    - Questions should be age-appropriate and educational
-    - Include variety in question types
-
-    Format your response as a JSON array with this exact structure:
-    [
-    {
-        "question": "Question text here?",
-        "options": ["Option A", "Option B", "Option C", "Option D"],
-        "correct": 0,
-        "difficulty": "easy"
-    }
-    ]
-
-    Make sure the correct answer index (0-3) corresponds to the right option in the array. Provide exactly 15 questions total.`;
-
                 try {
                     console.log('🤖 Starting AI question generation...');
                     showLoadingMessage('🤖 AI is generating questions... Please wait!');
                     
-                    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                    const response = await fetch(QUIZ_API_URL, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
                         },
                         body: JSON.stringify({
-                            contents: [{
-                                parts: [{
-                                    text: prompt
-                                }]
-                            }]
+                            subject,
+                            topic,
                         })
                     });
 
@@ -1169,17 +1137,7 @@ body {
                     const data = await response.json();
                     console.log('✅ API Response received');
                     
-                    const generatedText = data.candidates[0].content.parts[0].text;
-                    console.log('📝 Generated text length:', generatedText.length);
-                    
-                    // Extract JSON from the response
-                    const jsonMatch = generatedText.match(/\[[\s\S]*\]/);
-                    if (!jsonMatch) {
-                        console.error('❌ Could not find JSON in response');
-                        throw new Error('Could not parse AI response - No JSON found');
-                    }
-
-                    const questions = JSON.parse(jsonMatch[0]);
+                    const questions = data.questions;
                     console.log('✅ Questions parsed successfully:', questions.length);
                     
                     // Validate questions
@@ -1439,7 +1397,6 @@ body {
 
             function showResults() {
                 totalCoins += quizCoins;
-                localStorage.setItem('totalCoins', totalCoins);
                 updateCoinDisplay();
 
                 hideAllPages();
@@ -1481,6 +1438,12 @@ body {
                 topicInput.name = 'topic';
                 topicInput.value = currentTopic;
                 form.appendChild(topicInput);
+
+                const earnedCoinsInput = document.createElement('input');
+                earnedCoinsInput.type = 'hidden';
+                earnedCoinsInput.name = 'earned_coins';
+                earnedCoinsInput.value = quizCoins;
+                form.appendChild(earnedCoinsInput);
 
                 document.body.appendChild(form);
                 form.submit();
@@ -1536,5 +1499,6 @@ body {
             // Initialize the app
             showQuizChallenge();
         </script>
+        <script src="{% static 'js/theme_persistence.js' %}"></script>
     </body>
     </html>

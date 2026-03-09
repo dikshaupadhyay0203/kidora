@@ -478,6 +478,32 @@
             padding: 0 5px;
         }
 
+        .coins-summary-card {
+            grid-column: 1 / -1;
+            cursor: default;
+        }
+
+        .coins-summary-title {
+            font-size: 22px;
+            font-weight: 700;
+            font-family: 'Fredoka One', cursive;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+
+        .coins-summary-value {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 6px;
+        }
+
+        .coins-summary-note {
+            font-weight: 600;
+            opacity: 0.9;
+            color: var(--text-color);
+        }
+
 
         .last-score {
             font-weight: 600;
@@ -669,6 +695,14 @@
         </div>
 
         <div class="main-content">
+            <div class="card coins-summary-card">
+                <div class="card-body">
+                    <div class="coins-summary-title">Your Progress Coins</div>
+                    <div class="coins-summary-value">🪙 {{ coins }}</div>
+                    <div class="coins-summary-note">Starts at 250 by default and increases from quiz rewards.</div>
+                </div>
+            </div>
+
             {% for subject in subjects %}
             <div class="card" data-bs-toggle="modal" data-bs-target="#subjectModal-{{ subject.id }}">
                 <div class="card-body">
@@ -874,5 +908,6 @@
         });
         // --- MODIFIED CODE END ---
     </script>
+    <script src="{% static 'js/theme_persistence.js' %}"></script>
 </body>
 </html>

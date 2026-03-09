@@ -6,6 +6,21 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+def _is_non_retriable_error(error_message: str) -> bool:
+    lowered = (error_message or "").lower()
+    non_retriable_markers = [
+        "credit_limit",
+        "credit limit exceeded",
+        "402",
+        "unauthorized",
+        "authentication",
+        "invalid api key",
+        "forbidden",
+        "insufficient_quota",
+    ]
+    return any(marker in lowered for marker in non_retriable_markers)
+
 def _generate_internal(prompt: str, steps: int, width: int, height: int):
     """
     Calls the Together API. Returns base64-encoded image data or raises.
@@ -32,20 +47,21 @@ def generate_image(
     prompt: str,
     index: int,
     output_dir: str,
+    filename: str | None = None,
     steps: int = 2,
-    width: int = 1024,
-    height: int = 1024,
-    timeout_seconds: int = 60,
-    max_retries: int = 3,
+    width: int = 768,
+    height: int = 768,
+    timeout_seconds: int = 25,
+    max_retries: int = 1,
 ) -> str:
     """
     Generates an image using Together API,
-    saves as 'images/{index}.png', and returns the filepath.
+    saves as '{filename or index}.png', and returns the filepath.
     Retries and times out as needed.
     """
     os.makedirs(output_dir, exist_ok=True)
-    filename = f"{index}.png"
-    filepath = os.path.join(output_dir, filename)
+    final_filename = filename or f"{index}.png"
+    filepath = os.path.join(output_dir, final_filename)
 
     for attempt in range(1, max_retries + 1):
         with multiprocessing.Pool(1) as pool:
@@ -61,6 +77,8 @@ def generate_image(
                 pool.join()
                 continue
             except Exception as e:
+                if _is_non_retriable_error(str(e)):
+                    raise RuntimeError(f"Non-retriable image generation error: {e}")
                 print(f"[❌] Generation error ({e}). Retrying {attempt}/{max_retries}…")
                 continue
 
